@@ -1,5 +1,6 @@
 package com.proyecto.demo.servicios;
 
+import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
@@ -35,24 +36,25 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private FotoServicio fotoServicio;
-
     @Autowired
-    private ZonaRepositorio zonaRepositorio;
+    private BarraServicio barraServicio;
+
+    
 
 
     @Transactional
-    public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2, String idZona) throws ErrorServicio {
+    public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
+        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
 
-        Zona zona = zonaRepositorio.getById(idZona);
-
-        validar(nombre, apellido, mail, clave, clave2, zona);
+        validar(nombre, apellido, mail, clave, clave2);
 
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setMail(mail);
-        usuario.setZona(zona);
-        usuario.setRol(Rol.USUARIO);
+        
+        usuario.setRol(Rol.ADMIN);
 
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(encriptada);
@@ -69,9 +71,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Transactional
     public void modificar(MultipartFile archivo, String id, String nombre, String apellido, String mail, String clave, String clave2, String idZona) throws ErrorServicio {
 
-        Zona zona = zonaRepositorio.getOne(idZona);
         
-        validar(nombre, apellido, mail, clave, clave2, zona);
+        
+        validar(nombre, apellido, mail, clave, clave2);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
         if (respuesta.isPresent()) {
@@ -80,7 +82,7 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setApellido(apellido);
             usuario.setNombre(nombre);
             usuario.setMail(mail);
-            usuario.setZona(zona);
+            
             String encriptada = new BCryptPasswordEncoder().encode(clave);
             usuario.setClave(encriptada);
 
@@ -151,7 +153,7 @@ public class UsuarioServicio implements UserDetailsService {
     	}
     }
 
-    public void validar(String nombre, String apellido, String mail, String clave, String clave2, Zona zona) throws ErrorServicio {
+    public void validar(String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
 
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("El nombre del usuario no puede ser nulo");
@@ -172,9 +174,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("Las claves deben ser iguales");
         }
 
-        if (zona == null) {
-            throw new ErrorServicio("No se encontró la zona solicitada");
-        }
+       
 
     }
 
@@ -226,11 +226,27 @@ public class UsuarioServicio implements UserDetailsService {
     }
     
    @Transactional(readOnly=true)
-    public List<Usuario> todosLosUsuarios(){
+    public List<Usuario>  todosLosUsuarios(){
  
         return usuarioRepositorio.findAll();
         
     }
+    
+    
+    public void actualizarListBarras(String idUsuario,String idBarra) throws ErrorServicio{
+        //buscamos el usuario y getiamos las listas de Barra
+    Usuario usuario = buscarPorId(idUsuario);
+    List<Barra> barras = usuario.getBarras();
+    //sumamos las barras a la list
+    barras.add(barraServicio.buscarPorId(idBarra));
+    usuario.setBarras(barras);
+    
+    
+    
+    
+    }
+ 
+
     
   
 }

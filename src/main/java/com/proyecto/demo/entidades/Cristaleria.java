@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,6 +22,8 @@ public class Cristaleria {
     private String id;
       
      private String tipo;
+    @OneToOne
+     private Barra barraPerteneciente;
      
      private int enStock;
      
@@ -48,6 +52,14 @@ public class Cristaleria {
 
     public String getDescripcion() {
         return descripcion;
+    }
+
+    public Barra getBarraPerteneciente() {
+        return barraPerteneciente;
+    }
+
+    public void setBarraPerteneciente(Barra barraPerteneciente) {
+        this.barraPerteneciente = barraPerteneciente;
     }
 
     public void setDescripcion(String descripcion) {

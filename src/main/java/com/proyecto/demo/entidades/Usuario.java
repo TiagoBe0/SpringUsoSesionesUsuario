@@ -13,6 +13,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.proyecto.demo.enums.Rol;
+import java.util.List;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Usuario {
@@ -30,6 +32,8 @@ public class Usuario {
     @ManyToOne
     private Zona zona;
     
+    @OneToMany
+    private List<Barra> barras;
     @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,6 +44,14 @@ public class Usuario {
     
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    public List<Barra> getBarras() {
+        return barras;
+    }
+
+    public void setBarras(List<Barra> barras) {
+        this.barras = barras;
+    }
     
     
     

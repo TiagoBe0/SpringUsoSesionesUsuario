@@ -47,10 +47,16 @@ public class UsuarioController {
         }
         return "perfil.html";
     }
+     @GetMapping("/registroUsuario")
+    public String registro() {
+        
+        
+        return "registroUsuario.html";
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-perfil")
-    public String registrar(ModelMap modelo, HttpSession session, MultipartFile archivo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String idZona) {
+    public String actualizar(ModelMap modelo, HttpSession session, MultipartFile archivo, @RequestParam String id, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, String idZona) {
 
         Usuario usuario = null;
         try {
@@ -75,6 +81,38 @@ public class UsuarioController {
         }
 
     }
+      @GetMapping("/loginUsuarioModelo")
+    public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
+        if (error != null) {
+            model.put("error", "Usuario o clave incorrectos");
+        }
+        if (logout != null) {
+            model.put("logout", "Ha salido correctamente.");
+        }
+        return "loginUsuario1.html";
+    }
+     @GetMapping("/loginUsuario")
+    public String palabrota() {
+        
+        return "loginUsuario1.html";
+    }
+     @GetMapping("/inicioUsuario")
+    public String inicioUsuario() {
+        
+        return "inicioUsuario.html";
+    }
     
-    
+     @PostMapping("/registrar")
+    public String registrar( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
+        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
+        try {
+            usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
+        } catch (ErrorServicio ex) {
+           
+            return "index.html";
+        }
+        modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
+        modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
+        return "exito.html";
+    } 
 }

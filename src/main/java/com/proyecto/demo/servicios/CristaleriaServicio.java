@@ -2,11 +2,14 @@
 
 package com.proyecto.demo.servicios;
 
+import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.errores.ErrorServicio;
+
 import com.proyecto.demo.repositorios.CristaleriaRepositorio;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +24,15 @@ public class CristaleriaServicio {
     
     @Autowired
     private CristaleriaRepositorio cristaleriaRepositorio;
-    
+     @Autowired
+    private BarraServicio barraServicio;
     
      @Autowired
     private FotoServicio fotoServicio;
 
     
     @Transactional
-    public void registrar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock) throws ErrorServicio {
+    public void registrar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra) throws ErrorServicio {
 
        
 
@@ -36,7 +40,7 @@ public class CristaleriaServicio {
 
        Cristaleria cristaleria = new Cristaleria();
        
-       
+      
         Foto foto = fotoServicio.guardar(archivo);
         cristaleria.setFoto(foto);
         cristaleria.setAlta(new Date());
@@ -44,6 +48,16 @@ public class CristaleriaServicio {
         cristaleria.setPrecio(precio);
         cristaleria.setEnStock(enStock);
         cristaleria.setTipo(tipo);
+        //Creamos una barra de pertenecencia y añadimos a lista de cristaleria comoa tributo
+        Barra barra =barraServicio.buscarPorId(idBarra);
+         List<Cristaleria> cristalerias = barra.getListaCristalerias();
+         cristalerias.add(cristaleria);
+         barra.setListaCristalerias(cristalerias);
+          float suma = barraServicio.calcularPrecioTotal(cristalerias);
+        barra.setPrecioTotal(suma);
+         
+        cristaleria.setBarraPerteneciente(barra);
+        
         
         cristaleriaRepositorio.save(cristaleria);
         

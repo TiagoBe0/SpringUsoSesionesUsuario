@@ -8,6 +8,7 @@ import com.proyecto.demo.servicios.CristaleriaServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,13 +22,20 @@ public class CristaleriaController {
     private CristaleriaServicio cristaleriaServicio;
     
     
+     @GetMapping("/formulario")
+    public String form(ModelMap modelo) {
+        
+        
+        return "registroCristaleria.html";
+    }
+    
     
     
      @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam MultipartFile archivo,@RequestParam String tipo, @RequestParam String descripcion,@RequestParam float precio,@RequestParam int enStock) {
+    public String registrar(ModelMap modelo, @RequestParam MultipartFile archivo,@RequestParam String tipo, @RequestParam String idBarra,@RequestParam String descripcion,@RequestParam float precio,@RequestParam int enStock) {
 
         try {
-            cristaleriaServicio.registrar( archivo,  tipo,  descripcion,  precio,  enStock);
+            cristaleriaServicio.registrar( archivo,  tipo,  descripcion,  precio,  enStock,idBarra);
         } catch (ErrorServicio ex) {
            modelo.put(tipo,"tipo");
             modelo.put(descripcion,"tipo");

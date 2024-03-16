@@ -32,6 +32,14 @@ public class Controlador {
         modelo.addAttribute("usuarios", usuariosActivos);
         return "index.html";
     }
+    
+    @GetMapping("/formularioBarra")
+    public String form(ModelMap modelo) {
+        
+        
+        return "formularioBarra.html";
+    }
+  
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/inicio")
@@ -44,7 +52,7 @@ public class Controlador {
         return "inicio.html";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/loginUsuarioModelo")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
         if (error != null) {
             model.put("error", "Usuario o clave incorrectos");
@@ -52,31 +60,29 @@ public class Controlador {
         if (logout != null) {
             model.put("logout", "Ha salido correctamente.");
         }
-        return "login.html";
+        return "loginUsuario1.html";
+    }
+     @GetMapping("/loginUsuarioControlador")
+    public String loginUser() {
+        
+        return "loginUsuario1.html";
     }
 
     @GetMapping("/registro")
-    public String registro(ModelMap modelo) {
-        List<Zona> zonas = zonaRepositorio.findAll();
-        modelo.put("zonas", zonas);
-        return "registro.html";
+    public String registro() {
+        
+        
+        return "registroUsuario.html";
     }
 
     @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2, @RequestParam String idZona) {
-
+    public String registrar( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
+        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
         try {
-            usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2, idZona);
+            usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
-            List<Zona> zonas = zonaRepositorio.findAll();
-            modelo.put("zonas", zonas);
-            modelo.put("error", ex.getMessage());
-            modelo.put("nombre", nombre);
-            modelo.put("apellido", apellido);
-            modelo.put("mail", mail);
-            modelo.put("clave1", clave1);
-            modelo.put("clave2", clave2);
-            return "registro.html";
+           
+            return "index.html";
         }
         modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
         modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
