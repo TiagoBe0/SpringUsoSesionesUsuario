@@ -53,7 +53,7 @@ public class CristaleriaController {
         Cristaleria cristaleria = new Cristaleria();
        
             cristaleria = cristaleriaServicio.buscarPorId(id);
-            cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, id);
+            //cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, id);
             
 
             return "exito.html";

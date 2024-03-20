@@ -15,33 +15,42 @@
                         <div class="p-5">
                             <img class="img-fluid rounded-circle" src="../statics/img/bartender.jpg" alt="">
                         </div>
-                    </div>
+                    </div> 
+                    
                     <div class="col-lg-6 order-lg-1">
+                        
                         <div class="p-5">
+
+                            <h2 class="display-4">Registrar Nueva Barra</h2>
                             
-                            <h2 class="display-4">Registrate</h2>
-                            <form th:action="@{/barra/registrar}" method="POST" enctype="multipart/form-data">
+                             <form action="/usuario/actualizar-cristaleria" method="POST" enctype="multipart/form-data">
 
+                                                                    
+                                                                    <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
+                                                            
+                                                                    <input type="hidden"  name="id" th:value="${perfil.id}"/>
+                                                                    
+                                                                    
+                                                                    <label>Nombre o Tipo de Cristaleria</label>
+                                                                    <input type="text" class="form-control" name="tipo"  />
+                                                                    <label>Descripcion(opcional)</label>
+                                                                    <input type="text" class="form-control" name="descripcion"  />
+                                                                    <label>Cantidad</label>
+                                                                    <input type="number" class="form-control" name="enStock"  />
+                                                                    <label>precio</label>
+                                                                    <input type="number" class="form-control" name="precio"  />
+                                                                      <label>Barra Perteneciente</label>
+                                                                              <select class="form-control" name="idBarra"> 
+                                                                            <option th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"></option>
+                                                                            </select>                                      
+                                                                        <label>Foto</label>
+                                                                    <input type="file" class="form-control" name="archivo"  />
+                                                                    
 
-                                <p th:if="${error != null}" th:text="${error}" style="color:red;"></p>
-
-                                <!-- <p th:if="${error != null}" th:text="${error}" style="color:red;"></p> -->
-
-                                <label>Nombre de Cristaleria</label>
-                                <input type="text" class="form-control" name="nombre" th:value="${nombre}"/>
-                                 <label>Total de unidades</label>
-                                <input type="int" class="form-control" name="cantidad" th:value="${enStock}"/>
-                                <label>Barra</label>
-                                <input type="text" class="form-control" name="barra" th:value="${barra}"/>
-                                <label>Precio por unidad</label>
-                                <input type="radio" class="form-control" name="cantidad" th:value="${precio}"/>
-
-
-
-
-                                
-                                <br/><button   type="submit" class="btn btn-primary">Registrarme</button>
-                            </form>
+                                                                    
+                                                                  
+                                                                    <br/><button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                                                                </form>
                         </div>
                     </div>
                 </div>

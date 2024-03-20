@@ -28,7 +28,7 @@ public class Barra {
        private String nombre;
        
      @OneToMany
-       List<Cristaleria> listaCristalerias;
+      List<Cristaleria> listaCristalerias;
        @ManyToOne
        private Usuario usuario;
        

@@ -1,8 +1,10 @@
 package com.proyecto.demo.controladores;
 
 
+import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
+import com.proyecto.demo.servicios.CristaleriaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,8 @@ public class FotoController {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+     @Autowired
+    private CristaleriaServicio cristaleriaServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/usuario/{id}")
@@ -34,6 +38,26 @@ public class FotoController {
                 throw new ErrorServicio("El usuario no tiene una foto asignada.");
             }
             byte[] foto = usuario.getFoto().getContenido();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(foto, headers, HttpStatus.OK);
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(FotoController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+    @GetMapping("/cristaleriafoto/{id}")
+    public ResponseEntity<byte[]> fotoCristlaeria(@PathVariable String id) {
+
+        try {
+            Cristaleria cristaleria = cristaleriaServicio.buscarPorId(id);
+            if (cristaleria.getFoto() == null) {
+                throw new ErrorServicio("El usuario no tiene una foto asignada.");
+            }
+            byte[] foto = cristaleria.getFoto().getContenido();
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.IMAGE_JPEG);

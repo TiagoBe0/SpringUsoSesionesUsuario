@@ -27,7 +27,7 @@ public class BarraServicio {
 
        
        Barra barra = new Barra();
-       barra.setAlta(new Date());
+       //barra.setAlta(new Date());
        barra.setUsuario(usuarioServicio.buscarPorId(idUsuario));
        
        usuarioServicio.actualizarListBarras(idUsuario,barra.getId());
@@ -41,16 +41,19 @@ public class BarraServicio {
 
     }
     
-    public void cargarListaDeCristaleria(String id , List<Cristaleria> cristalerias) throws ErrorServicio{
-        
-        Barra barra = buscarPorId(id);
-        barra.setListaCristalerias(cristalerias);
-       
+    //ACTUALIZAR PRECIO TOTAL DE BARRA
+    
+    @Transactional
+    public void actualizarPrecioBarra(Barra barra,float costoRuptura) throws ErrorServicio{
+        //buscamos el usuario y getiamos las listas de Barra
+    
+    barra.setPrecioTotal(barra.getPrecioTotal()-costoRuptura);
     
     
     
     
     }
+   
     public List<Barra> listarTodas(){
         return barraRepositorio.findAll();
     }
@@ -60,8 +63,8 @@ public class BarraServicio {
         
         for (Cristaleria cristaleria : cristalerias) {
             
-            suma = suma + cristaleria.getPrecio();
-            
+            suma = suma + cristaleria.getPrecioTotal();
+            System.out.println("precio"+suma);
         }
         
     
@@ -82,5 +85,6 @@ public class BarraServicio {
         }
 
     }
+     
 
 }

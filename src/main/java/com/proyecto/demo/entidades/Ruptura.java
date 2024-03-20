@@ -18,9 +18,11 @@ public class Ruptura {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-     
+     private String nombre;
+      private String idUsuario;
+     private int numeroDeRuptura;
      private String explicacion;
-       @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
     @Temporal(TemporalType.TIMESTAMP)
     private Date baja;
@@ -28,6 +30,32 @@ public class Ruptura {
      private Cristaleria tipoCristaleria;
      
      private float costoRuptura;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNumeroDeRuptura() {
+        return numeroDeRuptura;
+    }
+
+    public void setNumeroDeRuptura(int numeroDeRuptura) {
+        this.numeroDeRuptura = numeroDeRuptura;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+     
+     
 
     public String getId() {
         return id;

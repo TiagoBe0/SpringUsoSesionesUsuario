@@ -34,6 +34,13 @@ public class Usuario {
     
     @OneToMany
     private List<Barra> barras;
+    
+    @OneToMany
+    private List<Cristaleria> todasLasCristalerias;
+     
+    @OneToMany
+    private List<Ruptura> todasLasRupturas;
+    
     @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
     @Temporal(TemporalType.TIMESTAMP)
@@ -51,6 +58,22 @@ public class Usuario {
 
     public void setBarras(List<Barra> barras) {
         this.barras = barras;
+    }
+
+    public List<Cristaleria> getTodasLasCristalerias() {
+        return todasLasCristalerias;
+    }
+
+    public void setTodasLasCristalerias(List<Cristaleria> todasLasCristalerias) {
+        this.todasLasCristalerias = todasLasCristalerias;
+    }
+
+    public List<Ruptura> getTodasLasRupturas() {
+        return todasLasRupturas;
+    }
+
+    public void setTodasLasRupturas(List<Ruptura> todasLasRupturas) {
+        this.todasLasRupturas = todasLasRupturas;
     }
     
     

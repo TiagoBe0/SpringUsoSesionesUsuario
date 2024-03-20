@@ -1,11 +1,13 @@
 package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
+import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.enums.Rol;
 import com.proyecto.demo.errores.ErrorServicio;
+import com.proyecto.demo.repositorios.BarraRepositorio;
 import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
 import java.util.ArrayList;
@@ -33,15 +35,38 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    
+    @Autowired
+    private CristaleriaServicio cristaleriaServicio;
 
     @Autowired
     private FotoServicio fotoServicio;
     @Autowired
     private BarraServicio barraServicio;
 
-    
+     @Autowired
+    private BarraRepositorio barraRepositorio;
 
+ @javax.transaction.Transactional
+    public void registrarBarra(String nombre,String idUsuario) throws ErrorServicio {
 
+       System.out.println("LLEGAMOS A USUARIO REGISTRO BARRAS");
+       Barra barra = new Barra();
+       barra.setNombre(nombre);
+
+       //barra.setAlta(new Date());
+       barra.setUsuario(buscarPorId(idUsuario));
+       
+       actualizarListBarras(idUsuario,barra.getId());
+       
+       
+        
+        barraRepositorio.save(barra);
+        
+
+       
+
+    }
     @Transactional
     public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
         System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
@@ -59,7 +84,7 @@ public class UsuarioServicio implements UserDetailsService {
         String encriptada = new BCryptPasswordEncoder().encode(clave);
         usuario.setClave(encriptada);
         
-        usuario.setAlta(new Date());
+        //usuario.setAlta(new Date());
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
@@ -69,7 +94,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
 
     @Transactional
-    public void modificar(MultipartFile archivo, String id, String nombre, String apellido, String mail, String clave, String clave2, String idZona) throws ErrorServicio {
+    public void modificar(MultipartFile archivo, String id, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
 
         
         
@@ -101,7 +126,79 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
+    @Transactional
+    public void modificarBarra( String id, String nombre) throws ErrorServicio {
 
+        
+        Barra barra = new Barra();
+        barra.setNombre(nombre);
+        barra.setUsuario(buscarPorId(id));
+       
+         barraRepositorio.save(barra);
+        
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+           
+            actualizarListBarras(id, barra.getId());
+            
+            
+           
+            
+
+            
+
+            usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
+        
+@Transactional
+public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cristalerias){
+    
+    usuario.setTodasLasCristalerias(cristalerias);
+
+
+
+}
+    
+    
+@Transactional
+    public void modificarCristaleria( String id, String nombre,String tipo, String descripcion, float precio, int enStock,String idBarra) throws ErrorServicio {
+
+        
+        Barra barra = new Barra();
+        barra.setNombre(nombre);
+        barra.setUsuario(buscarPorId(id));
+       
+         barraRepositorio.save(barra);
+        
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+           
+            actualizarListBarras(id, barra.getId());
+            
+            
+           
+            
+
+            
+
+            usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
     @Transactional
     public void deshabilitar(String id) throws ErrorServicio {
 
@@ -177,6 +274,31 @@ public class UsuarioServicio implements UserDetailsService {
        
 
     }
+    
+    
+    //listar toda crtistaleria de barras
+    public List<Cristaleria> listarTodaLaCristaleria(String id) throws ErrorServicio{
+          
+        Usuario usuario = buscarPorId(id);
+        List<Barra> barras =usuario.getBarras();
+        List<Cristaleria> todasLasCristalerias = null;
+        
+        for (Barra barra : barras) {
+            
+            for (Cristaleria obj : barra.getListaCristalerias()) {
+                todasLasCristalerias.add(obj);
+            }
+            
+        }
+    return todasLasCristalerias;
+    
+    }
+    
+   //huscar cristaleria por id
+    public List<Cristaleria> buscarCristaleriaPorIdUsuario(String id){
+    
+    return cristaleriaServicio.listarPorIdUsuario(id);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
@@ -231,7 +353,14 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.findAll();
         
     }
-    
+    @Transactional(readOnly=true)
+    public List<Barra>  todasLasBarras(String idUsuario) throws ErrorServicio{
+     Usuario usuario =buscarPorId(idUsuario);
+     
+ 
+        return usuario.getBarras();
+        
+    }
     
     public void actualizarListBarras(String idUsuario,String idBarra) throws ErrorServicio{
         //buscamos el usuario y getiamos las listas de Barra
@@ -245,6 +374,7 @@ public class UsuarioServicio implements UserDetailsService {
     
     
     }
+   
  
 
     

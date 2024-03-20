@@ -25,9 +25,14 @@ public class Cristaleria {
     @OneToOne
      private Barra barraPerteneciente;
      
+    
+    private String idUsuario;
+    
      private int enStock;
      
      private float precio;
+     
+     private float precioTotal;
      
      private String descripcion;
         @OneToOne
@@ -40,6 +45,22 @@ public class Cristaleria {
 
     public String getId() {
         return id;
+    }
+
+    public float getPrecioTotal() {
+        return precioTotal;
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public void setPrecioTotal() {
+        this.precioTotal = this.precio*this.enStock;
     }
 
     public void setId(String id) {
@@ -59,6 +80,8 @@ public class Cristaleria {
     }
 
     public void setBarraPerteneciente(Barra barraPerteneciente) {
+        
+        
         this.barraPerteneciente = barraPerteneciente;
     }
 
@@ -76,6 +99,7 @@ public class Cristaleria {
 
     public void setEnStock(int enStock) {
         this.enStock = enStock;
+        
     }
 
     public float getPrecio() {

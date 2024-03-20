@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,11 +24,21 @@ public class BarraController {
     
  
     
-      @GetMapping("/formulario")
-    public String form(ModelMap modelo) {
+      @GetMapping("/formulario/{idUsuario}")
+    public String form(ModelMap modelo, @PathVariable String idUsuario) {
+        
+        modelo.put("idUsuario",idUsuario );
         
         
         return "registroBarra.html";
+    }
+    @GetMapping("/listartodas")
+    public String tabladeBarra(ModelMap modelo, @PathVariable String idUsuario) {
+        
+        //modelo.addAttribute("barra",barraServicio.listarTodas().get(0).getNombre() );
+        
+        
+        return "listarBarras.html";
     }
     
     
