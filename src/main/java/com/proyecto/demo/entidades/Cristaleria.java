@@ -24,7 +24,8 @@ public class Cristaleria {
      private String tipo;
     @OneToOne
      private Barra barraPerteneciente;
-     
+    
+         private String barraPertenecienteNombre;
     
     private String idUsuario;
     
@@ -80,7 +81,7 @@ public class Cristaleria {
     }
 
     public void setBarraPerteneciente(Barra barraPerteneciente) {
-        
+        //this.barraPertenecienteNombre=barraPerteneciente.getNombre();
         
         this.barraPerteneciente = barraPerteneciente;
     }
@@ -91,6 +92,14 @@ public class Cristaleria {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getBarraPertenecienteNombre() {
+        return barraPertenecienteNombre;
+    }
+
+    public void setBarraPertenecienteNombre(String barraPertenecienteNombre) {
+        this.barraPertenecienteNombre = barraPertenecienteNombre;
     }
 
     public int getEnStock() {

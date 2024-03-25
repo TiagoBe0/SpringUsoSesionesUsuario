@@ -49,6 +49,7 @@ public class RupturaServicio {
            List<Ruptura> rupturas =usuario.getTodasLasRupturas();
            rupturas.add(ruptura);
            usuario.setTodasLasRupturas(rupturas);
+          barraServicio.actualizarStockBarra(cristaleria.getBarraPerteneciente().getId(), cantidad);
            barraServicio.actualizarPrecioBarra(cristaleria.getBarraPerteneciente(), ruptura.getCostoRuptura());
         
            //barraRepositorio.save(barraPerteneciente);

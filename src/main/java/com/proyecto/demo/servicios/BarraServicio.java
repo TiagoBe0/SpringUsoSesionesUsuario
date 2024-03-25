@@ -6,6 +6,7 @@ import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,6 +54,17 @@ public class BarraServicio {
     
     
     }
+    
+        
+    @Transactional
+    public void actualizarStockBarra(String idBarra,int numeroRupturas) throws ErrorServicio{
+        //buscamos el usuario y getiamos las listas de Barra
+    Barra barra = buscarPorId(idBarra);
+    barra.setTotalUnidades(barra.getTotalUnidades()-numeroRupturas);
+     
+            
+    
+    }
    
     public List<Barra> listarTodas(){
         return barraRepositorio.findAll();
@@ -85,6 +97,14 @@ public class BarraServicio {
         }
 
     }
+     
+     public void deshabilitar(String id) throws ErrorServicio{
+     
+          Barra barra = buscarPorId(id);
+          barraRepositorio.delete(barra);
+          barraRepositorio.deleteById(id);
+     
+     }
      
 
 }

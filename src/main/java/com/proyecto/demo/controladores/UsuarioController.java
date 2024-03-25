@@ -274,7 +274,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         
         modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
         
-        return "inicioUsuario.html";
+        return  "panelBarra.html";
     }
     
      @PostMapping("/registrar")

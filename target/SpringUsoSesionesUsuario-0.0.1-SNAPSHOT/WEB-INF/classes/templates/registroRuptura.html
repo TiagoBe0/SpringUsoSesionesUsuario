@@ -28,7 +28,7 @@
                                                                     
                                                                   
                                                                    
-                                                                    <input  name="id" th:value="${perfil.id}"/>
+                                 <input type="hidden"  name="id" th:value="${perfil.id}"/>
                                                                     
                                                                     <label>Responsables de la ruptura</label>
                                                                     <input type="text" class="form-control" name="nombre"  />
@@ -38,13 +38,18 @@
                                                                     <input type="number" class="form-control" name="cantidad"  />
                                                                     <label>Tipo de Cristaleria Rota</label>
                                                                               <select class="form-control" name="idCristaleria"> 
-                                                                            <option th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo}"></option>
-                                                                            </select>                               
+                                                                            <option th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo+'-'+cristaleria.barraPerteneciente.nombre}"  ></option>
+                                                                            
+                                                                              </select>    
+                                                                    <label>Barra Perteneciente</label>
+                                                                              <select class="form-control" name="idBarra"> 
+                                                                            <option th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"></option>
+                                                                            </select>           
                                                                       
 
                                                                     
                                                                   
-                                                                    <br/><button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                                                                    <br/><button type="submit" class="btn btn-primary">enviar</button>
                                                                 </form>
                         </div>
                     </div>

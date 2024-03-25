@@ -75,5 +75,16 @@ public class BarraController {
         modelo.put("descripcion", "Barra cargada correctamente");
         return "exitoBarra.html";
     }
+    
+    @GetMapping("/deshabilitar/{id}")
+	public String deshabilitar(ModelMap modelo, @PathVariable String id) {
+		try {
+			barraServicio.deshabilitar(id);
+			return "redirect:/admin/dashboard";
+		}catch(Exception e) {
+			modelo.put("error", "No fue posible deshabilitar");
+			return "inicioAdmin";
+		}
+	}
 
 }

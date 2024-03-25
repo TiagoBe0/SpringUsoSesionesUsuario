@@ -103,6 +103,7 @@ public class CristaleriaServicio {
         cristaleria.setIdUsuario(id);
         cristaleria.setTipo(tipo);
         cristaleria.setBarraPerteneciente(barraPerteneciente);
+        cristaleria.setBarraPertenecienteNombre(barraPerteneciente.getNombre());
         List<Cristaleria> cristalerias = barraPerteneciente.getListaCristalerias();
         
         cristalerias.add(cristaleria);
@@ -138,6 +139,11 @@ public class CristaleriaServicio {
     }
     
    
+     public void deshabilitar(String id) throws ErrorServicio{
+     
+          cristaleriaRepositorio.deleteById(id);
+     
+     }
     
     
     public Cristaleria buscarPorId(String id) throws ErrorServicio {
