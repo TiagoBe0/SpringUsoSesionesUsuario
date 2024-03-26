@@ -1,9 +1,11 @@
 package com.proyecto.demo.controladores;
 
 
+import com.proyecto.demo.entidades.Cristal;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
+import com.proyecto.demo.servicios.CristalServicio;
 import com.proyecto.demo.servicios.CristaleriaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.util.logging.Level;
@@ -27,6 +29,9 @@ public class FotoController {
     private UsuarioServicio usuarioServicio;
      @Autowired
     private CristaleriaServicio cristaleriaServicio;
+     
+     @Autowired
+     private CristalServicio cristalServicio;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/usuario/{id}")
@@ -70,5 +75,25 @@ public class FotoController {
 
     }
 
-  
+   @GetMapping("/cristalfoto/{id}")
+    public ResponseEntity<byte[]> fotoCristal(@PathVariable String id) {
+
+        try {
+            Cristal cristal = cristalServicio.buscarPorId(id);
+            if (cristal.getFoto() == null) {
+                throw new ErrorServicio("El usuario no tiene una foto asignada.");
+            }
+            byte[] foto = cristal.getFoto().getContenido();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+
+            return new ResponseEntity<>(foto, headers, HttpStatus.OK);
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(FotoController.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
 }

@@ -91,7 +91,7 @@ public class CristaleriaServicio {
         
 
         
-        if (!idBarra.isBlank()) {
+        if (!idBarra.isEmpty()) {
 
             
             Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);

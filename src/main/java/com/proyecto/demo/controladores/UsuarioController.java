@@ -7,6 +7,7 @@ import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
 import com.proyecto.demo.servicios.BarraServicio;
+import com.proyecto.demo.servicios.CristalServicio;
 import com.proyecto.demo.servicios.CristaleriaServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
@@ -29,7 +30,7 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
-@Autowired
+    @Autowired
     private CristaleriaServicio cristaleriaServicio;
 
     @Autowired
@@ -38,6 +39,11 @@ public class UsuarioController {
     private ZonaRepositorio zonaRepositorio;
     @Autowired
     private BarraServicio barraServicio;
+    
+    
+    
+    @Autowired
+    private CristalServicio cristalServicio;
      
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-perfil-nuevo")
@@ -85,6 +91,29 @@ public class UsuarioController {
             model.addAttribute("error", e.getMessage());
         }
         return "perfil.html";
+    }
+     //Este es el que llega a crear cristal
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-cristal")
+    public String crearCristal(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
+         //barraServicio.registrar(nombre, id);
+       //List<Barra> barras =usuarioServicio.todasLasBarras(id);
+         //model.put("barras", barras);
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+            model.addAttribute("perfil", usuario);
+            
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "registroCristal.html";
     }
     
     //ESTE ES PARA ENTRAR AL FORMULARIO DE CRISTALERIA 
@@ -319,6 +348,49 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+    
+    
+    
+    //creal cristaleria
+    
+    
+     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @PostMapping("/actualizar-cristal")
+    public String actualizarCristal(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String nombre) throws ErrorServicio {
+        
+        //Aqui me comunico con modificar cristaleria
+         cristalServicio.registrar(archivo, nombre);
+        Usuario usuario = null;
+        try {
+
+            Usuario login = (Usuario) session.getAttribute("usuariosession");
+            if (login == null || !login.getId().equals(id)) {
+                return "redirect:/inicio";
+            }
+
+            usuario = usuarioServicio.buscarPorId(id);
+            
+            //usuarioServicio.modificarBarra(id,nombre);
+             modelo.addAttribute("cristales",cristalServicio.listarTodas());
+            session.setAttribute("usuariosession", usuario);
+
+            return "redirect:/inicio";
+        } catch (ErrorServicio ex) {
+           
+
+            return "perfil.html";
+        }
+
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 //METODO PARA MODIFICAR BARRA
 @GetMapping("/modificar-barra-panel/{id}")

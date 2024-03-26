@@ -34,7 +34,7 @@ public class RupturaServicio {
   
 
         
-        if (!idCristaleria.isBlank()) {
+        if (!idCristaleria.isEmpty()) {
 
             Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
                  Usuario usuario = usuarioServicio.buscarPorId(id);
