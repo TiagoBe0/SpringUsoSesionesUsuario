@@ -3,6 +3,7 @@
 package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
+import com.proyecto.demo.entidades.Cristal;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
 import com.proyecto.demo.entidades.Usuario;
@@ -28,6 +29,8 @@ public class CristaleriaServicio {
     private CristaleriaRepositorio cristaleriaRepositorio;
      @Autowired
     private BarraServicio barraServicio;
+     @Autowired
+     private CristalServicio cristalServicio;
      
      @Autowired
      private UsuarioServicio usuarioServicio;
@@ -84,17 +87,27 @@ public class CristaleriaServicio {
     }
 
     @Transactional
-    public void modificar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id) throws ErrorServicio {
+    public void modificar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {
 
        Cristaleria cristaleria = new Cristaleria();
+       Cristal cristal = cristalServicio.buscarPorId(idCristal);
+        if(cristal !=null){
+              cristaleria.setCristalRepo(cristal);
+           
+            cristaleria.setFoto(cristal.getFoto());
+               
+        
+        }else{
+        Foto foto = fotoServicio.guardar(archivo);
+        cristaleria.setFoto(foto);
         
         
-
-        
+        }
+   
         if (!idBarra.isEmpty()) {
 
             
-            Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
+        Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
         Usuario usuario = usuarioServicio.buscarPorId(id);
         cristaleria.setDescripcion(descripcion);
         cristaleria.setPrecio(precio);
@@ -116,15 +129,16 @@ public class CristaleriaServicio {
         barraPerteneciente.setListaCristalerias(cristalerias);
         
            //barraRepositorio.save(barraPerteneciente);
-
+/*
             String idFoto = null;
             if (cristaleria.getFoto() != null) {
                 idFoto = cristaleria.getFoto().getId();
-            }
-
-            Foto foto = fotoServicio.actualizar(idFoto, archivo);
+                   Foto foto = fotoServicio.actualizar(idFoto, archivo);
             cristaleria.setFoto(foto);
 
+            }
+*/
+         
             cristaleriaRepositorio.save(cristaleria);
         } else {
 

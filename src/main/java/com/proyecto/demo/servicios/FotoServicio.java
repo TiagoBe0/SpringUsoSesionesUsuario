@@ -64,4 +64,19 @@ public class FotoServicio {
     }
     
     
+    public Foto buscarPorId(String id) throws ErrorServicio {
+
+        Optional<Foto> respuesta = fotoRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Foto cristaleria = respuesta.get();
+            return cristaleria;
+        } else {
+
+            throw new ErrorServicio("No se encontró la cristaleria solicitada");
+        }
+
+    }
+    
+    
 }

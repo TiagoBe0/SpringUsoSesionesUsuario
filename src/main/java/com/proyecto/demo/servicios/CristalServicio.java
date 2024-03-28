@@ -26,6 +26,7 @@ public class CristalServicio {
     public void registrar(MultipartFile archivo , String nombre) throws ErrorServicio{
         
         Cristal cristal = new Cristal();
+      
         Foto foto = fotoServicio.guardar(archivo);
         
         cristal.setFoto(foto);

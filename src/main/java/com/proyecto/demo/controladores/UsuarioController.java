@@ -40,10 +40,11 @@ public class UsuarioController {
     @Autowired
     private BarraServicio barraServicio;
     
-    
-    
     @Autowired
     private CristalServicio cristalServicio;
+    
+    
+    //COPIA DE HTML FORMULARIO USUARIO
      
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-perfil-nuevo")
@@ -92,7 +93,7 @@ public class UsuarioController {
         }
         return "perfil.html";
     }
-     //Este es el que llega a crear cristal
+     //HTML CREAR CRISTAL
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-cristal")
     public String crearCristal(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
@@ -133,6 +134,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             Usuario usuario = usuarioServicio.buscarPorId(id);
             
              model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("cristales",cristalServicio.listarTodas());
             model.addAttribute("perfil", usuario);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
@@ -320,13 +322,13 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         return "exito.html";
     } 
 
- 
+ //POST CREAR CRISTALERIA
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-cristaleria")
-    public String actualizarCristaleria(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra) throws ErrorServicio {
-        System.out.println("CRISTALERIA LELGA A CONTROLADRO USUARIO"+ precio +";"+idBarra);
+    public String actualizarCristaleria(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String idCristal) throws ErrorServicio {
+        System.out.println("CRISTALERIA LELGA A CONTROLADRO USUARIO"+ precio +";"+idCristal);
         //Aqui me comunico con modificar cristaleria
-         cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id);
+         cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
         Usuario usuario = null;
         try {
 
@@ -351,12 +353,12 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     
     
     
-    //creal cristaleria
+    //CREAR CRISTALERIA PPST
     
     
      @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-cristal")
-    public String actualizarCristal(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String nombre) throws ErrorServicio {
+    public String actualizarCristal(ModelMap modelo, HttpSession session,@RequestParam   String id,MultipartFile archivo, String nombre) throws ErrorServicio {
         
         //Aqui me comunico con modificar cristaleria
          cristalServicio.registrar(archivo, nombre);

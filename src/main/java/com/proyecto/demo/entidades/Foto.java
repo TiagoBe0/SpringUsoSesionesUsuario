@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Foto {
@@ -19,6 +20,8 @@ public class Foto {
     private String nombre;
     private String mime;
     
+    
+
     @Lob @Basic(fetch = FetchType.LAZY)
     private byte[] contenido;
 
@@ -49,6 +52,7 @@ public class Foto {
     public byte[] getContenido() {
         return contenido;
     }
+
 
     public void setContenido(byte[] contenido) {
         this.contenido = contenido;

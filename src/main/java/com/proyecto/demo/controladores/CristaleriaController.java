@@ -33,7 +33,7 @@ public class CristaleriaController {
     
     
      @PostMapping("/registrar")
-    public String registrar(ModelMap modelo, @RequestParam MultipartFile archivo,@RequestParam String tipo, @RequestParam String idBarra,@RequestParam String descripcion,@RequestParam float precio,@RequestParam int enStock) {
+    public String registrar(ModelMap modelo,  MultipartFile archivo,@RequestParam String tipo, @RequestParam String idBarra,@RequestParam String descripcion,@RequestParam float precio,@RequestParam int enStock) {
 
         try {
             cristaleriaServicio.registrar( archivo,  tipo,  descripcion,  precio,  enStock,idBarra);

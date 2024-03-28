@@ -3,11 +3,14 @@
 
 package com.proyecto.demo.entidades;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 public class Cristal {
@@ -17,9 +20,11 @@ public class Cristal {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
      
-     
-    private String nombre;
     
+
+    private String nombre;
+    @OneToMany
+      List<Cristaleria> listaCristalerias;
     @OneToOne
     private Foto foto;
 
@@ -30,6 +35,8 @@ public class Cristal {
     public void setId(String id) {
         this.id = id;
     }
+
+
 
     public String getNombre() {
         return nombre;
@@ -45,6 +52,14 @@ public class Cristal {
 
     public void setFoto(Foto foto) {
         this.foto = foto;
+    }
+
+    public List<Cristaleria> getListaCristalerias() {
+        return listaCristalerias;
+    }
+
+    public void setListaCristalerias(List<Cristaleria> listaCristalerias) {
+        this.listaCristalerias = listaCristalerias;
     }
     
     

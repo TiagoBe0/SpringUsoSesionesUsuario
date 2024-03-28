@@ -67,8 +67,8 @@
 					<td th:text="${cristaleria.enStock}"></td>
                                         <td th:text="${cristaleria.descripcion}"></td>
                                         <td th:text="${cristaleria.precio}"></td>
-                                        <td ><img th:if="${cristaleria.foto == null}" class="img-fluid rounded-circle" src="img/m1.jpeg" alt="" style="width: 60px"> 
-                                        <img th:if="${cristaleria.foto != null}" class="img-fluid rounded-circle"  style="width: 60px" th:src="${'/foto/cristaleriafoto/' + cristaleria.id}" alt="">
+                                        <td ><img  class="img-fluid rounded-circle" th:src="${'/foto/cristaleriafoto/' + cristaleria.id}" alt="" style="width: 60px"> 
+                                        <img   class="img-fluid rounded-circle"  style="width: 60px" th:src="${'/foto/cristaleriafoto/' + cristaleria.id}" alt="">
                                          <td><a th:href="@{/usuario/editar-ruptura/__${cristaleria.id}__}"><i class="fa fa-arrow-up"></i></a></td>
                                               
                                         </td>

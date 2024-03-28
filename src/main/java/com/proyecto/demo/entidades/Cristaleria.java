@@ -30,7 +30,8 @@ public class Cristaleria {
     private String idUsuario;
     
      private int enStock;
-     
+     @ManyToOne
+      Cristal cristalRepo;
      private float precio;
      
      private float precioTotal;
@@ -54,6 +55,14 @@ public class Cristaleria {
 
     public String getIdUsuario() {
         return idUsuario;
+    }
+
+    public Cristal getCristalRepo() {
+        return cristalRepo;
+    }
+
+    public void setCristalRepo(Cristal cristalRepo) {
+        this.cristalRepo = cristalRepo;
     }
 
     public void setIdUsuario(String idUsuario) {
