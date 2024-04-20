@@ -79,6 +79,31 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setApellido(apellido);
         usuario.setMail(mail);
         
+        usuario.setRol(Rol.USUARIO);
+
+        String encriptada = new BCryptPasswordEncoder().encode(clave);
+        usuario.setClave(encriptada);
+        
+        //usuario.setAlta(new Date());
+
+        Foto foto = fotoServicio.guardar(archivo);
+        usuario.setFoto(foto);
+
+        usuarioRepositorio.save(usuario);
+
+    }
+        @Transactional
+    public void registrarAdmin(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
+        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+
+        validar(nombre, apellido, mail, clave, clave2);
+
+        Usuario usuario = new Usuario();
+        usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setMail(mail);
+        
         usuario.setRol(Rol.ADMIN);
 
         String encriptada = new BCryptPasswordEncoder().encode(clave);

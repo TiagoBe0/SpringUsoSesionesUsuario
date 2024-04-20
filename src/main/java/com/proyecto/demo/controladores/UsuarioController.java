@@ -220,6 +220,12 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         
         return "registroUsuario.html";
     }
+      @GetMapping("/registroUsuarioAdmin")
+    public String registroAdmin() {
+        
+        
+        return "registroUsuarioAdmin.html";
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-perfil")
@@ -313,6 +319,20 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
         try {
             usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
+        } catch (ErrorServicio ex) {
+           
+            return "index.html";
+        }
+        modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
+        modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
+        return "exito.html";
+    } 
+    //REGISTRO USUARIO ADMIN
+       @PostMapping("/registraradmin")
+    public String registrarAdmin( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
+        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
+        try {
+            usuarioServicio.registrarAdmin(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
            
             return "index.html";
