@@ -2,9 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\static",
-    "\\templates",
-    "\\templates\\fragments"
+    "\\statics",
+    "\\static\\scss"
   ],
-  "SelectedNode": "\\templates\\index.html",
+  "SelectedNode": "\\static\\scss\\_masthead.scss",
   "PreviewInSolutionExplorer": false
 }

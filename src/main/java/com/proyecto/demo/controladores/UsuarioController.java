@@ -149,6 +149,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+         model.put("cristalerias", usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/inicio";
         }
@@ -163,7 +164,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "panelBarra.html";
+        return "index_app.html";
     }
     
      //ESTE ES PARA ENTRAR AL FORMULARIO DE RUPTURA
@@ -311,7 +312,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         
         modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
         
-        return  "panelBarra.html";
+        return  "index_app.html";
     }
     
      @PostMapping("/registrar")
