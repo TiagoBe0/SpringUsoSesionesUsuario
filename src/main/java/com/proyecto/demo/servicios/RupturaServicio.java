@@ -7,6 +7,8 @@ import com.proyecto.demo.entidades.Ruptura;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.RupturaRepositorio;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class RupturaServicio {
     public void modificar( String nombre, String explicacion, int cantidad,String idCristaleria,String id) throws ErrorServicio {
 
        Ruptura ruptura = new Ruptura();
+       Calendar calendario = new GregorianCalendar();
+       
         
   
 
@@ -44,6 +48,7 @@ public class RupturaServicio {
            ruptura.setNumeroDeRuptura(cantidad);
            ruptura.setCostoRuptura(cristaleria.getPrecio()*cantidad);
            ruptura.setTipoCristaleria(cristaleria);
+           ruptura.setCalendario(calendario);
            cristaleria.setEnStock(cristaleria.getEnStock()-cantidad);
            cristaleria.setIdUsuario(usuario.getId());
            List<Ruptura> rupturas =usuario.getTodasLasRupturas();
@@ -51,7 +56,7 @@ public class RupturaServicio {
            usuario.setTodasLasRupturas(rupturas);
           barraServicio.actualizarStockBarra(cristaleria.getBarraPerteneciente().getId(), cantidad);
            barraServicio.actualizarPrecioBarra(cristaleria.getBarraPerteneciente(), ruptura.getCostoRuptura());
-        
+        usuarioServicio.actualizarCapitalTotal(id);
            //barraRepositorio.save(barraPerteneciente);
 
         }
@@ -59,7 +64,32 @@ public class RupturaServicio {
     }
     
     
+    //RUPTURA DEL MES
     
+    public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
+        float costeMensual=0.f;
+        Usuario usuario =usuarioServicio.buscarPorId(idUsuario);
+        
+        if(usuario!=null){
+            for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+                
+                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                    
+                    costeMensual=costeMensual+ruptura.getCostoRuptura();
+                
+                
+                
+                }
+                
+                
+            }
+            usuario.setCosteMensual(costeMensual);
+            return costeMensual;
+        }
+    
+    return costeMensual;
+    
+    }
    
 
 }

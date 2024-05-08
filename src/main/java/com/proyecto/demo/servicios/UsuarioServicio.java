@@ -3,6 +3,7 @@ package com.proyecto.demo.servicios;
 import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
+import com.proyecto.demo.entidades.Ruptura;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.enums.Rol;
@@ -11,7 +12,9 @@ import com.proyecto.demo.repositorios.BarraRepositorio;
 import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -168,7 +171,8 @@ public class UsuarioServicio implements UserDetailsService {
             Usuario usuario = respuesta.get();
            
             actualizarListBarras(id, barra.getId());
-            
+            usuario.setTotalDeBarras(usuario.getTotalDeBarras()+1);
+            usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
             
            
             
@@ -183,10 +187,64 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
         
+    
+    //CALCULAR CAPITAL TOTAL EN STCOK
+    public void actualizarCapitalTotal(String idUsuario) throws ErrorServicio{
+        
+        Usuario usuario = buscarPorId(idUsuario);
+        
+        if(usuario!=null){
+            float suma=0.f;
+            List<Barra> barras = usuario.getBarras();
+            for (Barra barra : barras) {
+                
+                suma=suma+barra.getPrecioTotal();
+                
+            }
+        usuario.setCapitalTotal(suma);
+        usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+        Calendar calendario = new GregorianCalendar();
+            actualizacionCosteMensualRupturas(idUsuario,calendario );
+       
+        }
+    
+    
+    
+    
+    }
+    
+    //RUPTURA DEL MES
+    
+    public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
+        float costeMensual=0.f;
+        Usuario usuario =buscarPorId(idUsuario);
+        
+        if(usuario!=null){
+            for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+                
+                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                    
+                    costeMensual=costeMensual+ruptura.getCostoRuptura();
+                
+                
+                
+                }
+                
+                
+            }
+            usuario.setCosteMensual(costeMensual);
+            return costeMensual;
+        }
+    
+    return costeMensual;
+    
+    }
+
 @Transactional
 public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cristalerias){
     
     usuario.setTodasLasCristalerias(cristalerias);
+    
 
 
 
@@ -394,7 +452,14 @@ public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cris
     //sumamos las barras a la list
     barras.add(barraServicio.buscarPorId(idBarra));
     usuario.setBarras(barras);
-    
+    usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+    usuario.setTotalDeBarras(barras.size());
+    float suma=0.f;
+        for (Barra barra : barras) {
+            suma=suma+barra.getPrecioTotal();
+            
+        }
+        usuario.setCapitalTotal(suma);
     
     
     

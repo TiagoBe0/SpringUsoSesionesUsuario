@@ -123,24 +123,37 @@
 			<ul class="box-info">
 				<li>
 					<i class='bx bxs-calendar-check' ></i>
+                                        <h4>Barras: </h4>
 					<span class="text">
-						<h3>1020</h3>
-						<p>New Order</p>
+						<h3 th:text="${perfil.totalDeBarras}" ></h3>
+						<p></p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-group' ></i>
+                                        <h4>total de cristalerias</h4>
 					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
+						<h3 th:text="${perfil.totalCristalerias}"></h3>
+						<p></p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
+                                        <h4>perdidas del mes</h4>
+                                       
 					<span class="text">
-						<h3>$2543</h3>
-						<p>Total Sales</p>
-					</span>
+						<h3 th:text="${perfil.costeMensual+'$'}"></h3>
+                                                
+                                                </span>
+				</li>
+                                <li>
+					<i class='bx bxs-dollar-circle' ></i>
+                                        <h4>capital</h4>
+                                       
+					<span class="text">
+						<h3 th:text="${perfil.capitalTotal+'$'}"></h3>
+                                                
+                                                </span>
 				</li>
 			</ul>
 
@@ -173,9 +186,9 @@
                                                                 <td th:text="${cristaleria.barraPertenecienteNombre}" ></td>
 							
                                                                 
-                                                                <td><span class="status completed" th:text="${cristaleria.enStock}"></span></td>
+                                                                <td th:text="${cristaleria.enStock}"></td>
 							
-                                                <td><span class="status completed" th:text="${cristaleria.precio}"></span></td>
+                                                                <td > <h3 th:text="${cristaleria.precio}"></h3></td>
 							
                                                 
                                                 </tr>
@@ -198,6 +211,9 @@
 								<th>explicacion</th>
                                                                 <th>nombre de responsable</th>
                                                                 <th>tipo de cristaleria</th>
+                                                                <th>dia</th>
+                                                                 <th>mes</th>
+                                                                  <th>anio</th>
                                                                 <th>coste</th>
 							</tr>
 						</thead>
@@ -213,9 +229,11 @@
                                         <td th:text="${ruptura.nombre}"></td>
                                          <td th:text="${ruptura.tipoCristaleria.tipo}"></td>
                                        
-							
+                                         <td th:text="${ruptura.dia}" ></td>
+                                         <td th:text="${ruptura.mes}" ></td>
+                                         <td th:text="${ruptura.anio}" ></td>
                                                                 
-                                                                <td><span class="status completed" th:text="${ruptura.costoRuptura}"></span></td>
+                                         <td> <h3  th:text="${ruptura.costoRuptura}"></h3></td>
 							
                                                
 							

@@ -4,6 +4,7 @@ package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
+import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
 import java.time.Instant;
@@ -34,6 +35,7 @@ public class BarraServicio {
        usuarioServicio.actualizarListBarras(idUsuario,barra.getId());
        barra.setNombre(nombre);
        
+      
         
         barraRepositorio.save(barra);
         
@@ -55,6 +57,21 @@ public class BarraServicio {
     
     }
     
+    
+    public int actualizarStockBarra(String idUsuario) throws ErrorServicio{
+        int total=0;
+        Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+        if(usuario!=null){
+            
+            for (Barra barra : usuario.getBarras()) {
+                total=total+barra.getTotalUnidades();
+            }
+        
+        
+        }
+    
+    return total;
+    }
         
     @Transactional
     public void actualizarStockBarra(String idBarra,int numeroRupturas) throws ErrorServicio{

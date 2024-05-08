@@ -28,7 +28,13 @@ public class Usuario {
     private String apellido;
     private String mail;
     private String clave;
-    
+    //estadisticas
+    private int totalDeBarras;
+    private float capitalTotal;
+  
+    private int diasLimpios;
+     
+    private float costeMensual;
     @ManyToOne
     private Zona zona;
     
@@ -52,6 +58,10 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
+    
+    
+    private int totalCristalerias;
+    
     public List<Barra> getBarras() {
         return barras;
     }
@@ -60,8 +70,52 @@ public class Usuario {
         this.barras = barras;
     }
 
+    public int getDiasLimpios() {
+        return diasLimpios;
+    }
+
+    public float getCosteMensual() {
+        return costeMensual;
+    }
+
+    public void setCosteMensual(float costeMensual) {
+        this.costeMensual = costeMensual;
+    }
+
+    public int getTotalCristalerias() {
+        return totalCristalerias;
+    }
+
+    public void setTotalCristalerias(int totalCristalerias) {
+        this.totalCristalerias = totalCristalerias;
+    }
+
+   
+
+   
+
+    public void setDiasLimpios(int diasLimpios) {
+        this.diasLimpios = diasLimpios;
+    }
+
     public List<Cristaleria> getTodasLasCristalerias() {
         return todasLasCristalerias;
+    }
+
+    public int getTotalDeBarras() {
+        return totalDeBarras;
+    }
+
+    public void setTotalDeBarras(int totalDeBarras) {
+        this.totalDeBarras = totalDeBarras;
+    }
+
+    public float getCapitalTotal() {
+        return capitalTotal;
+    }
+
+    public void setCapitalTotal(float capitalTotal) {
+        this.capitalTotal = capitalTotal;
     }
 
     public void setTodasLasCristalerias(List<Cristaleria> todasLasCristalerias) {

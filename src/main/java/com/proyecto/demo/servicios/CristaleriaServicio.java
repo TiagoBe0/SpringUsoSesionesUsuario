@@ -62,12 +62,14 @@ public class CristaleriaServicio {
         cristaleria.setTipo(tipo);
         //Creamos una barra de pertenecencia y añadimos a lista de cristaleria comoa tributo
         Barra barra =barraServicio.buscarPorId(idBarra);
+        Usuario usuario = usuarioServicio.buscarPorId(barra.getUsuario().getId());
         cristaleria.setIdUsuario(barra.getUsuario().getId());
          List<Cristaleria> cristalerias = barra.getListaCristalerias();
          cristalerias.add(cristaleria);
        
          barra.setListaCristalerias(cristalerias);
           float suma = barraServicio.calcularPrecioTotal(cristalerias);
+          usuario.setCapitalTotal(suma);
         barra.setPrecioTotal(suma);
          
         cristaleria.setBarraPerteneciente(barra);
