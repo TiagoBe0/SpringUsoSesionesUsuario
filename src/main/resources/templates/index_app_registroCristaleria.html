@@ -58,7 +58,7 @@
 		</ul>
 		<ul class="side-menu">
 			<li>
-				<a href="#">
+				<a th:href="@{/usuario/editar-perfil-nuevo(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bxs-cog' ></i>
 					<span class="text">Settings</span>
 				</a>
@@ -97,7 +97,7 @@
 				<span class="num">8</span>
 			</a>
 			<a href="#" class="profile">
-				<img src="img/people.png">
+				<img th:src="${'/foto/usuario/' + perfil.id}">
 			</a>
 		</nav>
 		<!-- NAVBAR -->

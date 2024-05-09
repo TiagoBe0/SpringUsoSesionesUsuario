@@ -30,7 +30,7 @@ public class Controlador {
         List<Usuario> usuariosActivos = usuarioServicio.todosLosUsuarios();
         //Recordar que utilizo el modelo,para viajar con la llave usuarios al HTML la lista usuariosactivos
         modelo.addAttribute("usuarios", usuariosActivos);
-        return "index.html";
+        return "error.html";
     }
     
     @GetMapping("/formularioBarra")
@@ -49,7 +49,7 @@ public class Controlador {
     	
     	modelo.addAttribute("usuarios", usuarios);
     	
-        return "inicio.html";
+        return "index_app_inicio.html";
     }
 
     @GetMapping("/loginUsuarioModelo")

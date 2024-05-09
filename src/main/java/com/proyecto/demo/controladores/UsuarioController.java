@@ -200,7 +200,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @PostMapping("/editar-barra-form")
     public String editarBarraFormulario(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
         barraServicio.registrar(nombre, id);
-System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
+
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/inicio";
@@ -214,7 +214,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "index_app_registroBarra.html";
+        return "index_app.html";
     }
     
      @GetMapping("/registroUsuario")
