@@ -27,6 +27,7 @@ public class Barra {
        
        private String nombre;
        
+       private boolean activa=true;
      @OneToMany
       List<Cristaleria> listaCristalerias;
        @ManyToOne
@@ -55,6 +56,14 @@ public class Barra {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
     }
 
     public String getNombre() {

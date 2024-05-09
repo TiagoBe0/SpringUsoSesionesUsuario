@@ -31,7 +31,7 @@ public class BarraServicio {
        Barra barra = new Barra();
        //barra.setAlta(new Date());
        barra.setUsuario(usuarioServicio.buscarPorId(idUsuario));
-       
+       barra.setActiva(true);
        usuarioServicio.actualizarListBarras(idUsuario,barra.getId());
        barra.setNombre(nombre);
        
@@ -101,6 +101,20 @@ public class BarraServicio {
     
     
     }
+    //ELIMINAR BARRA
+    @Transactional
+    public void eliminar(String idBarra) throws ErrorServicio{
+        
+        buscarPorId(idBarra).setActiva(false);
+        
+    
+    
+        
+        
+    }
+    
+    
+    
      public Barra buscarPorId(String id) throws ErrorServicio {
 
         Optional<Barra> respuesta = barraRepositorio.findById(id);

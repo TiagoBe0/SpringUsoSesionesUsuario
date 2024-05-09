@@ -171,7 +171,7 @@ public class UsuarioServicio implements UserDetailsService {
             Usuario usuario = respuesta.get();
            
             actualizarListBarras(id, barra.getId());
-            usuario.setTotalDeBarras(usuario.getTotalDeBarras()+1);
+            
             usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
             
            
@@ -218,13 +218,17 @@ public class UsuarioServicio implements UserDetailsService {
     public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
         Usuario usuario =buscarPorId(idUsuario);
-        
+        int diasLimpios=32;
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
                 
                 if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
+                    if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
+                    
+                    diasLimpios=calendario.get(Calendar.DATE)-ruptura.getDia();
+                    }
                 
                 
                 
@@ -232,6 +236,7 @@ public class UsuarioServicio implements UserDetailsService {
                 
                 
             }
+            usuario.setDiasLimpios(diasLimpios);
             usuario.setCosteMensual(costeMensual);
             return costeMensual;
         }

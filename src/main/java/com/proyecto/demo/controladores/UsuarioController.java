@@ -91,7 +91,7 @@ public class UsuarioController {
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "perfil.html";
+        return "index_app_registroBarra.html";
     }
      //HTML CREAR CRISTAL
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -114,7 +114,7 @@ public class UsuarioController {
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "registroCristal.html";
+        return "index_app_registroCristal.html";
     }
     
     //ESTE ES PARA ENTRAR AL FORMULARIO DE CRISTALERIA 
@@ -139,7 +139,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "registroCristaleria.html";
+        return "index_app_registroCristaleria.html";
     }
      //ESTE ES PARA ENTRAR AL PANEL BARRA  ------------------cerebro
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -192,7 +192,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "registroRuptura.html";
+        return "index_app_registroRuptura.html";
     }
     
     
@@ -214,7 +214,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "registroBarra.html";
+        return "index_app_registroBarra.html";
     }
     
      @GetMapping("/registroUsuario")
@@ -312,9 +312,9 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     public String inicioUsuario(ModelMap modelo) {
         
         
-        modelo.put("usuarios",usuarioServicio.todosLosUsuarios());
         
-        return  "index_app.html";
+        
+        return  "index_app_inicio.html";
     }
     
      @PostMapping("/registrar")
@@ -351,11 +351,11 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     public String actualizarCristaleria(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String idCristal) throws ErrorServicio {
         System.out.println("CRISTALERIA LELGA A CONTROLADRO USUARIO"+ precio +";"+idCristal);
         //Aqui me comunico con modificar cristaleria
-          usuarioServicio.actualizarCapitalTotal(id);
+          //usuarioServicio.actualizarCapitalTotal(id);
          cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
         Usuario usuario = null;
         try {
-            usuarioServicio.actualizarCapitalTotal(id);
+            //usuarioServicio.actualizarCapitalTotal(id);
 
             Usuario login = (Usuario) session.getAttribute("usuariosession");
             if (login == null || !login.getId().equals(id)) {

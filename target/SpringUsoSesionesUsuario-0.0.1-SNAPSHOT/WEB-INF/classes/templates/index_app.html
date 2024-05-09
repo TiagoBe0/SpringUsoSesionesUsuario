@@ -5,11 +5,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<!-- Boxicons -->
-	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' style=" color: #450202" rel='stylesheet'>
 	<!-- My CSS -->
         <link rel="stylesheet" href="../styles.css">
 
-	<title>AdminHub</title>
+        <title style="color: #450202">BartenderStock</title>
 </head>
 <body>
 
@@ -18,55 +18,56 @@
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
-			<span class="text">AdminHub</span>
+			<span class="text" style="color: #450202">B&S</span>
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
 				<a href="#">
 					<i class='bx bxs-cog' ></i>
-					<span class="text">Dashboard</span>
+					<span class="text" style="color: #450202">Dashboard</span>
 				</a>
 			</li>
 			<li>
 				<a th:href="@{/usuario/editar-perfil(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-cog' ></i>
-					<span class="text">Nueva Barra</span>
+					<span class="text" style="color: #450202">Nueva Barra</span>
 				</a>
 			</li>
 			<li>
 				<a th:href="@{/usuario/editar-barra(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-cog'></i>
-					<span class="text">Crear Cristaleria</span>
+					<span class="text" style="color: #450202">Crear Cristaleria</span>
 				</a>
 			</li>
 			<li>
 				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bxs-cog' ></i>
-					<span class="text">Administrar Barra</span>
+					<span class="text" style="color: #450202" >Administrar Barra</span>
 				</a>
 			</li>
 			<li>
 				<a th:href="@{/usuario/editar-ruptura(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-cog' ></i>
-					<span class="text">Nueva Ruptura</span>
+					<span class="text" style="color: #450202">Nueva Ruptura</span>
 				</a>
                             <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-group' ></i>
-					<span class="text">Subir imagen de cristaleria</span>
+					<span class="text" style="color: #450202">Subir imagen de cristaleria</span>
 				</a>
 			</li>
 		</ul>
 		<ul class="side-menu">
 			<li>
 				<a href="#">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
+					<i class='bx bxs-cog'  style=" color: #450202"></i>
+					<span class="text" style="color: #450202">Settings</span>
 				</a>
 			</li>
+                        
 			<li>
-				<a href="#" class="logout">
+				<a href="/logout" th:if="${session.usuariosession != null}" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
+					<span class="text" style="color: #450202">Logout</span>
 				</a>
 			</li>
 		</ul>
@@ -94,7 +95,7 @@
 				<span class="num">8</span>
 			</a>
 			<a href="#" class="profile">
-				<img src="img/people.png">
+				<img th:src="${'/foto/usuario/' + perfil.id}">
 			</a>
 		</nav>
 		<!-- NAVBAR -->
@@ -103,10 +104,10 @@
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1>Dashboard</h1>
+					<h1 style="color: #450202">Dashboard</h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">Dashboard</a>
+							<a href="#" style=" color: #450202">Dashboard</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
@@ -116,14 +117,22 @@
 				</div>
 				<a href="#" class="btn-download">
 					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download PDF</span>
+					<span  style="color: #450202" class="text">Download PDF</span>
 				</a>
 			</div>
 
 			<ul class="box-info">
 				<li>
 					<i class='bx bxs-calendar-check' ></i>
-                                        <h4>Barras: </h4>
+                                        <h4 style="color: #450202" >Barras: </h4>
+					<span class="text">
+						<h3  th:text="${perfil.totalDeBarras}" ></h3>
+						<p></p>
+					</span>
+				</li>
+                                <li>
+					<i class='bx bxs-calendar-check' ></i>
+                                        <h4 style=" color: #450202">cristalerias: </h4>
 					<span class="text">
 						<h3 th:text="${perfil.totalDeBarras}" ></h3>
 						<p></p>
@@ -131,15 +140,15 @@
 				</li>
 				<li>
 					<i class='bx bxs-group' ></i>
-                                        <h4>total de cristalerias</h4>
+                                        <h4 style=" color: #450202" >Dias Sin Rupturas</h4>
 					<span class="text">
-						<h3 th:text="${perfil.totalCristalerias}"></h3>
+						<h3 th:text="${perfil.diasLimpios}"></h3>
 						<p></p>
 					</span>
 				</li>
 				<li>
 					<i class='bx bxs-dollar-circle' ></i>
-                                        <h4>perdidas del mes</h4>
+                                        <h4 style=" color: #450202">perdidas del mes</h4>
                                        
 					<span class="text">
 						<h3 th:text="${perfil.costeMensual+'$'}"></h3>
@@ -148,7 +157,7 @@
 				</li>
                                 <li>
 					<i class='bx bxs-dollar-circle' ></i>
-                                        <h4>capital</h4>
+                                        <h4 style="color: #450202">capital</h4>
                                        
 					<span class="text">
 						<h3 th:text="${perfil.capitalTotal+'$'}"></h3>
@@ -161,7 +170,7 @@
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-						<h3>Panel De Cristalerias</h3>
+						<h3 style="color: #450202">Panel De Cristalerias</h3>
 						<i class='bx bx-search' ></i>
 						<i class='bx bx-filter' ></i>
 					</div>
@@ -188,7 +197,7 @@
                                                                 
                                                                 <td th:text="${cristaleria.enStock}"></td>
 							
-                                                                <td > <h3 th:text="${cristaleria.precio}"></h3></td>
+                                                                <td > <h3 th:text="${cristaleria.precio+'$'}"></h3></td>
 							
                                                 
                                                 </tr>
@@ -206,6 +215,7 @@
 					<table>
 						<thead >
 							<tr>
+                                                            <th>tipo</th>
 								<th>total</th>
 								
 								<th>explicacion</th>
@@ -222,9 +232,9 @@
                                                
 								<td >
 									<img th:src="${'/foto/cristaleriafoto/' + ruptura.tipoCristaleria.id}">
-									<p th:text="${ruptura.numeroDeRuptura}"></p>
+									
 								</td>
-								
+                                                                <td><h2 th:text="${ruptura.numeroDeRuptura}"></h2></td>
                                                                 <td th:text="${ruptura. explicacion}"></td>
                                         <td th:text="${ruptura.nombre}"></td>
                                          <td th:text="${ruptura.tipoCristaleria.tipo}"></td>
@@ -233,7 +243,7 @@
                                          <td th:text="${ruptura.mes}" ></td>
                                          <td th:text="${ruptura.anio}" ></td>
                                                                 
-                                         <td> <h3  th:text="${ruptura.costoRuptura}"></h3></td>
+                                         <td> <h3  th:text="${ruptura.costoRuptura+'$'}"></h3></td>
 							
                                                
 							
@@ -258,7 +268,8 @@
 								<th>Total de Cristalerias</th>
 								
                                                                 <th>Valor Total</th>
-                                                                <th>Acciones</th>
+                                                                <th>Cantidad de Unidades</th>
+                                                                
 							</tr>
 						</thead>
 						<tbody>
@@ -266,13 +277,15 @@
                                                
 								<td >
 									<img src="https://cdn-icons-png.flaticon.com/512/7467/7467250.png">
-									<p th:text="${barra.nombre}"></p>
+									<p th:if="${barra.activa != false}" th:text="${barra.nombre}"></p>
 								</td>
 								<td th:text="${barra.totalUnidades}" ></td>
-                                                                <td th:text="${barra.precioTotal}" ></td>
+                                                                <td  ><h3 th:text="${barra.precioTotal+'$'}"></h3></td>
 							
                                                                 
-                                                                <td><span class="status completed" th:text="${barra.totalUnidades}"></span></td>
+                                                                <td><h3 th:text="${barra.totalUnidades}"></h3></td>
+                                                                <--<!-- comment <td><a th:href="@{/barra/eliminar/__${barra.id}__}">X<i class="fa fa-ban"></i></a>
+					</td>--> 
 							
                                                 
                                                 
@@ -294,7 +307,7 @@
 						</li>
 						<li class="completed">
 							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
+                                                        <i class='bx bx-dots-vertical-rounded'   > <a href="https://wa.link/00a8rt" >whatsapp</a></i>
 						</li>
 						<li class="not-completed">
 							<p>Todo List</p>

@@ -3,6 +3,8 @@
 package com.proyecto.demo.controladores;
 
 
+import com.proyecto.demo.entidades.Barra;
+import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.servicios.BarraServicio;
 
@@ -42,6 +44,23 @@ public class BarraController {
     }
     
     
+	@GetMapping("/eliminar/{id}")
+	public String eliminar(ModelMap modelo, @PathVariable String id) {
+		try {
+			Barra barra = barraServicio.buscarPorId(id);
+                        if(barra!=null){
+                            
+                            barraServicio.eliminar(id);
+                            
+                
+                
+                }
+			return "redirect:/admin/dashboard";
+		}catch(Exception e) {
+			modelo.put("error", "No fue posible deshabilitar");
+			return "index_app.html";
+		}
+	}
     
     @GetMapping("/listabarras")
     public String listabarras(ModelMap modelo) {
