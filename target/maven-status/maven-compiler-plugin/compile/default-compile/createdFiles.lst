@@ -11,11 +11,13 @@ com\proyecto\demo\repositorios\RupturaRepositorio.class
 com\proyecto\demo\servicios\CristaleriaServicio.class
 com\proyecto\demo\servicios\RupturaServicio.class
 com\proyecto\demo\entidades\Cristal.class
+com\proyecto\demo\controladores\ProveedorController.class
 com\proyecto\demo\security\Security.class
 com\proyecto\demo\controladores\ErroresController.class
 com\proyecto\demo\servicios\CristalServicio.class
 com\proyecto\demo\DemoApplication.class
 com\proyecto\demo\entidades\Barra.class
+com\proyecto\demo\entidades\Proveedor.class
 com\proyecto\demo\repositorios\UsuarioRepositorio.class
 com\proyecto\demo\controladores\UsuarioController.class
 com\proyecto\demo\controladores\AdminController.class
@@ -28,6 +30,8 @@ com\proyecto\demo\controladores\BarraController.class
 com\proyecto\demo\repositorios\ZonaRepositorio.class
 com\proyecto\demo\repositorios\CristalRepositorio.class
 com\proyecto\demo\controladores\FotoController.class
+com\proyecto\demo\repositorios\ProveedorRepositorio.class
 com\proyecto\demo\controladores\Controlador.class
+com\proyecto\demo\servicios\ProveedorServicio.class
 com\proyecto\demo\ServletInitializer.class
 com\proyecto\demo\servicios\UsuarioServicio.class

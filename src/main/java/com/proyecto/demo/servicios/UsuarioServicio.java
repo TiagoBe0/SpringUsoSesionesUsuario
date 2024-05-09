@@ -3,12 +3,14 @@ package com.proyecto.demo.servicios;
 import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Foto;
+import com.proyecto.demo.entidades.Proveedor;
 import com.proyecto.demo.entidades.Ruptura;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.enums.Rol;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
+import com.proyecto.demo.repositorios.ProveedorRepositorio;
 import com.proyecto.demo.repositorios.UsuarioRepositorio;
 import com.proyecto.demo.repositorios.ZonaRepositorio;
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
     
+    
+    @Autowired
+    private ProveedorServicio proveedorServicio;
     @Autowired
     private CristaleriaServicio cristaleriaServicio;
 
@@ -49,6 +54,8 @@ public class UsuarioServicio implements UserDetailsService {
 
      @Autowired
     private BarraRepositorio barraRepositorio;
+     @Autowired
+    private ProveedorRepositorio proveedorRepositorio;
 
  @javax.transaction.Transactional
     public void registrarBarra(String nombre,String idUsuario) throws ErrorServicio {
@@ -186,7 +193,40 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
+         @Transactional
+    public void modificarProveedor( String id, String nombre,long contacto,String link) throws ErrorServicio {
+
         
+        Proveedor barra = new Proveedor();
+        barra.setNombre(nombre);
+        barra.setUsuario(buscarPorId(id));
+        barra.setLink(link);
+        barra.setCelular(contacto);
+       
+         proveedorRepositorio.save(barra);
+        
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+           
+            actualizarListBarras(id, barra.getId());
+            
+            usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
+            
+           
+            
+
+            
+
+            usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
     
     //CALCULAR CAPITAL TOTAL EN STCOK
     public void actualizarCapitalTotal(String idUsuario) throws ErrorServicio{

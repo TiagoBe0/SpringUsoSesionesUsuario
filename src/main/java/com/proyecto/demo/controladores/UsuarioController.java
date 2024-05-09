@@ -9,6 +9,7 @@ import com.proyecto.demo.repositorios.ZonaRepositorio;
 import com.proyecto.demo.servicios.BarraServicio;
 import com.proyecto.demo.servicios.CristalServicio;
 import com.proyecto.demo.servicios.CristaleriaServicio;
+import com.proyecto.demo.servicios.ProveedorServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.util.List;
@@ -39,7 +40,8 @@ public class UsuarioController {
     private ZonaRepositorio zonaRepositorio;
     @Autowired
     private BarraServicio barraServicio;
-    
+     @Autowired
+    private ProveedorServicio proveedorServicio;
     @Autowired
     private CristalServicio cristalServicio;
     
@@ -69,7 +71,7 @@ public class UsuarioController {
         }
         return "perfilModificar.html";
     }
-    //Este es el que llega a crear barra
+        //Este es el que llega a crear barra
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-perfil")
     public String editarPerfilviejo(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
@@ -92,6 +94,30 @@ public class UsuarioController {
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_registroBarra.html";
+    }
+    //Este es el que llega a crear proveedor
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-proveedor")
+    public String registroProveedor(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
+        System.out.println("Estamos llegando a controlador del usuariossesision");
+        //barraServicio.registrar(nombre, id);
+       //List<Barra> barras =usuarioServicio.todasLasBarras(id);
+         //model.put("barras", barras);
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+            model.addAttribute("perfil", usuario);
+            
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroProveedor.html";
     }
      //HTML CREAR CRISTAL
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -148,6 +174,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         //barraServicio.registrar(nombre, id);
         System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
          model.put("cristalerias", usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
          
@@ -160,6 +187,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             Usuario usuario = usuarioServicio.buscarPorId(id);
               usuarioServicio.actualizarCapitalTotal(id);
              model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", proveedorServicio.listarTodas());
             model.addAttribute("rupturas",usuario.getTodasLasRupturas());
              model.addAttribute("perfil", usuario);
                 
@@ -286,7 +314,34 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
-    
+    //POST ACTUALIZAR PROVEEDOR
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @PostMapping("/actualizar-proveedor")
+    public String actualizarProveedor(ModelMap modelo, HttpSession session,   String id,  String nombre ,long contacto,String link ) throws ErrorServicio {
+       
+        //Aqui me comunico con MODIFICARBARRA
+         usuarioServicio.modificarProveedor(id, nombre,contacto,link);
+        Usuario usuario = null;
+        try {
+
+            Usuario login = (Usuario) session.getAttribute("usuariosession");
+            if (login == null || !login.getId().equals(id)) {
+                return "redirect:/inicio";
+            }
+
+            usuario = usuarioServicio.buscarPorId(id);
+            //usuarioServicio.modificarBarra(id,nombre);
+           
+            session.setAttribute("usuariosession", usuario);
+
+            return "redirect:/inicio";
+        } catch (ErrorServicio ex) {
+           
+
+            return "perfil.html";
+        }
+
+    }
       @GetMapping("/loginUsuarioModelo")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
         if (error != null) {

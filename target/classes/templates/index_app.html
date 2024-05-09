@@ -51,6 +51,14 @@
 					<i class='bx bx-plus' ></i>
 					<span class="text" style="color: #450202">Nueva Ruptura</span>
 				</a>
+                        </li>
+                        <li>
+				<a th:href="@{/usuario/editar-proveedor(id=__${session.usuariosession.id}__)}">
+					<i class='bx bx-plus' ></i>
+					<span class="text" style="color: #450202">Nuevo Proveedor</span>
+				</a>
+                        </li>
+                        <li>
                             <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
 					<i class='bx bx-plus' ></i>
 					<span class="text" style="color: #450202">Subir imagen de cristaleria</span>
@@ -285,7 +293,7 @@
 							
                                                                 
                                                                 <td><h3 th:text="${barra.totalUnidades}"></h3></td>
-                                                                <--<!-- comment <td><a th:href="@{/barra/eliminar/__${barra.id}__}">X<i class="fa fa-ban"></i></a>
+                                                                <!-- comment <td><a th:href="@{/barra/eliminar/__${barra.id}__}">X<i class="fa fa-ban"></i></a>
 					</td>--> 
 							
                                                 
@@ -297,31 +305,18 @@
 				</div>
 				<div class="todo">
 					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus' ></i>
+						<h3>Proveedores</h3>
+                                                <a th:href="@{/usuario/editar-proveedor(id=__${session.usuariosession.id}__)}" ><i class='bx bx-plus' style="width: 50px"></i></a>
+						
 						<i class='bx bx-filter' ></i>
 					</div>
 					<ul class="todo-list">
-						<li class="completed">
-							<p>Rupturas</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
+						<li class="completed" th:each="proveedor : ${proveedores}">
+                                                    <h4 th:text="${proveedor.nombre}"></h4>
+                                                    <h5 th:text="${proveedor.celular}"></h5>
+                                                    <i class='bx bx-dots-vertical-rounded' th:href="${proveedor.link}"><a href="https://api.whatsapp.com/send?phone=TUNUMERODEREGISTRO&text=Hola,%20estoy%20interesado%20en%20obtener%20más%20información." target="${proveedor.link}">Abrir Chat de WhatsApp</a></i>
 						</li>
-						<li class="completed">
-							<p>Todo List</p>
-                                                        <i class='bx bx-dots-vertical-rounded'   > <a href="https://wa.link/00a8rt" >whatsapp</a></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
+						
 					</ul>
 				</div>
 			</div>

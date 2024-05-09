@@ -42,6 +42,9 @@ public class Usuario {
     private List<Barra> barras;
     
     @OneToMany
+    private List<Proveedor> proveedores;
+    
+    @OneToMany
     private List<Cristaleria> todasLasCristalerias;
      
     @OneToMany
@@ -76,6 +79,14 @@ public class Usuario {
 
     public float getCosteMensual() {
         return costeMensual;
+    }
+
+    public List<Proveedor> getProveedores() {
+        return proveedores;
+    }
+
+    public void setProveedores(List<Proveedor> proveedores) {
+        this.proveedores = proveedores;
     }
 
     public void setCosteMensual(float costeMensual) {

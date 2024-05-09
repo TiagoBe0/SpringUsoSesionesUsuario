@@ -26,14 +26,14 @@ public class Proveedor {
     private String id;
        
        private String nombre;
-       
+        private String link;
        private boolean activa=true;
      @OneToMany
       List<Cristaleria> listaCristalerias;
        @ManyToOne
        private Usuario usuario;
        
-       
+        private long celular;
        private float precioTotal;
        
        private int totalUnidades;
@@ -50,12 +50,28 @@ public class Proveedor {
         return usuario;
     }
 
+    public long getCelular() {
+        return celular;
+    }
+
+    public void setCelular(long celular) {
+        this.celular = celular;
+    }
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public boolean isActiva() {

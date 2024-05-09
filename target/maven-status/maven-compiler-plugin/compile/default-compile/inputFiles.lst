@@ -3,6 +3,7 @@ F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\Cristal
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\security\Security.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\CristalRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Ruptura.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Proveedor.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\servicios\UsuarioServicio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Foto.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\enums\Rol.java
@@ -10,6 +11,7 @@ F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\servicios\CristalSer
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\DemoApplication.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\Controlador.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\ErroresController.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\ProveedorController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\CristalController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\UsuarioRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\FotoController.java
@@ -25,9 +27,11 @@ F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Cristaleri
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\servicios\FotoServicio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\FotoRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\servicios\CristaleriaServicio.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\servicios\ProveedorServicio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Barra.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\AdminController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\BarraController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\RupturaRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\ServletInitializer.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\ProveedorRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Cristal.java

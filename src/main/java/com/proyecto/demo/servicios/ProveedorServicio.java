@@ -4,9 +4,11 @@ package com.proyecto.demo.servicios;
 
 import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
+import com.proyecto.demo.entidades.Proveedor;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.errores.ErrorServicio;
 import com.proyecto.demo.repositorios.BarraRepositorio;
+import com.proyecto.demo.repositorios.ProveedorRepositorio;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class ProveedorServicio {
     
     @Autowired
-    private BarraRepositorio barraRepositorio;
+    private ProveedorRepositorio barraRepositorio;
     @Autowired
     private UsuarioServicio usuarioServicio;
     
@@ -28,7 +30,7 @@ public class ProveedorServicio {
     public void registrar(String nombre,String idUsuario) throws ErrorServicio {
 
        
-       Barra barra = new Barra();
+       Proveedor barra = new Proveedor();
        //barra.setAlta(new Date());
        barra.setUsuario(usuarioServicio.buscarPorId(idUsuario));
        barra.setActiva(true);
@@ -76,14 +78,14 @@ public class ProveedorServicio {
     @Transactional
     public void actualizarStockBarra(String idBarra,int numeroRupturas) throws ErrorServicio{
         //buscamos el usuario y getiamos las listas de Barra
-    Barra barra = buscarPorId(idBarra);
+    Proveedor barra = buscarPorId(idBarra);
     barra.setTotalUnidades(barra.getTotalUnidades()-numeroRupturas);
      
             
     
     }
    
-    public List<Barra> listarTodas(){
+    public List<Proveedor> listarTodas(){
         return barraRepositorio.findAll();
     }
     public float calcularPrecioTotal(List<Cristaleria> cristalerias){
@@ -115,12 +117,12 @@ public class ProveedorServicio {
     
     
     
-     public Barra buscarPorId(String id) throws ErrorServicio {
+     public Proveedor buscarPorId(String id) throws ErrorServicio {
 
-        Optional<Barra> respuesta = barraRepositorio.findById(id);
+        Optional<Proveedor> respuesta = barraRepositorio.findById(id);
         if (respuesta.isPresent()) {
 
-            Barra barra = respuesta.get();
+            Proveedor barra = respuesta.get();
             return barra;
         } else {
 
@@ -131,7 +133,7 @@ public class ProveedorServicio {
      
      public void deshabilitar(String id) throws ErrorServicio{
      
-          Barra barra = buscarPorId(id);
+          Proveedor barra = buscarPorId(id);
           barraRepositorio.delete(barra);
           barraRepositorio.deleteById(id);
      
