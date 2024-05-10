@@ -180,7 +180,9 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
-         model.put("cristalerias", usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
          
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/inicio";
@@ -296,7 +298,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     public String alterarCristaleria(ModelMap modelo, HttpSession session,   String idCristaleria,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id) throws ErrorServicio {
         
         //Aqui me comunico con modificar cristaleria
-         cristaleriaServicio.alterar(archivo, tipo, descripcion, precio, enStock, idCristaleria);
+         cristaleriaServicio.alterar(archivo, tipo, descripcion, precio, enStock, idCristaleria, id);
         Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
          Usuario usuario = usuarioServicio.buscarPorId(id);
         try {

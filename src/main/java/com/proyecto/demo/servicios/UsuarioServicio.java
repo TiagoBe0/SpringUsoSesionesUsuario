@@ -295,6 +295,30 @@ public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cris
 
 
 }
+@Transactional
+public void actualizarCristaleriasAlterada(String idUsuario,String idCristaleria) throws ErrorServicio{
+    
+    Usuario usuario =buscarPorId(idUsuario);
+    
+    if(usuario!=null){
+       
+        
+        for (Cristaleria cristaleria :  usuario.getTodasLasCristalerias()) {
+            if(cristaleria.getId().equals(idCristaleria)){
+            
+                 usuario.getTodasLasCristalerias().remove(cristaleria);
+                 usuario.getTodasLasCristalerias().add(cristaleriaServicio.buscarPorId(idCristaleria));
+            }
+            
+        }
+    
+        
+    }
+    
+
+
+
+}
     @Transactional
 public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio{
 

@@ -152,7 +152,7 @@ public class CristaleriaServicio {
 
     }
       @Transactional
-    public void alterar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id) throws ErrorServicio {
+    public void alterar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id,String idUsuario) throws ErrorServicio {
         
          if(!id.isEmpty()){
              Optional<Cristaleria> respuesta = cristaleriaRepositorio.findById(id);
@@ -163,6 +163,7 @@ public class CristaleriaServicio {
                  cristaleria.setDescripcion(descripcion);
                  cristaleria.setPrecio(precio);
                  cristaleria.setTipo(tipo);
+                 cristaleria.setEnStock(enStock);
                  cristaleria.setPrecioTotal();
                  if(archivo!=null){
                      
@@ -174,36 +175,51 @@ public class CristaleriaServicio {
                  
                  
                  }
-                 List<Cristaleria> cristalerias=null;
-                 Usuario usuario = usuarioServicio.buscarPorId(cristaleria.getIdUsuario());
-                 if(usuario!=null){
-                     cristalerias=usuario.getTodasLasCristalerias();
-                     cristalerias.add(cristaleria);
-                     usuario.setTodasLasCristalerias(cristalerias);
-                     usuarioServicio.actualizarCapitalTotal(usuario.getId());
-                     usuarioServicio.actualizarNumeroTotalDeCristalerias(usuario.getId());
-                     
-                 
-                     
-                 }
                  cristaleriaRepositorio.save(cristaleria);
-                  Barra barra =barraServicio.buscarPorId(cristaleria.getBarraPerteneciente().getId());
-                  if(barra!=null){
-                  
-                        barraServicio.actualizarStockBarra(usuario.getId());
-                        float suma = barraServicio.calcularPrecioTotal(cristalerias);
-                  barra.setPrecioTotal(suma);
-                  }
+                Usuario usuario = usuarioServicio.buscarPorId(idUsuario);
+                String idBarra = cristaleria.getBarraPerteneciente().getId();
+                Barra barra = barraServicio.buscarPorId(idBarra);
+                List<Cristaleria> cristalerias=barra.getListaCristalerias();
+                List<Cristaleria> cristaleriasUsuario=usuario.getTodasLasCristalerias();
+                 for (Cristaleria cristaleria1 : cristalerias) {
+                     if(cristaleria1.getId().equals(id)){
+                         
+                         cristalerias.remove(cristaleria1);
+                         cristalerias.add(cristaleria);
+                     
+                     
+                     }
+                 }
+                 int conteo=0;
+                  for (Cristaleria cristaleria2 : cristaleriasUsuario) {
+                     if(cristaleria2.getId().equals(id)){
+                         
+                         cristaleriasUsuario.remove(cristaleria2);
+                         cristaleriasUsuario.add(cristaleria);
+                         cristaleria2 =cristaleria;
+                     
+                     
+                     }
+                     conteo=conteo+cristaleria2.getEnStock();
+                 }
+                 barra.setListaCristalerias(cristalerias);
+                float suma = barraServicio.calcularPrecioTotal(cristalerias);
+                 barra.setPrecioTotal(suma);
+                 barra.setTotalUnidades(conteo);
+                
+                  //usuarioServicio.actualizarListBarras(idUsuario, idBarra);
+                 //usuarioServicio.actualizarCapitalTotal(idUsuario);
+                 usuarioServicio.actualizarNumeroTotalDeCristalerias(idUsuario);
+                 
+                
              }
-            
-
-            
-          }
+          
        
          else {
 
             throw new ErrorServicio("No se encontró el usuario solicitado");
         }
+         }
 
     }
     public List<Cristaleria> todasCristalrias(){
@@ -218,6 +234,8 @@ public class CristaleriaServicio {
           cristaleriaRepositorio.deleteById(id);
      
      }
+  
+     
     
     
     public Cristaleria buscarPorId(String id) throws ErrorServicio {
