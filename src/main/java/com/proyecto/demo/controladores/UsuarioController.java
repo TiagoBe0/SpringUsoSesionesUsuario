@@ -2,6 +2,7 @@ package com.proyecto.demo.controladores;
 
 
 import com.proyecto.demo.entidades.Barra;
+import com.proyecto.demo.entidades.Cristaleria;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.errores.ErrorServicio;
@@ -9,6 +10,7 @@ import com.proyecto.demo.repositorios.ZonaRepositorio;
 import com.proyecto.demo.servicios.BarraServicio;
 import com.proyecto.demo.servicios.CristalServicio;
 import com.proyecto.demo.servicios.CristaleriaServicio;
+import com.proyecto.demo.servicios.PedidoServicio;
 import com.proyecto.demo.servicios.ProveedorServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
@@ -40,6 +42,8 @@ public class UsuarioController {
     private ZonaRepositorio zonaRepositorio;
     @Autowired
     private BarraServicio barraServicio;
+    @Autowired
+    private PedidoServicio pedidoServicio;
      @Autowired
     private ProveedorServicio proveedorServicio;
     @Autowired
@@ -187,7 +191,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             Usuario usuario = usuarioServicio.buscarPorId(id);
               usuarioServicio.actualizarCapitalTotal(id);
              model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
-              model.addAttribute("proveedores", proveedorServicio.listarTodas());
+              model.addAttribute("proveedores", usuario.getProveedores());
             model.addAttribute("rupturas",usuario.getTodasLasRupturas());
              model.addAttribute("perfil", usuario);
                 
@@ -285,7 +289,36 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
-    
+     
+ //POST MODIFICAR ALTERAR CREAR CRISTALERIA
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @PostMapping("/alterar-cristaleria")
+    public String alterarCristaleria(ModelMap modelo, HttpSession session,   String idCristaleria,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id) throws ErrorServicio {
+        
+        //Aqui me comunico con modificar cristaleria
+         cristaleriaServicio.alterar(archivo, tipo, descripcion, precio, enStock, idCristaleria);
+        Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
+         Usuario usuario = usuarioServicio.buscarPorId(id);
+        try {
+
+            Usuario login = (Usuario) session.getAttribute("usuariosession");
+            if (login == null || !login.getId().equals(usuario.getId())) {
+                return "redirect:/inicio";
+            }
+
+            usuario = usuarioServicio.buscarPorId(usuario.getId());
+            //usuarioServicio.modificarBarra(id,nombre);
+           
+            session.setAttribute("usuariosession", usuario);
+
+            return "redirect:/inicio";
+        } catch (ErrorServicio ex) {
+           
+
+            return "perfil.html";
+        }
+
+    }
     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-barra")
@@ -321,6 +354,34 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
        
         //Aqui me comunico con MODIFICARBARRA
          usuarioServicio.modificarProveedor(id, nombre,contacto,link);
+        Usuario usuario = null;
+        try {
+
+            Usuario login = (Usuario) session.getAttribute("usuariosession");
+            if (login == null || !login.getId().equals(id)) {
+                return "redirect:/inicio";
+            }
+
+            usuario = usuarioServicio.buscarPorId(id);
+            //usuarioServicio.modificarBarra(id,nombre);
+           
+            session.setAttribute("usuariosession", usuario);
+
+            return "redirect:/inicio";
+        } catch (ErrorServicio ex) {
+           
+
+            return "perfil.html";
+        }
+
+    }
+     //POST ACTUALIZAR PROVEEDOR
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @PostMapping("/actualizar-pedido")
+    public String actualizarPedido(ModelMap modelo, HttpSession session,   String id,  String nombre ,int contacto,String link ) throws ErrorServicio {
+       
+        //Aqui me comunico con MODIFICARBARRA
+         pedidoServicio.modificarPedido(id, nombre,contacto,link);
         Usuario usuario = null;
         try {
 

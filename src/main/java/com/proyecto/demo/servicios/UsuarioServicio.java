@@ -198,7 +198,7 @@ public class UsuarioServicio implements UserDetailsService {
 
         
         Proveedor barra = new Proveedor();
-        barra.setNombre(nombre);
+        barra.setNombre(nombre.toUpperCase());
         barra.setUsuario(buscarPorId(id));
         barra.setLink(link);
         barra.setCelular(contacto);
@@ -211,9 +211,8 @@ public class UsuarioServicio implements UserDetailsService {
 
             Usuario usuario = respuesta.get();
            
-            actualizarListBarras(id, barra.getId());
+            actualizarListProveedores(id, barra.getId());
             
-            usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
             
            
             
@@ -228,9 +227,11 @@ public class UsuarioServicio implements UserDetailsService {
 
     }
     
+    
+    
     //CALCULAR CAPITAL TOTAL EN STCOK
     public void actualizarCapitalTotal(String idUsuario) throws ErrorServicio{
-        
+        actualizarNumeroTotalDeCristalerias(idUsuario);
         Usuario usuario = buscarPorId(idUsuario);
         
         if(usuario!=null){
@@ -294,7 +295,24 @@ public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cris
 
 
 }
+    @Transactional
+public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio{
+
     
+    Usuario usuario = buscarPorId(id);
+    if(usuario!=null){
+    
+        List<Barra> barras = usuario.getBarras();
+        int total=0;
+        for (Barra barra : barras) {
+            total=total+barra.getTotalUnidades();
+        }
+        
+        usuario.setTotalCristalerias(total);
+    }
+
+
+}
     
 @Transactional
     public void modificarCristaleria( String id, String nombre,String tipo, String descripcion, float precio, int enStock,String idBarra) throws ErrorServicio {
@@ -510,7 +528,18 @@ public void actualizarListaDeCristalerias(Usuario usuario,List<Cristaleria> cris
     
     }
    
- 
+ public void actualizarListProveedores(String idUsuario,String idBarra) throws ErrorServicio{
+        //buscamos el usuario y getiamos las listas de Barra
+    Usuario usuario = buscarPorId(idUsuario);
+    List<Proveedor> barras = usuario.getProveedores();
+    //sumamos las barras a la list
+    barras.add(proveedorServicio.buscarPorId(idBarra));
+    usuario.setProveedores(barras);
+    
+    
+    
+    
+    }
 
     
   

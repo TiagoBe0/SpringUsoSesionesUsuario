@@ -3,6 +3,7 @@ com\proyecto\demo\entidades\Zona.class
 com\proyecto\demo\entidades\Cristaleria.class
 com\proyecto\demo\servicios\BarraServicio.class
 com\proyecto\demo\entidades\Foto.class
+com\proyecto\demo\controladores\PedidoController.class
 com\proyecto\demo\servicios\FotoServicio.class
 com\proyecto\demo\controladores\CristaleriaController.class
 com\proyecto\demo\entidades\Usuario.class
@@ -15,10 +16,12 @@ com\proyecto\demo\controladores\ProveedorController.class
 com\proyecto\demo\security\Security.class
 com\proyecto\demo\controladores\ErroresController.class
 com\proyecto\demo\servicios\CristalServicio.class
+com\proyecto\demo\repositorios\PedidoRepositorio.class
 com\proyecto\demo\DemoApplication.class
 com\proyecto\demo\entidades\Barra.class
 com\proyecto\demo\entidades\Proveedor.class
 com\proyecto\demo\repositorios\UsuarioRepositorio.class
+com\proyecto\demo\entidades\Pedido.class
 com\proyecto\demo\controladores\UsuarioController.class
 com\proyecto\demo\controladores\AdminController.class
 com\proyecto\demo\repositorios\BarraRepositorio.class
@@ -29,6 +32,7 @@ com\proyecto\demo\enums\Rol.class
 com\proyecto\demo\controladores\BarraController.class
 com\proyecto\demo\repositorios\ZonaRepositorio.class
 com\proyecto\demo\repositorios\CristalRepositorio.class
+com\proyecto\demo\servicios\PedidoServicio.class
 com\proyecto\demo\controladores\FotoController.class
 com\proyecto\demo\repositorios\ProveedorRepositorio.class
 com\proyecto\demo\controladores\Controlador.class

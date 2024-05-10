@@ -11,7 +11,7 @@
 <!-- Navigation -->
 <nav th:replace="/fragments/navbar :: nav"></nav>
  <!-- Header -->
-<header th:replace="/fragments/headergenerico :: header"></header>
+
   
 <div th:if="${exito}!=null" class="card text-white bg-success mb-3" >
 			<div class="card-body">
@@ -157,8 +157,21 @@
 		<h1 th:text="${cristaleria.tipo}"></h1>
 		<p th:text="${cristaleria.descripcion}" ></p>
                                                 <p th:text="${cristaleria.enStock}"></p>
-                 <p th:text="${cristaleria.precio}"></p>
-                 
+                 <p th:text="${cristaleria.precio+'$'}"></p>
+                 <div class="contenido-card">
+                 <form  style="border-box:40px " action="/usuario/alterar-cristaleria"  method="POST" enctype="multipart/form-data">
+                     <input style="color: #000" type="hidden" name="idCristaleria" th:value="${cristaleria.id}"  >
+                     <input style="color: #000" type="hidden" name="id" th:value="${cristaleria.idUsuario}"  >
+                     <input style="color: #000" type="text" name="tipo" th:value="${cristaleria.tipo}"  placeholder="modificar nombre">
+                        <input  style="color: #000" type="text" name="descripcion" th:value="${cristaleria.descripcion}"   placeholder="modificar descripcion" ><!-- comment -->
+                            <input  style="color: #000" type="number" name="enStock" th:value="${cristaleria.enStock}"  placeholder="modificar total unidades" ><!-- comment -->
+                                  <input  style="color: #000" type="number" name="precio" th:value="${cristaleria.precio}"   placeholder="modificar precio" >
+                                      <input  style="color: #000" type="file" name="archivo"  >
+                                 
+                                 
+                  <input class="botons" type="submit" value="enviar">
+                </form>	
+                 </div>
 		
 	</div>
 </div>
@@ -170,7 +183,7 @@
 		<p th:text="${barra.precioTotal}" ></p>
                 <p th:text="${barra.totalUnidades}" ></p>
                 <a th:href="@{/barra/deshabilitar/__${barra.id}__}"><i class="fa fa-ban"></i></a> <!--FLECHITA-->
-					
+                	
                                                 
                                                
                 
@@ -195,6 +208,7 @@
                                                 <p th:text="${ruptura.numeroDeRuptura}"></p>
                                                
                  <p  th:text="${ruptura.nombre}"></p>
+                 
 		
 	</div>
 </div>

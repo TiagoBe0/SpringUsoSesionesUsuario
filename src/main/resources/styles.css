@@ -102,7 +102,7 @@ body {
 	padding: 4px;
 }
 #sidebar .side-menu li.active {
-	background: var(--grey);
+	background: var(--light-bluegrey);
 	position: relative;
 }
 #sidebar .side-menu li.active::before {
@@ -113,7 +113,7 @@ body {
 	border-radius: 50%;
 	top: -40px;
 	right: 0;
-	box-shadow: 20px 20px 0 var(--grey);
+	box-shadow: 20px 20px 0 var(--light-bluegrey);
 	z-index: -1;
 }
 #sidebar .side-menu li.active::after {
@@ -124,7 +124,7 @@ body {
 	border-radius: 50%;
 	bottom: -40px;
 	right: 0;
-	box-shadow: 20px -20px 0 var(--grey);
+	box-shadow: 20px -20px 0 var(--light-bluegrey);
 	z-index: -1;
 }
 #sidebar .side-menu li a {
@@ -140,7 +140,7 @@ body {
 	overflow-x: hidden;
 }
 #sidebar .side-menu.top li.active a {
-	color: var(--blue);
+	color: var(--light-bluegrey);
 }
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
