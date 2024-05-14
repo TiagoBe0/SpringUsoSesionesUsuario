@@ -103,6 +103,44 @@
 		<!-- MAIN -->
 		<main>
                     <a class="boton" th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" type="submit"  >DASHBOARD</a>
+                    <div class="table-data">
+                            <div class="order" >
+					<div class="head">
+						<h3 >Panel De Cristalerias</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead >
+							<tr>
+								<th>Tipo</th>
+								<th>Descripcion</th>
+                                                                
+                                                                <th>Cantidad  </th>
+                                                                <th>Precio</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="cristaleria : ${cristalerias}" >
+                                               
+								<td >
+									<img th:src="${'/foto/cristaleriafoto/' + cristaleria.id}">
+									<p th:text="${cristaleria.tipo}"></p>
+								</td>
+								<td th:text="${cristaleria.descripcion}" ></td>
+                                                                
+							
+                                                                
+                                                                <td ><input  style="color: #000"class="controls" type="number" name="enStock" th:value="${cristaleria.enStock}" ></td>
+							
+                                                                <td > <h3 th:text="${cristaleria.precio+'$'}"></h3></td>
+							
+                                                
+                                                </tr>
+                                                </tbody>
+                                                
+					</table>
+				</div>
 			<section class="form-register">
   <h4 style="color: black">Registro de Proveedor</h4>
   <form action="/usuario/actualizar-pedido"  method="POST" enctype="multipart/form-data">
@@ -113,7 +151,9 @@
   <input type="hidden" name="id" th:value="${perfil.id}"/>
   <input class="botons" type="submit" value="enviar">
  </form>
+    
 </section>
+                    
 		</main>
 		<!-- MAIN -->
 	</section>

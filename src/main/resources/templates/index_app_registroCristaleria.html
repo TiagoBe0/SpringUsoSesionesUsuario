@@ -9,6 +9,35 @@
 	<!-- My CSS -->
         <link rel="stylesheet" href="../styles.css">
 
+        
+          <style>
+     
+
+      .gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(70px,70px));
+          grid-gap: 1px;
+          max-width: 500px;
+      }
+
+      .gallery-item {
+          position: relative;
+          overflow: hidden;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+          .gallery-item img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              transition: transform 0.3s ease;
+          }
+
+          .gallery-item:hover img {
+              transform: scale(1.1);
+          }
+  </style>
 	<title>AdminHub</title>
 </head>
 <body>
@@ -119,16 +148,23 @@
   <label style="color: #660000">Barra Perteneciente</label>
   <select  class="controls" style="color: #000" name="idBarra"> 
       <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"> <</option>
-  </select>     
+  </select> 
+   
   <label>Foto </label>
-<div class="form-check" th:each="cristal : ${cristales}" >
-    <input class="form-check-input" type="checkbox" th:value="${cristal.id}" name="idCristal" id="flexCheckDefault">
-    <label class="form-check-label" for="flexCheckDefault">
-        
-    <img th:if="${cristal.foto != null}" class="img-fluid rounded-circle"  style="width: 60px" th:src="${'/foto/cristalfoto/' + cristal.id}" alt="">
-                                                    
-  </label>
-</div>
+  
+  
+  <div class="gallery">
+            <!-- Iterar sobre la lista de cristales para mostrar cada imagen con checkbox -->
+            <div class="gallery-item" th:each="cristal : ${cristales}">
+                <input class="form-check-input" type="checkbox" th:value="${cristal.id}" name="idCristal" id="cristalCheckbox${cristal.id}">
+                <label class="form-check-label" for="cristalCheckbox${cristal.id}">
+                    <img th:if="${cristal.foto != null}" class="img-fluid rounded-circle" style="width: 60px" th:src="${'/foto/cristalfoto/' + cristal.id}" alt="Cristal Image">
+                </label>
+            </div>
+        </div>
+  
+   
+     
                                                                                                       
                                                                                                       
                                                                                                        <label style="color: black">Subir Foto </label>

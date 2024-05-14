@@ -11,11 +11,11 @@
         <link rel="icon"  class='bx bxs-smile' type="image/x-icon">
         <title > BartenderStock</title>
 </head>
-<body>
+<body >
 
 
 	<!-- SIDEBAR -->
-	<section id="sidebar">
+	<section id="sidebar" >
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
 			<span class="text" >B&S</span>
@@ -86,7 +86,7 @@
 
 
 	<!-- CONTENT -->
-	<section id="content">
+        <section id="content" >
 		<!-- NAVBAR -->
 		<nav>
 			<i class='bx bx-menu' ></i>
@@ -133,8 +133,8 @@
 			
 
 
-			<div class="table-data">
-				<div class="order">
+                    <div class="table-data">
+                            <div class="order" >
 					<div class="head">
 						<h3 >Panel De Cristalerias</h3>
 						<i class='bx bx-search' ></i>
@@ -170,33 +170,34 @@
                                                 </tbody>
                                                 
 					</table>
-				</div>  
-                                <ul class="box-info">
-				<li>
-					<i class='bx bxs-calendar-check' ></i>
+				</div>
+                        <ul class="box-info">
+                            <li style="width: 220px;height: 75px">
+					
                                         <h4  >Barras: </h4>
 					<span class="text">
 						<h3  th:text="${perfil.totalDeBarras}" ></h3>
 						<p></p>
 					</span>
 				</li>
-                                <li>
-					<i class='bx bxs-calendar-check' ></i>
+                                <li style="width: 220px;height: 75px">
+					
                                         <h4 >cristalerias: </h4>
 					<span class="text">
 						<h3 th:text="${perfil.totalCristalerias}" ></h3>
 						<p></p>
 					</span>
 				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
+				<li style="width: 220px;height: 75px">
+					
                                         <h4  >Dias Sin Rupturas</h4>
 					<span class="text">
 						<h3 th:text="${perfil.diasLimpios}"></h3>
 						<p></p>
 					</span>
 				</li>
-                                <li style="background-color: crimson" >
+                                <li  style="width: 300px;height: 100px ;background: rgb(217,168,2);
+background: linear-gradient(90deg, rgba(217,168,2,0.9500175070028011) 0%, rgba(128,9,19,0.7231267507002801) 43%, rgba(162,11,29,0.7147233893557423) 100%);" >
 					<i class='bx bxs-dollar-circle' ></i>
                                         <h4 >perdidas del mes</h4>
                                        
@@ -205,7 +206,8 @@
                                                 
                                                 </span>
 				</li>
-                                <li style="background-color: greenyellow">
+                                <li  style="width: 300px;height: 100px;background: rgb(2,212,217);
+background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9,128,31,0.7231267507002801) 43%, rgba(11,162,94,0.7147233893557423) 100%);">
 					<i class='bx bxs-dollar-circle' ></i>
                                         <h4 >capital</h4>
                                        
@@ -216,9 +218,11 @@
 				</li>
 			</ul>
 
+                        </div>
                                 
-                                <div class="table-data">
-                                    <div class="order" style="background-color: #ed969e">
+                                
+                    <div class="table-data">
+                            <div class="order" >
 					<div class="head">
 						<h3>Panel De Rupturas</h3>
 						<i class='bx bx-search' ></i>
@@ -233,6 +237,7 @@
 								<th> explicacion </th>
                                                                 <th> nombre de responsable </th>
                                                                 <th> tipo de cristaleria </th>
+                                                                <th> barra </th>
                                                                 <th>dia</th>
                                                                  <th>mes</th>
                                                                   <th>anio</th>
@@ -250,7 +255,7 @@
                                                                 <td th:text="${ruptura. explicacion}"></td>
                                         <td th:text="${ruptura.nombre}"></td>
                                          <td th:text="${ruptura.tipoCristaleria.tipo}"></td>
-                                       
+                                        <td th:text="${ruptura.tipoCristaleria.barraPertenecienteNombre}"></td>
                                          <td th:text="${ruptura.dia}" ></td>
                                          <td th:text="${ruptura.mes}" ></td>
                                          <td th:text="${ruptura.anio}" ></td>
@@ -265,9 +270,9 @@
 						</tbody>
 					</table>
 				</div>
-                            
-			<div class="table-data">
-				<div class="order">
+                            </div>
+                            <div class="table-data" >
+                                <div class="order">
 					<div class="head">
 						<h3>Todas Tus Barras</h3>
 						<i class='bx bx-search' ></i>
@@ -285,7 +290,7 @@
                                                                 
 							</tr>
 						</thead>
-						<tbody>
+						<tbody >
 							<tr th:each="barra : ${barras}" >
                                                
 								<td >
@@ -300,7 +305,7 @@
                                                                 <td>
                                                                     
                                                      <a th:href="@{/usuario/modificar-barra-panel/__${barra.id}__}">
-                                                   enviar
+                                                   <i class='bx bxs-cog'  ></i>
                                                     </a>
                                                                     
 
@@ -315,19 +320,25 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="todo">
+                                <div class="todo" >
 					<div class="head">
 						<h3>Proveedores</h3>
                                                 <a th:href="@{/usuario/editar-proveedor(id=__${session.usuariosession.id}__)}" ><i class='bx bx-plus' style="width: 50px"></i></a>
 						
 						<i class='bx bx-filter' ></i>
 					</div>
-					<ul class="todo-list">
-						<li class="completed" th:each="proveedor : ${proveedores}">
+					<ul class="todo-list" >
+                                            <li class="completed" th:each="proveedor : ${proveedores}" >
                                                     <h4 th:text="${proveedor.nombre}"></h4>
                                                     <h5 th:text="${'+'+proveedor.celular}"></h5>
-                                                    <i class='bx bx-dots-vertical-rounded' th:href="${proveedor.link}"><a href="https://api.whatsapp.com/send?phone=TUNUMERODEREGISTRO&text=Hola,%20estoy%20interesado%20en%20obtener%20más%20información." target="${proveedor.link}">Abrir Chat de WhatsApp</a></i>
+                                                    <i class='bx bx-dots-vertical-rounded' th:href="${proveedor.link}"><a href="https://api.whatsapp.com/send?phone=TUNUMERODEREGISTRO&text=Hola,%20estoy%20interesado%20en%20obtener%20más%20información." target="${proveedor.link}">Abrir Chat</a></i>
 						</li>
+                                                <li>
+				<a th:href="@{/usuario/editar-pedido(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Nuevo Pedido</span>
+				</a>
+			</li>
 						
 					</ul>
 				</div>

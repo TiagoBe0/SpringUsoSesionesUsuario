@@ -99,6 +99,30 @@ public class UsuarioController {
         }
         return "index_app_registroBarra.html";
     }
+    //ESTE LELGA AL REGISTRO PEDIDO
+       @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-pedido")
+    public String registroPedido(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
+        System.out.println("Estamos llegando a controlador del usuariossesision");
+        //barraServicio.registrar(nombre, id);
+       //List<Barra> barras =usuarioServicio.todasLasBarras(id);
+         //model.put("barras", barras);
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+             model.addAttribute("cristalerias", usuario.getTodasLasCristalerias());
+            model.addAttribute("perfil", usuario);
+            
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroPedido.html";
+    }
     //Este es el que llega a crear proveedor
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-proveedor")
