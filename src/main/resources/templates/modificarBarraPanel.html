@@ -7,7 +7,7 @@
    
 </head>
 
-<body>
+<body style="background-image: url(https://static.vecteezy.com/system/resources/previews/002/623/583/original/abstract-black-geometric-shape-background-with-diagonal-line-texture-design-for-presentation-banner-cover-web-flyer-card-poster-game-texture-slide-and-powerpoint-illustration-vector.jpg)">
 <!-- Navigation -->
 <nav th:replace="/fragments/navbar :: nav"></nav>
  <!-- Header -->
@@ -160,8 +160,8 @@
                  <p th:text="${cristaleria.precio+'$'}"></p>
                  <div class="contenido-card">
                  <form  style="border-box:40px " action="/usuario/alterar-cristaleria"  method="POST" enctype="multipart/form-data">
-                     <input style="color: #000" type="text" name="idCristaleria" th:value="${cristaleria.id}"  >
-                     <input style="color: #000" type="text" name="id" th:value="${cristaleria.idUsuario}"  >
+                     <input style="color: #000" type="hidden" name="idCristaleria" th:value="${cristaleria.id}"  >
+                     <input style="color: #000" type="hidden" name="id" th:value="${cristaleria.idUsuario}"  >
                      <input style="color: #000" type="text" name="tipo" th:value="${cristaleria.tipo}"  placeholder="modificar nombre">
                         <input  style="color: #000" type="text" name="descripcion" th:value="${cristaleria.descripcion}"   placeholder="modificar descripcion" ><!-- comment -->
                             <input  style="color: #000" type="number" name="enStock" th:value="${cristaleria.enStock}"  placeholder="modificar total unidades" ><!-- comment -->

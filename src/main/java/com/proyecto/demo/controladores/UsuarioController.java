@@ -226,6 +226,37 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
         return "index_app.html";
     }
+      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/panel-insumos")
+    public String panelInsumo(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_insumos.html";
+    }
     
      //ESTE ES PARA ENTRAR AL FORMULARIO DE RUPTURA
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")

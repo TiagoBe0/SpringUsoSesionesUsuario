@@ -11,7 +11,7 @@
 
 	<title>AdminHub</title>
 </head>
-<body>
+<body style="background-image: url(https://static.vecteezy.com/system/resources/previews/002/623/583/original/abstract-black-geometric-shape-background-with-diagonal-line-texture-design-for-presentation-banner-cover-web-flyer-card-poster-game-texture-slide-and-powerpoint-illustration-vector.jpg)">
 
 
 	<!-- SIDEBAR -->
@@ -27,6 +27,12 @@
 					<span class="text" >Dashboard</span>
 				</a>
 			</li>
+                        <li>
+				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Administrar Barra</span>
+				</a>
+			</li>
 			<li>
 				<a th:href="@{/usuario/editar-perfil(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-cog' ></i>
@@ -39,12 +45,7 @@
 					<span class="text">Crear Cristaleria</span>
 				</a>
 			</li>
-			<li>
-				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Administrar Barra</span>
-				</a>
-			</li>
+			
 			<li>
 				<a th:href="@{/usuario/editar-ruptura(id=__${session.usuariosession.id}__)}">
 					<i class='bx bxs-cog' ></i>
