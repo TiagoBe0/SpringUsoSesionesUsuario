@@ -155,7 +155,7 @@
   
   <div class="gallery">
             <!-- Iterar sobre la lista de cristales para mostrar cada imagen con checkbox -->
-            <div class="gallery-item" th:each="cristal : ${cristales}">
+            <div class="gallery-item" th:each="cristal : ${cristales}" th:if="${!cristal.insumo}">
                 <input class="form-check-input" type="checkbox" th:value="${cristal.id}" name="idCristal" id="cristalCheckbox${cristal.id}">
                 <label class="form-check-label" for="cristalCheckbox${cristal.id}">
                     <img th:if="${cristal.foto != null}" class="img-fluid rounded-circle" style="width: 60px" th:src="${'/foto/cristalfoto/' + cristal.id}" alt="Cristal Image">

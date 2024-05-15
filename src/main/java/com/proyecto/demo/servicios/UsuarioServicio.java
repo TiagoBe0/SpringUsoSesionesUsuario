@@ -46,7 +46,10 @@ public class UsuarioServicio implements UserDetailsService {
     private ProveedorServicio proveedorServicio;
     @Autowired
     private CristaleriaServicio cristaleriaServicio;
-
+ @Autowired
+    private CristalServicio cristalServicio;
+  @Autowired
+    private RupturaServicio rupturaServicio;
     @Autowired
     private FotoServicio fotoServicio;
     @Autowired
@@ -79,8 +82,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
     @Transactional
     public void registrar(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+     
 
         validar(nombre, apellido, mail, clave, clave2);
 
@@ -104,8 +106,7 @@ public class UsuarioServicio implements UserDetailsService {
     }
         @Transactional
     public void registrarAdmin(MultipartFile archivo, String nombre, String apellido, String mail, String clave, String clave2) throws ErrorServicio {
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
-        System.out.println("LLEGARON DATOS A LOS SERVICIOOOOOOOOOOOOOOS");
+        
 
         validar(nombre, apellido, mail, clave, clave2);
 
@@ -168,7 +169,39 @@ public class UsuarioServicio implements UserDetailsService {
         Barra barra = new Barra();
         barra.setNombre(nombre);
         barra.setUsuario(buscarPorId(id));
-       
+       barra.setInsumo(false);
+         barraRepositorio.save(barra);
+        
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+        if (respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+           
+            actualizarListBarras(id, barra.getId());
+            
+            usuario.setCapitalTotal(barraServicio.calcularPrecioTotal(usuario.getTodasLasCristalerias()));
+            
+           
+            
+
+            
+
+            usuarioRepositorio.save(usuario);
+        } else {
+
+            throw new ErrorServicio("No se encontró el usuario solicitado");
+        }
+
+    }
+    @Transactional
+     public void modificarInsumo( String id, String nombre) throws ErrorServicio {
+
+        
+        Barra barra = new Barra();
+        barra.setNombre(nombre);
+        barra.setUsuario(buscarPorId(id));
+       barra.setInsumo(true);
          barraRepositorio.save(barra);
         
 
@@ -226,8 +259,19 @@ public class UsuarioServicio implements UserDetailsService {
         }
 
     }
+    //BORRAR TODA LA BASE DE DATOS
+    @Transactional
+    public void borrarTodo(){
+        cristaleriaServicio.borrarTodo();
+        cristalServicio.borrarTodo();
+        barraServicio.borrarTodo();
+        rupturaServicio.borrarTodo();
+    fotoServicio.borrarTodo();
+    proveedorServicio.borrarTodo();
+    //pedidoServicio.borrarTodo();
+   
     
-    
+    }
     
     //CALCULAR CAPITAL TOTAL EN STCOK
     public void actualizarCapitalTotal(String idUsuario) throws ErrorServicio{
@@ -236,14 +280,26 @@ public class UsuarioServicio implements UserDetailsService {
         
         if(usuario!=null){
             float suma=0.f;
+            float sumaInsumos=0.f;
             List<Barra> barras = usuario.getBarras();
             for (Barra barra : barras) {
+                if(barra.isInsumo()){
+                    sumaInsumos=sumaInsumos+barra.getPrecioTotal();
                 
-                suma=suma+barra.getPrecioTotal();
+                }
+                else{
+                    suma=suma+barra.getPrecioTotal();
+                
+                }
+                
+                
                 
             }
         usuario.setCapitalTotal(suma);
-        usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+        usuario.setCapitalTotalInsumos(sumaInsumos);
+        int[] array = barraServicio.actualizarStockBarra(idUsuario);
+        usuario.setTotalCristalerias(array[0]);
+        usuario.setTotalInsumos(array[1]);
         Calendar calendario = new GregorianCalendar();
             actualizacionCosteMensualRupturas(idUsuario,calendario );
        
@@ -328,11 +384,19 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
     
         List<Barra> barras = usuario.getBarras();
         int total=0;
+        int totalInsumos=0;
         for (Barra barra : barras) {
+            if(!barra.isInsumo()){
             total=total+barra.getTotalUnidades();
-        }
+            }else{
+            
+            totalInsumos=totalInsumos+barra.getTotalUnidades();
+            }
+            
+            }
         
         usuario.setTotalCristalerias(total);
+        usuario.setTotalInsumos(totalInsumos);
     }
 
 
@@ -456,7 +520,28 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
         for (Barra barra : barras) {
             
             for (Cristaleria obj : barra.getListaCristalerias()) {
+                if(!obj.isInsumo()){
                 todasLasCristalerias.add(obj);
+                }
+            }
+            
+        }
+    return todasLasCristalerias;
+    
+    }
+       //listar toda crtistaleria de barras
+    public List<Cristaleria> listarTodosLosInsumos(String id) throws ErrorServicio{
+          
+        Usuario usuario = buscarPorId(id);
+        List<Barra> barras =usuario.getBarras();
+        List<Cristaleria> todasLasCristalerias = null;
+        
+        for (Barra barra : barras) {
+            
+            for (Cristaleria obj : barra.getListaCristalerias()) {
+                if(obj.isInsumo()){
+                todasLasCristalerias.add(obj);
+                }
             }
             
         }
@@ -539,14 +624,23 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
     //sumamos las barras a la list
     barras.add(barraServicio.buscarPorId(idBarra));
     usuario.setBarras(barras);
-    usuario.setTotalCristalerias(barraServicio.actualizarStockBarra(idUsuario));
+    int[] array= barraServicio.actualizarStockBarra(idUsuario);
+    usuario.setTotalCristalerias(array[0]);
+     usuario.setTotalInsumos(array[1]);
     usuario.setTotalDeBarras(barras.size());
     float suma=0.f;
+    float sumaInsumos=0.f;
         for (Barra barra : barras) {
+            if(!barra.isInsumo()){
             suma=suma+barra.getPrecioTotal();
+            }else{
+                
+                 sumaInsumos=sumaInsumos+barra.getPrecioTotal();
             
+            }
         }
         usuario.setCapitalTotal(suma);
+        usuario.setCapitalTotalInsumos(sumaInsumos);
     
     
     

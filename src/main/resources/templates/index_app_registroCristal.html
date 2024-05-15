@@ -107,7 +107,20 @@
 			<section class="form-register">
   <h4 style="color: black">Añadir imagen al repositorio</h4>
   <form action="/usuario/actualizar-cristal"  method="POST" enctype="multipart/form-data">
-  <input style="color: black" class="controls" type="file" name="archivo" id="nombre" >
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="insumo" value="-1">
+  <label style="color: #000" for="flexRadioDefault1">
+    Cristal
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="insumo"  value="1" checked>
+  <label style="color: #000" for="flexRadioDefault2">
+    Insumo
+  </label>
+</div>
+
+      <input style="color: black" class="controls" type="file" name="archivo" id="nombre" >
   <input type="hidden" name="id" th:value="${perfil.id}"/>
   <input class="botons" type="submit" value="enviar">
  </form>

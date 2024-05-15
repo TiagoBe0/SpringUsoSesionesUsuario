@@ -26,12 +26,14 @@
 					<i class='bx bxs-cog' ></i>
 					<span class="text" >Dashboard Cristaleria</span>
 				</a>
-                            <a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}" >
+                           
+			</li>
+                        <li>
+			 <a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bxs-cog' ></i>
 					<span class="text" >Dashboard Insumos</span>
 				</a>
-			</li>
-			
+                            </li>
 			<li>
 				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bx-menu'  ></i>
@@ -39,13 +41,13 @@
 				</a>
 			</li>
                         <li>
-				<a th:href="@{/usuario/editar-perfil(id=__${session.usuariosession.id}__)}">
+				<a th:href="@{/usuario/editar-insumo(id=__${session.usuariosession.id}__)}">
 					<i class='bx bx-plus' ></i>
 					<span class="text">Nueva Barra</span>
 				</a>
 			</li>
 			<li>
-				<a th:href="@{/usuario/editar-barra(id=__${session.usuariosession.id}__)}">
+				<a th:href="@{/usuario/editar-item(id=__${session.usuariosession.id}__)}">
 					<i class='bx bx-plus'></i>
 					<span class="text">Nuevo Producto</span>
 				</a>
@@ -117,7 +119,7 @@
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1 >Dashboard</h1>
+                                    <h1 style="color: #ffffff">Dashboard Insumos</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" >Dashboard</a>
@@ -150,8 +152,8 @@
 								<th>Tipo</th>
 								<th>Descripcion</th>
                                                                 <th>Barra Perteneciente</th>
-                                                                <th>Total en Stock  <p  th:text="${' '+perfil.totalCristalerias}"></p></th>
-                                                                <th>precio <h2  th:text="${' '+perfil.capitalTotal+'$'}"></h2></th>
+                                                                <th>Total en Stock  <p  th:text="${' '+perfil.totalInsumos}"></p></th>
+                                                                <th>precio <h2  th:text="${' '+perfil.capitalTotalInsumos+'$'}"></h2></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -188,7 +190,7 @@
 					
                                         <h4 >cristalerias: </h4>
 					<span class="text">
-						<h3 th:text="${perfil.totalCristalerias}" ></h3>
+						<h3 th:text="${perfil.totalInsumos}" ></h3>
 						<p></p>
 					</span>
 				</li>
@@ -216,7 +218,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
                                         <h4 >capital</h4>
                                        
 					<span class="text">
-						<h3 th:text="${perfil.capitalTotal+'$'}"></h3>
+						<h3 th:text="${perfil.capitalTotalInsumos+'$'}"></h3>
                                                 
                                                 </span>
 				</li>
@@ -295,7 +297,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody >
-							<tr th:each="barra : ${barras}" >
+							<tr th:each="barra : ${barras}" th:if="${barra.insumo==true}" >
                                                
 								<td >
 									<img src="https://cdn-icons-png.flaticon.com/512/7467/7467250.png">

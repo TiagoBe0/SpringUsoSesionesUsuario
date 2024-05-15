@@ -35,6 +35,12 @@ public class Usuario {
     private int diasLimpios;
      
     private float costeMensual;
+     private float capitalTotalInsumos;
+  
+    private int diasLimpiosInsumos;
+    private int totalInsumos;
+     
+    private float costeMensualInsumos;
     @ManyToOne
     private Zona zona;
     
@@ -67,6 +73,38 @@ public class Usuario {
     
     public List<Barra> getBarras() {
         return barras;
+    }
+
+    public float getCapitalTotalInsumos() {
+        return capitalTotalInsumos;
+    }
+
+    public void setCapitalTotalInsumos(float capitalTotalInsumos) {
+        this.capitalTotalInsumos = capitalTotalInsumos;
+    }
+
+    public int getTotalInsumos() {
+        return totalInsumos;
+    }
+
+    public void setTotalInsumos(int totalInsumos) {
+        this.totalInsumos = totalInsumos;
+    }
+
+    public int getDiasLimpiosInsumos() {
+        return diasLimpiosInsumos;
+    }
+
+    public void setDiasLimpiosInsumos(int diasLimpiosInsumos) {
+        this.diasLimpiosInsumos = diasLimpiosInsumos;
+    }
+
+    public float getCosteMensualInsumos() {
+        return costeMensualInsumos;
+    }
+
+    public void setCosteMensualInsumos(float costeMensualInsumos) {
+        this.costeMensualInsumos = costeMensualInsumos;
     }
 
     public void setBarras(List<Barra> barras) {

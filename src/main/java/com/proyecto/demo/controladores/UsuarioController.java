@@ -79,10 +79,7 @@ public class UsuarioController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-perfil")
     public String editarPerfilviejo(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
-        System.out.println("Estamos llegando a controlador del usuariossesision");
-        //barraServicio.registrar(nombre, id);
-       //List<Barra> barras =usuarioServicio.todasLasBarras(id);
-         //model.put("barras", barras);
+      
 
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
@@ -98,6 +95,27 @@ public class UsuarioController {
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_registroBarra.html";
+    }
+        //Este es el que llega a crear Insumo
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-insumo")
+    public String editarInsumo(HttpSession session, @RequestParam String id,String nombre, ModelMap model) throws ErrorServicio {
+      
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+            model.addAttribute("perfil", usuario);
+            
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroInsumo.html";
     }
     //ESTE LELGA AL REGISTRO PEDIDO
        @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -194,6 +212,29 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_registroCristaleria.html";
+    }
+     //ESTE ES PARA ENTRAR AL FORMULARIO DE ITEM 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-item")
+    public String cargarItem(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+ 
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("cristales",cristalServicio.listarTodas());
+            model.addAttribute("perfil", usuario);
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroItem.html";
     }
      //ESTE ES PARA ENTRAR AL PANEL BARRA  ------------------cerebro
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -379,10 +420,16 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-barra")
-    public String actualizarBarra(ModelMap modelo, HttpSession session,   String id,  String nombre ) throws ErrorServicio {
-        System.out.println("ACTUALIZAR BARRA"+nombre+id);
+    public String actualizarBarra(ModelMap modelo, HttpSession session,   String id,  String nombre,int insumo) throws ErrorServicio {
+        
         //Aqui me comunico con MODIFICARBARRA
+        if(insumo<0){
          usuarioServicio.modificarBarra(id, nombre);
+        }
+        else{
+              usuarioServicio.modificarInsumo(id, nombre);
+        
+        }
         Usuario usuario = null;
         try {
 
@@ -432,6 +479,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+        
      //POST ACTUALIZAR PROVEEDOR
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-pedido")
@@ -504,9 +552,9 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         return "exito.html";
     } 
     //REGISTRO USUARIO ADMIN
-       @PostMapping("/registraradmin")
+       @PostMapping("/registrar-admin")
     public String registrarAdmin( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
-        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
+        
         try {
             usuarioServicio.registrarAdmin(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
@@ -522,7 +570,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-cristaleria")
     public String actualizarCristaleria(ModelMap modelo, HttpSession session,   String id,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String idCristal) throws ErrorServicio {
-        System.out.println("CRISTALERIA LELGA A CONTROLADRO USUARIO"+ precio +";"+idCristal);
+      
         //Aqui me comunico con modificar cristaleria
           //usuarioServicio.actualizarCapitalTotal(id);
          cristaleriaServicio.modificar(archivo, tipo, descripcion, precio, enStock, idBarra,id, idCristal);
@@ -556,11 +604,11 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     
      @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/actualizar-cristal")
-    public String actualizarCristal(ModelMap modelo, HttpSession session,@RequestParam   String id,MultipartFile archivo, String nombre) throws ErrorServicio {
+    public String actualizarCristal(ModelMap modelo, HttpSession session,@RequestParam   String id,MultipartFile archivo, String nombre,int insumo) throws ErrorServicio {
         
         //Aqui me comunico con modificar cristaleria
           usuarioServicio.actualizarCapitalTotal(id);
-         cristalServicio.registrar(archivo, nombre);
+         cristalServicio.registrar(archivo, nombre,insumo);
         Usuario usuario = null;
         try {
 

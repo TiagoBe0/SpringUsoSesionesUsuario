@@ -103,8 +103,14 @@ public class CristaleriaServicio {
                
         
         }else{
+            if(archivo!=null){
         Foto foto = fotoServicio.guardar(archivo);
         cristaleria.setFoto(foto);
+            }
+            else{
+            
+                cristaleria.setFoto(null);
+            }
         
         
         }
@@ -113,6 +119,13 @@ public class CristaleriaServicio {
 
             
         Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
+        if(barraPerteneciente.isInsumo()){
+            cristaleria.setInsumo(true);
+        
+        }else{
+            cristaleria.setInsumo(false);
+        
+        }
         Usuario usuario = usuarioServicio.buscarPorId(id);
         cristaleria.setDescripcion(descripcion);
         cristaleria.setPrecio(precio);
@@ -129,8 +142,19 @@ public class CristaleriaServicio {
          List<Cristaleria> cristaleriaUsuario =usuario.getTodasLasCristalerias();
          cristaleriaUsuario.add(cristaleria);
          usuario.setTodasLasCristalerias(cristaleriaUsuario);
-        
-         barraPerteneciente.setPrecioTotal(barraServicio.calcularPrecioTotal(cristalerias));
+          if( barraPerteneciente.isInsumo()){
+                   
+                    float suma = barraServicio.calcularPrecioTotalInsumos(cristalerias);
+                     barraPerteneciente.setPrecioTotal(suma);
+               }
+               else{
+                    float suma = barraServicio.calcularPrecioTotal(cristalerias);
+                     barraPerteneciente.setPrecioTotal(suma);
+               
+               }
+          
+          
+      
         barraPerteneciente.setListaCristalerias(cristalerias);
         
            //barraRepositorio.save(barraPerteneciente);
@@ -151,9 +175,15 @@ public class CristaleriaServicio {
         }
 
     }
+    
+     @Transactional
+    public void borrarTodo(){
+    
+    cristaleriaRepositorio.deleteAll();
+    }
+       
       @Transactional
     public void alterar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id,String idUsuario) throws ErrorServicio {
-          System.out.println("CCXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"+precio+enStock+descripcion+tipo+idUsuario+""+id);
                 
                 
          if(!id.isEmpty()){
@@ -248,9 +278,18 @@ public class CristaleriaServicio {
                  }
                 
                  
+               if(barra.isInsumo()){
+                   
+                    float suma = barraServicio.calcularPrecioTotalInsumos(cristalerias);
+                    barra.setPrecioTotal(suma);
+               }
+               else{
+                    float suma = barraServicio.calcularPrecioTotal(cristalerias);
+                    barra.setPrecioTotal(suma);
                
-                float suma = barraServicio.calcularPrecioTotal(cristalerias);
-                 barra.setPrecioTotal(suma);
+               }
+               
+                 
                  barra.setTotalUnidades(conteo);
                 
                   //usuarioServicio.actualizarListBarras(idUsuario, idBarra);

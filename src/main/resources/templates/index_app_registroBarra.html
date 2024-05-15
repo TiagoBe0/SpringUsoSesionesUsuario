@@ -109,7 +109,9 @@
   <form action="/usuario/actualizar-barra"  method="POST" enctype="multipart/form-data">
   <input style="color: black" class="controls" type="text" name="nombre" id="nombre" placeholder="Ingrese un nombre">
   <input type="hidden" name="id" th:value="${perfil.id}"/>
+   <input type="hidden" name="insumo" th:value="-4"/>
   <input class="botons" type="submit" value="enviar">
+  
  </form>
 </section>
 		</main>

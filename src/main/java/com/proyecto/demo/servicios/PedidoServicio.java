@@ -173,5 +173,13 @@ public class PedidoServicio {
      
      }
      
+     
+      @Transactional
+    public void borrarTodo(){
+    
+    barraRepositorio.deleteAll();
+    }
+       
+     
 
 }

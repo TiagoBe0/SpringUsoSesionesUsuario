@@ -20,7 +20,7 @@ public class Cristaleria {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-      
+     private boolean insumo;
      private String tipo;
     @OneToOne
      private Barra barraPerteneciente;
@@ -55,6 +55,14 @@ public class Cristaleria {
 
     public String getIdUsuario() {
         return idUsuario;
+    }
+
+    public boolean isInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(boolean insumo) {
+        this.insumo = insumo;
     }
 
     public Cristal getCristalRepo() {

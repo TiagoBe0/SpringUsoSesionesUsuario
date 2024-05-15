@@ -79,4 +79,13 @@ public class FotoServicio {
     }
     
     
+    
+     @Transactional
+    public void borrarTodo(){
+    
+    fotoRepositorio.deleteAll();
+    }
+       
+    
+    
 }

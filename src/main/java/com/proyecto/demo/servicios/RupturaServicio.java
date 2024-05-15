@@ -91,5 +91,10 @@ public class RupturaServicio {
     
     }
    
-
+ @Transactional
+    public void borrarTodo(){
+    
+    rupturaRepositorio.deleteAll();
+    }
+       
 }

@@ -74,12 +74,31 @@ public class Controlador {
         
         return "registroUsuario.html";
     }
+      @GetMapping("/registroAdmin1942")
+    public String registroUsuarioAdmin() {
+        
+        
+        return "registroUsuarioAdmin.html";
+    }
 
     @PostMapping("/registrar")
     public String registrar( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
-        System.out.println("LLEGAMOS A LOS CONTROLADORES TIOOOOOOO");
+        
         try {
             usuarioServicio.registrar(archivo, nombre, apellido, mail, clave1, clave2);
+        } catch (ErrorServicio ex) {
+           
+            return "index.html";
+        }
+        modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
+        modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
+        return "exito.html";
+    }
+    @PostMapping("/registrarAdmin")
+    public String registrarAdmin( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
+        
+        try {
+            usuarioServicio.registrarAdmin(archivo, nombre, apellido, mail, clave1, clave2);
         } catch (ErrorServicio ex) {
            
             return "index.html";

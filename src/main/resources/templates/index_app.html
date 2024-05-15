@@ -26,11 +26,12 @@
 					<i class='bx bxs-cog' ></i>
 					<span class="text" >Dashboard Cristaleria</span>
 				</a>
-                            <a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}" >
+                           
+			</li>
+                        <li> <a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bxs-cog' ></i>
 					<span class="text" >Dashboard Insumos</span>
-				</a>
-			</li>
+				</a></li>
 			
 			<li>
 				<a  th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
@@ -76,6 +77,12 @@
 					<span class="text" >Settings</span>
 				</a>
 			</li>
+                        <li>
+				<a th:href="@{/admin/borrar-todo/__${session.usuariosession.id}__}" sec:authorize="hasRole('ADMIN')">
+					<i class='bx bxs-cog'  ></i>
+					<span class="text" >BORRAR TODO</span>
+				</a>
+			</li>
                         
 			<li>
 				<a href="/logout" th:if="${session.usuariosession != null}" class="logout">
@@ -117,7 +124,7 @@
 		<main>
 			<div class="head-title">
 				<div class="left">
-					<h1 >Dashboard</h1>
+					<h1 style="color: #ffffff">Dashboard Cristalerias</h1>
 					<ul class="breadcrumb">
 						<li>
 							<a href="#" >Dashboard</a>
@@ -295,7 +302,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody >
-							<tr th:each="barra : ${barras}" >
+							<tr th:each="barra : ${barras}"  th:if="${barra.insumo==false}">
                                                
 								<td >
 									<img src="https://cdn-icons-png.flaticon.com/512/7467/7467250.png">
