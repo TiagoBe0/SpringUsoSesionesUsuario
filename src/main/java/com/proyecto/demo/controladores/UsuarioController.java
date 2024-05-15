@@ -115,7 +115,7 @@ public class UsuarioController {
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
-        return "index_app_registroInsumo.html";
+        return "index_app_registroBarra.html";
     }
     //ESTE LELGA AL REGISTRO PEDIDO
        @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")

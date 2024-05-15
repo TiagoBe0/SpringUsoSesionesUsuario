@@ -93,10 +93,14 @@ public class CristaleriaServicio {
 
     @Transactional
     public void modificar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {
-
+       Cristal cristal =null;
+       Cristal cristalNuevo = null;
        Cristaleria cristaleria = new Cristaleria();
-       Cristal cristal = cristalServicio.buscarPorId(idCristal);
-        if(cristal !=null){
+       if(idCristal!=null){
+       cristal = cristalServicio.buscarPorId(idCristal);
+       }
+           
+       if(cristal !=null){
               cristaleria.setCristalRepo(cristal);
            
             cristaleria.setFoto(cristal.getFoto());
@@ -105,6 +109,9 @@ public class CristaleriaServicio {
         }else{
             if(archivo!=null){
         Foto foto = fotoServicio.guardar(archivo);
+      
+        
+        
         cristaleria.setFoto(foto);
             }
             else{
@@ -121,11 +128,18 @@ public class CristaleriaServicio {
         Barra barraPerteneciente = barraServicio.buscarPorId(idBarra);
         if(barraPerteneciente.isInsumo()){
             cristaleria.setInsumo(true);
+            if(idCristal ==null && archivo != null){
+            cristalServicio.registrar(archivo, null, 1);
+            }
+        
         
         }else{
             cristaleria.setInsumo(false);
-        
+            if(idCristal ==null && archivo != null){
+            cristalServicio.registrar(archivo, null, -1);
+            }
         }
+        
         Usuario usuario = usuarioServicio.buscarPorId(id);
         cristaleria.setDescripcion(descripcion);
         cristaleria.setPrecio(precio);
