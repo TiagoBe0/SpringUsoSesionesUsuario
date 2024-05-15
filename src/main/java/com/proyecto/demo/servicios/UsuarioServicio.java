@@ -314,11 +314,60 @@ public class UsuarioServicio implements UserDetailsService {
     
     public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
+         float costeMensualVencimiento=0.f;
+        Usuario usuario =buscarPorId(idUsuario);
+        int diasLimpios=32;
+        int diasVencimiento=32;
+        if(usuario!=null){
+            for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+                if(!ruptura.isInsumo()){
+                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                    
+                    costeMensual=costeMensual+ruptura.getCostoRuptura();
+                    if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
+                    
+                    diasLimpios=calendario.get(Calendar.DATE)-ruptura.getDia();
+                    }
+                    usuario.setDiasLimpios(diasLimpios);
+            usuario.setCosteMensual(costeMensual);
+                
+                
+                
+                }else{
+                
+                
+                    if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                    
+                    costeMensualVencimiento=costeMensualVencimiento+ruptura.getCostoRuptura();
+                    if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
+                    
+                    diasVencimiento=calendario.get(Calendar.DATE)-ruptura.getDia();
+                    }
+                }
+                     usuario.setDiasLimpiosInsumos(diasVencimiento);
+            usuario.setCosteMensualInsumos(costeMensualVencimiento);
+                }
+                
+                
+            }
+                
+            
+            return costeMensual;
+        }
+        }
+    
+    return costeMensual;
+    
+    }
+    //VENCIMIENTOS
+    
+    public float actualizacionCosteMensualVencimientos(String idUsuario,Calendar calendario) throws ErrorServicio{
+        float costeMensual=0.f;
         Usuario usuario =buscarPorId(idUsuario);
         int diasLimpios=32;
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
-                
+                if(ruptura.isInsumo()){
                 if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
@@ -327,14 +376,14 @@ public class UsuarioServicio implements UserDetailsService {
                     diasLimpios=calendario.get(Calendar.DATE)-ruptura.getDia();
                     }
                 
-                
+                }
                 
                 }
                 
                 
             }
-            usuario.setDiasLimpios(diasLimpios);
-            usuario.setCosteMensual(costeMensual);
+            usuario.setDiasLimpiosInsumos(diasLimpios);
+            usuario.setCosteMensualInsumos(costeMensual);
             return costeMensual;
         }
     
@@ -509,7 +558,25 @@ public void actualizarNumeroTotalDeCristalerias(String id ) throws ErrorServicio
 
     }
     
+    //GET ALGUNAS CRISTALERIAS
+    public List<Cristaleria> listarAlgunasCristalerias(String id) throws ErrorServicio{
+    List<Cristaleria> cristalerias=buscarPorId(id).getTodasLasCristalerias();
+    List<Cristaleria> algunasCristalerias=null;
+    int size = cristalerias.size();
+        if(size>=5){
+            for (int i = 0; i < 5; i++) {
+                algunasCristalerias.add(cristalerias.get(i));
+            }
+            
+            
+            return algunasCristalerias;
+
+
+        }
     
+    
+    return cristalerias;
+    }
     //listar toda crtistaleria de barras
     public List<Cristaleria> listarTodaLaCristaleria(String id) throws ErrorServicio{
           

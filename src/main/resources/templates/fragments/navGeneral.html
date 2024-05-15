@@ -2,23 +2,24 @@
  
         	<section id="sidebar" >
 		<a href="#" class="brand">
-			<i class='bx bxs-smile'></i>
+			<i class='bx bxs-drink'></i>
 			<span class="text" >B&S</span>
 		</a>
 		<ul class="side-menu top">
-			<li >
-				<a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text" >Dashboard Insumos</span>
-				</a>
-                           
-			</li>
+			
                         <li >
 			 <a th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" >
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text" >Dashboard Cristaleria</span>
 				</a>
                             </li>
+                            <li >
+				<a th:href="@{/usuario/panel-insumos(id=__${session.usuariosession.id}__)}">
+					<i class='bx bxs-calculator' ></i>
+					<span class="text" >Dashboard Insumos</span>
+				</a>
+                           
+			</li>
 			
                         <li>
 				<a th:href="@{/usuario/editar-insumo(id=__${session.usuariosession.id}__)}">

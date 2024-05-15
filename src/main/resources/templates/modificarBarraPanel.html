@@ -3,8 +3,39 @@
 <!-- Head --> 
 
 <head th:replace="/fragments/head :: head">
-    
    
+    <style>
+         .contenido-carddd {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    padding: 20px; /* Espaciado interno para separar el contenido */
+    margin-bottom: 20px; /* Margen inferior para separar de otras tarjetas */
+    border: 1px solid #ccc; /* Borde para la tarjeta */
+    border-radius: 8px; /* Bordes redondeados para la tarjeta */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera para efecto de elevación */
+}
+.contenido-card form {
+    margin-top: 20px;
+}
+
+.contenido-card input[type="text"],
+.contenido-card input[type="number"],
+.contenido-card input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.contenido-card input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+    </style>
 </head>
 
 <body style="background-image: url(https://th.bing.com/th/id/OIP.XqXoj7lKuHP_6zfTPiOAawHaE6?rs=1&pid=ImgDetMain)" ><!-- Navigation -->
@@ -142,30 +173,27 @@
 </div>
             
              -->
-      <div class="title-cards">
-		<h2>Lista de Cristaleria</h2>
+             <div class="title-cards" >
+		<h2 style="color: #ffffff" >Lista de Cristaleria</h2>
 	</div>
 <div class="container-card">
 	
 
-    <div class="card"  th:each="cristaleria : ${cristalerias}" >
-	<figure>
+    <div class="card"  th:each="cristaleria : ${cristalerias}" style="height: 400px" >
+	<figure style="height: 70px;height: 80px">
 		<img  th:src="${'/foto/cristaleriafoto/' + cristaleria.id}">
 	</figure>
 	<div class="contenido-card">
-		<h1 th:text="${cristaleria.tipo}"></h1>
-		<p th:text="${cristaleria.descripcion}" ></p>
-                                                <p th:text="${cristaleria.enStock}"></p>
-                 <p th:text="${cristaleria.precio+'$'}"></p>
-                 <div class="contenido-card">
-                 <form  style="border-box:40px " action="/usuario/alterar-cristaleria"  method="POST" enctype="multipart/form-data">
-                     <input style="color: #000" type="hidden" name="idCristaleria" th:value="${cristaleria.id}"  >
-                     <input style="color: #000" type="hidden" name="id" th:value="${cristaleria.idUsuario}"  >
-                     <input style="color: #000" type="text" name="tipo" th:value="${cristaleria.tipo}"  placeholder="modificar nombre">
-                        <input  style="color: #000" type="text" name="descripcion" th:value="${cristaleria.descripcion}"   placeholder="modificar descripcion" ><!-- comment -->
-                            <input  style="color: #000" type="number" name="enStock" th:value="${cristaleria.enStock}"  placeholder="modificar total unidades" ><!-- comment -->
-                                  <input  style="color: #000" type="number" name="precio" th:value="${cristaleria.precio}"   placeholder="modificar precio" >
-                                      <input  style="color: #000" type="file" name="archivo"  >
+		
+                 <div class="contenido-carddd" >
+                 <form  style="align-items: lefth " action="/usuario/alterar-cristaleria"  method="POST" enctype="multipart/form-data">
+                     <input style="color: #000" type="hidden" class="contenido-card input" name="idCristaleria" th:value="${cristaleria.id}"  >
+                     <input style="color: #000" type="hidden" class="contenido-card input"  name="id" th:value="${cristaleria.idUsuario}"  >
+                     <input style="color: #000" type="text" class="contenido-card input" name="tipo" th:value="${cristaleria.tipo}"  placeholder="modificar nombre">
+                        <input  style="color: #000" type="text" class="contenido-card input" name="descripcion" th:value="${cristaleria.descripcion}"   placeholder="modificar descripcion" ><!-- comment -->
+                            <input  style="color: #000" type="number" class="contenido-card input" name="enStock" th:value="${cristaleria.enStock}"  placeholder="modificar total unidades" ><!-- comment -->
+                                  <input  style="color: #000" class="contenido-card input" type="number" name="precio" th:value="${cristaleria.precio}"   placeholder="modificar precio" >
+                                      <input  style="color: #000" class="contenido-card input" type="file" name="archivo"  >
                                  
                                  
                   <input class="botons" type="submit" value="enviar">
@@ -175,9 +203,10 @@
 	</div>
 </div>
     <div class="card"  >
-	<figure>
-            <img src="https://th.bing.com/th/id/OIP.kmyo6TSzTw3Y4rP5kNxjcgHaE6?rs=1&pid=ImgDetMain"  alt="alt"/>
-        <div class="contenido-card"  >
+	<figure style="height: 70px;height: 80px">
+            <img style="height: 70px;height: 80px" src="https://th.bing.com/th/id/OIP.kmyo6TSzTw3Y4rP5kNxjcgHaE6?rs=1&pid=ImgDetMain"  alt="alt"/>
+        </figure>
+            <div class="contenido-card"  >
 		<h3 th:text="${barra.nombre}"></h3>
 		<p th:text="${barra.precioTotal}" ></p>
                 <p th:text="${barra.totalUnidades}" ></p>
@@ -190,29 +219,8 @@
 	</div>
 </div>
     </div>
-          <div class="title-cards">
-		<h2>Lista de Rupturas</h2>
-	</div>
-<div class="container-card">
-	
+        
 
-    <div class="card"  th:each="ruptura : ${rupturas}" >
-	<figure>
-		<img  th:src="${'/foto/cristaleriafoto/' + ruptura.tipoCristaleria.id}">
-	</figure>
-        <div class="contenido-card"  >
-		<h1 th:text="${ruptura.tipoCristaleria.tipo}"></h1>
-		<p th:text="${ruptura.explicacion}" ></p>
-                                                <p th:text="${ruptura.costoRuptura}"></p>
-                                                <p th:text="${ruptura.numeroDeRuptura}"></p>
-                                               
-                 <p  th:text="${ruptura.nombre}"></p>
-                 
-		
-	</div>
-</div>
-
-</div>
   </section>
 
 

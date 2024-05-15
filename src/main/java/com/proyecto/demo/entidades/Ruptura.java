@@ -37,7 +37,7 @@ public class Ruptura {
      private int mes;
      private int dia;
      private int hora;
-
+     private boolean insumo;
     public String getNombre() {
         return nombre;
     }
@@ -52,6 +52,14 @@ public class Ruptura {
 
     public Calendar getCalendario() {
         return calendario;
+    }
+
+    public boolean isInsumo() {
+        return insumo;
+    }
+
+    public void setInsumo(boolean insumo) {
+        this.insumo = insumo;
     }
 
    

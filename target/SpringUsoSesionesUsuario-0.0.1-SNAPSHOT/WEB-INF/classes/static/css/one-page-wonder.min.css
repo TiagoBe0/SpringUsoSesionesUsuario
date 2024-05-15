@@ -46,9 +46,9 @@ btn-primary:active,.btn-primary:focus,.btn-primary:hover{background-color:#fa570
 .btn-secondary:focus{box-shadow:0 0 0 .2rem rgba(255,106,0,.5)}
 /*Cards*/
 .container-card {
-    width: 60%;
+    width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, minmax(150px, 1fr)); /* Cuatro columnas por fila */
+    grid-template-columns: repeat(4, minmax(200px, 2fr)); /* Cuatro columnas por fila */
     gap: 10px; /* Espacio entre imágenes */
 
     margin: auto;

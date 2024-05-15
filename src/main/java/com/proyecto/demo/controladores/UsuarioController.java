@@ -96,6 +96,7 @@ public class UsuarioController {
         }
         return "index_app_registroBarra.html";
     }
+   
         //Este es el que llega a crear Insumo
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-insumo")
@@ -241,7 +242,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
     @GetMapping("/panel-barra")
     public String panelBarra(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
         //barraServicio.registrar(nombre, id);
-        System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
+       
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
@@ -267,7 +268,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
         return "index_app.html";
     }
-      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER
+      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER INSUMOS
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/panel-insumos")
     public String panelInsumo(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
@@ -299,12 +300,76 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         return "index_app_insumos.html";
     }
     
+     //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER INSUMOS base de datos
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/data-insumos")
+    public String panelInsumobd(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_dataInsumos.html";
+    }
+    
+     //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER Cristaleria base de datos
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/data-cristaleria")
+    public String panelCristaleriabd(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_dataCristalerias.html";
+    }
+    
      //ESTE ES PARA ENTRAR AL FORMULARIO DE RUPTURA
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-ruptura")
     public String cargarRuptura(HttpSession session , String id, String nombre,ModelMap model) throws ErrorServicio {
         //barraServicio.registrar(nombre, id);
-       System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
+       
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
         model.put("cristalerias",usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
@@ -435,7 +500,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
 
             Usuario login = (Usuario) session.getAttribute("usuariosession");
             if (login == null || !login.getId().equals(id)) {
-                return "redirect:/inicio";
+                return "index_app_registroBarra.html";
             }
 
             usuario = usuarioServicio.buscarPorId(id);
@@ -443,7 +508,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/inicio";
+            return  "index_app_registroBarra.html";
         } catch (ErrorServicio ex) {
            
 

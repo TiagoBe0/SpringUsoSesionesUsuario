@@ -45,12 +45,23 @@ public class RupturaServicio {
                  
            ruptura.setNombre(nombre);
            ruptura.setExplicacion(explicacion);
+           
            ruptura.setNumeroDeRuptura(cantidad);
            ruptura.setCostoRuptura(cristaleria.getPrecio()*cantidad);
            ruptura.setTipoCristaleria(cristaleria);
            ruptura.setCalendario(calendario);
            cristaleria.setEnStock(cristaleria.getEnStock()-cantidad);
            cristaleria.setIdUsuario(usuario.getId());
+           if(cristaleria.isInsumo()){
+               ruptura.setInsumo(true);
+               
+           }
+           else{
+           
+               ruptura.setInsumo(false);
+           }
+           
+           
            List<Ruptura> rupturas =usuario.getTodasLasRupturas();
            rupturas.add(ruptura);
            usuario.setTodasLasRupturas(rupturas);
