@@ -59,6 +59,52 @@
 					<span   class="text">Download PDF</span>
 				</a>
 			</div>
+                      <ul class="box-info">
+                            <li style="width: 220px;height: 75px">
+					
+                                        <h4  >Barras: </h4>
+					<span class="text">
+						<h3  th:text="${perfil.totalDeBarras}" ></h3>
+						<p></p>
+					</span>
+				</li>
+                                <li style="width: 220px;height: 75px">
+					
+                                        <h4 >cristalerias: </h4>
+					<span class="text">
+						<h3 th:text="${perfil.totalCristalerias}" ></h3>
+						<p></p>
+					</span>
+				</li>
+				<li style="width: 220px;height: 75px">
+					
+                                        <h4  >Dias Sin Rupturas</h4>
+					<span class="text">
+						<h3 th:text="${perfil.diasLimpios}"></h3>
+						<p></p>
+					</span>
+				</li>
+                                <li  style="width: 300px;height: 100px ;background: rgb(217,168,2);
+background: linear-gradient(90deg, rgba(217,168,2,0.9500175070028011) 0%, rgba(128,9,19,0.7231267507002801) 43%, rgba(162,11,29,0.7147233893557423) 100%);" >
+					<i class='bx bxs-dollar-circle' ></i>
+                                        <h4 >perdidas del mes</h4>
+                                       
+					<span class="text">
+						<h3 th:text="${perfil.costeMensual+'$'}"></h3>
+                                                
+                                                </span>
+				</li>
+                                <li  style="width: 300px;height: 100px;background: rgb(2,212,217);
+background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9,128,31,0.7231267507002801) 43%, rgba(11,162,94,0.7147233893557423) 100%);">
+					<i class='bx bxs-dollar-circle' ></i>
+                                        <h4 >capital</h4>
+                                       
+					<span class="text">
+						<h3 th:text="${perfil.capitalTotal+'$'}"></h3>
+                                                
+                                                </span>
+				</li>
+			</ul>
 
 			
 
@@ -105,52 +151,7 @@
                                                 
 					</table>
 				</div>
-                        <ul class="box-info">
-                            <li style="width: 220px;height: 75px">
-					
-                                        <h4  >Barras: </h4>
-					<span class="text">
-						<h3  th:text="${perfil.totalDeBarras}" ></h3>
-						<p></p>
-					</span>
-				</li>
-                                <li style="width: 220px;height: 75px">
-					
-                                        <h4 >cristalerias: </h4>
-					<span class="text">
-						<h3 th:text="${perfil.totalCristalerias}" ></h3>
-						<p></p>
-					</span>
-				</li>
-				<li style="width: 220px;height: 75px">
-					
-                                        <h4  >Dias Sin Rupturas</h4>
-					<span class="text">
-						<h3 th:text="${perfil.diasLimpios}"></h3>
-						<p></p>
-					</span>
-				</li>
-                                <li  style="width: 300px;height: 100px ;background: rgb(217,168,2);
-background: linear-gradient(90deg, rgba(217,168,2,0.9500175070028011) 0%, rgba(128,9,19,0.7231267507002801) 43%, rgba(162,11,29,0.7147233893557423) 100%);" >
-					<i class='bx bxs-dollar-circle' ></i>
-                                        <h4 >perdidas del mes</h4>
-                                       
-					<span class="text">
-						<h3 th:text="${perfil.costeMensual+'$'}"></h3>
-                                                
-                                                </span>
-				</li>
-                                <li  style="width: 300px;height: 100px;background: rgb(2,212,217);
-background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9,128,31,0.7231267507002801) 43%, rgba(11,162,94,0.7147233893557423) 100%);">
-					<i class='bx bxs-dollar-circle' ></i>
-                                        <h4 >capital</h4>
-                                       
-					<span class="text">
-						<h3 th:text="${perfil.capitalTotal+'$'}"></h3>
-                                                
-                                                </span>
-				</li>
-			</ul>
+                      
 
                         </div>
                                 
