@@ -8,7 +8,7 @@
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<!-- My CSS -->
         <link rel="stylesheet" href="../styles.css">
-
+ 
         
           <style>
      
@@ -40,11 +40,10 @@
   </style>
 	<title>AdminHub</title>
 </head>
-<body style="background-image: url(https://static.vecteezy.com/system/resources/previews/002/623/583/original/abstract-black-geometric-shape-background-with-diagonal-line-texture-design-for-presentation-banner-cover-web-flyer-card-poster-game-texture-slide-and-powerpoint-illustration-vector.jpg)">
-
+<body style="background-image: url(https://th.bing.com/th/id/OIP.XqXoj7lKuHP_6zfTPiOAawHaE6?rs=1&pid=ImgDetMain)" >
 
 	<!-- SIDEBAR -->
-	<section id="sidebar" th:replace="/fragments/navInsumo">
+	<section id="sidebar" th:replace="/fragments/navCristaleria">
 		
 	</section>
 	<!-- SIDEBAR -->
@@ -63,19 +62,19 @@
 		<main>
                     <a class="boton" th:href="@{/usuario/panel-barra(id=__${session.usuariosession.id}__)}" type="submit"  >DASHBOARD</a>
 			<section class="form-register">
-  <h4 style="color: black">Registrar Insumo</h4>
+  <h4 style="color: black">Registrar Cristaleria</h4>
   <!-- MAIN FORMULARIOOO -->
    <form action="/usuario/actualizar-cristaleria" method="POST" enctype="multipart/form-data">
        
-  <input style="color: black" class="controls" type="text" name="tipo" id="nombre" placeholder="nombre de insumo">
+  <input style="color: black" class="controls" type="text" name="tipo" id="nombre" placeholder="tipo de cristaleria">
   <input type="hidden" name="id" th:value="${perfil.id}"/>
    <input style="color: black" class="controls" type="text" name="descripcion" id="nombre" placeholder="descripcion (opcional)">
  
-  <input style="color: black" class="controls" type="number" name="enStock" id="nombre" placeholder="cantidad de unidades / kg ">
-  <input style="color: black" class="controls" type="number" name="precio" id="nombre" placeholder="precio por unidad / kg">
+  <input style="color: black" class="controls" type="number" name="enStock" id="nombre" placeholder="cantidad de unidades ">
+  <input style="color: black" class="controls" type="number" name="precio" id="nombre" placeholder="precio por unidad">
   <label style="color: #660000">Barra Perteneciente</label>
   <select  class="controls" style="color: #000" name="idBarra"> 
-      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"> </option>
+      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}" th:if="${barra.insumo}"> <</option>
   </select> 
    
   <label>Foto </label>
@@ -91,14 +90,10 @@
             </div>
         </div>
   
-   
-     
-                                                                                                      
-                                                                                                      
-                                                                                                       <label style="color: black">Subir Foto </label>
-  
-                                                                                                      
-                                                                                                      <input style="color: black" class="controls" type="file" name="archivo" id="nombre" placeholder="Subir foto ">
+                         
+    <label style="color: black">Subir Foto </label>
+ 
+            <input style="color: black" class="controls" type="file" name="archivo" id="nombre" placeholder="Subir foto ">
   
   
   

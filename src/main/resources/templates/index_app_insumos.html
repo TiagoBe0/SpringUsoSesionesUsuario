@@ -103,6 +103,10 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
                                                                                                     </i>
 
                                                    </a>
+                                                  <a  th:href="@{/pdf/insumo/__${perfil.id}__}">
+                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAURJREFUSEvt1j9Lw0AYBvDnuVBynTqL6CQIujrYOR1cBQdHP4HgP1yEoggO7ezqB9BdEIufQrGzs3NOJXk0UqE0Jf9KoINZc/f+cu+9916Imh/WHB8p4LHZ3KF0CWA1CxfQ7Th3kfeBKWBg7TOAtbyJv+/JkyAM+1ljpwEqEPwcQLcIUgkInOPA93sgj/OQykASuAgyE1AEmRmYRJL0je9hJSCrCP6B3CMyXyl6d85vWbvYAHZFhoqihwagL8/rMY5fRV4LWDbA09/SSq3AeN6Coug2ObEC2pQ2BWwACCjtAxiK3APQrgR8ONfyrT0EuQ3gZhKIyXtKWyCPKgGGXIqlt1G/OUhS9NOmZYzpQxqC/ARwOr7zpVKUWzJTBswFUPzCSa/gJXBuPbMXja7MKwArJVOUVNRZJwzvMoGSQXOH1/5X8Q1FZa4Z/LaayAAAAABJRU5ErkJggg=="/>
+
+                                                   </a>
                                                 
 					</div>
 					<table>
@@ -144,7 +148,10 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 					<div class="head">
 						<h3>Panel De Rupturas</h3>
 						<i class='bx bx-search' ></i>
-						<i class='bx bx-filter' ></i>
+						  <a  th:href="@{/pdf/vencimiento/__${perfil.id}__}">
+                                             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAURJREFUSEvt1j9Lw0AYBvDnuVBynTqL6CQIujrYOR1cBQdHP4HgP1yEoggO7ezqB9BdEIufQrGzs3NOJXk0UqE0Jf9KoINZc/f+cu+9916Imh/WHB8p4LHZ3KF0CWA1CxfQ7Th3kfeBKWBg7TOAtbyJv+/JkyAM+1ljpwEqEPwcQLcIUgkInOPA93sgj/OQykASuAgyE1AEmRmYRJL0je9hJSCrCP6B3CMyXyl6d85vWbvYAHZFhoqihwagL8/rMY5fRV4LWDbA09/SSq3AeN6Coug2ObEC2pQ2BWwACCjtAxiK3APQrgR8ONfyrT0EuQ3gZhKIyXtKWyCPKgGGXIqlt1G/OUhS9NOmZYzpQxqC/ARwOr7zpVKUWzJTBswFUPzCSa/gJXBuPbMXja7MKwArJVOUVNRZJwzvMoGSQXOH1/5X8Q1FZa4Z/LaayAAAAABJRU5ErkJggg=="/>
+
+                                                   </a>
 					</div>
 					<table>
 						<thead >
@@ -163,7 +170,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="ruptura: ${rupturas}" >
+							<tr th:each="ruptura: ${rupturas}" th:if="${ruptura.insumo}" >
                                                
 								<td >
 									<img th:src="${'/foto/cristaleriafoto/' + ruptura.tipoCristaleria.id}">

@@ -14,7 +14,9 @@ import com.proyecto.demo.servicios.PedidoServicio;
 import com.proyecto.demo.servicios.ProveedorServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
+import java.io.IOException;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -389,6 +391,31 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
         return "index_app_registroRuptura.html";
     }
+    //ESTE ES PARA ENTRAR AL FORMULARIO DE RUPTURA
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/editar-vencimiento")
+    public String cargarVencimiento(HttpSession session , String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+       
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        model.put("cristalerias",usuarioServicio.buscarPorId(id).getTodasLasCristalerias());
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+            
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+            model.addAttribute("perfil", usuario);
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroVencimiento.html";
+    }
     
     
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -757,5 +784,8 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+    
+    
+  
 
 }//llave de clase

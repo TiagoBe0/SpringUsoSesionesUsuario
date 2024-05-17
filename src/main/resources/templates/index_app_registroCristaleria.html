@@ -74,7 +74,7 @@
   <input style="color: black" class="controls" type="number" name="precio" id="nombre" placeholder="precio por unidad">
   <label style="color: #660000">Barra Perteneciente</label>
   <select  class="controls" style="color: #000" name="idBarra"> 
-      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"> <</option>
+      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}" th:if="${!barra.insumo}"> </option>
   </select> 
    
   <label>Foto </label>

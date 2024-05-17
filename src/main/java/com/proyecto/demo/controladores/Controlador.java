@@ -90,9 +90,9 @@ public class Controlador {
            
             return "index.html";
         }
-        modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
+        modelo.put("titulo", "Bienvenido a BartenderStock");
         modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
-        return "exito.html";
+        return "index_app_inicio.html";
     }
     @PostMapping("/registrarAdmin")
     public String registrarAdmin( ModelMap modelo,MultipartFile archivo, @RequestParam String nombre, @RequestParam String apellido, @RequestParam String mail, @RequestParam String clave1, @RequestParam String clave2) {
@@ -103,9 +103,9 @@ public class Controlador {
            
             return "index.html";
         }
-        modelo.put("titulo", "Bienvenido a Tinder de Mascotas");
+       modelo.put("titulo", "Bienvenido a BartenderStock");
         modelo.put("descripcion", "Tu usuario fue registrado de manera satisfactoria");
-        return "exito.html";
+        return "index_app_inicio.html";
     }
 
 }

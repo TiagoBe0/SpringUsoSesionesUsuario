@@ -19,6 +19,7 @@ server:
     whitelabel:
       enabled: false
   servlet:
+      
     session:
       cookie:
         http-only: true

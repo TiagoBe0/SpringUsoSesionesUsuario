@@ -101,7 +101,30 @@ public class RupturaServicio {
     return costeMensual;
     
     }
-   
+   public List<Ruptura> listarTodasRupturas(String id) throws ErrorServicio{
+   List<Ruptura> rupturas = usuarioServicio.buscarPorId(id).getTodasLasRupturas();
+       for (Ruptura ruptura : rupturas) {
+           if(ruptura.isInsumo()){
+           
+               rupturas.remove(ruptura);
+           }
+           
+           
+       }
+ return rupturas;
+   }
+    public List<Ruptura> listarTodosInsumos(String id) throws ErrorServicio{
+   List<Ruptura> rupturas = usuarioServicio.buscarPorId(id).getTodasLasRupturas();
+       for (Ruptura ruptura : rupturas) {
+           if(!ruptura.isInsumo()){
+           
+               rupturas.remove(ruptura);
+           }
+           
+           
+       }
+ return rupturas;
+   }
  @Transactional
     public void borrarTodo(){
     

@@ -14,6 +14,7 @@ F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\DemoApplication.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\Controlador.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\ErroresController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\ProveedorController.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\UserPDFExporter.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\CristalController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\UsuarioRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\FotoController.java
@@ -36,6 +37,7 @@ F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Barra.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\AdminController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\BarraController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\RupturaRepositorio.java
+F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\controladores\PdfController.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\ServletInitializer.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\repositorios\ProveedorRepositorio.java
 F:\SpringUsoSesionesUsuario\src\main\java\com\proyecto\demo\entidades\Cristal.java

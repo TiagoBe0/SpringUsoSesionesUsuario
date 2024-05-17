@@ -36,7 +36,7 @@
   <input style="color: black" class="controls" type="number" name="cantidad" id="nombre" placeholder="unidades perdidas ">
   <label style="color: #660000">Tipo de Cristaleria Rota</label>
   <select style="color: #000" class="controls" name="idCristaleria"> 
-      <option th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo+'-'+cristaleria.barraPerteneciente.nombre}"  ></option>
+      <option th:each="cristaleria: ${cristalerias}" th:value="${cristaleria.id}" th:text="${cristaleria.tipo+'-'+cristaleria.barraPerteneciente.nombre}" th:if="${!cristaleria.insumo}" ></option>
       </select>
   
   <label style="color: #660000">Barra Perteneciente</label>
