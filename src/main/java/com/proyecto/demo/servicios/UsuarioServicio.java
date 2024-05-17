@@ -301,14 +301,20 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setTotalCristalerias(array[0]);
         usuario.setTotalInsumos(array[1]);
         Calendar calendario = new GregorianCalendar();
-            actualizacionCosteMensualRupturas(idUsuario,calendario );
+       
+
+         usuario.setCosteMensualInsumos(actualizacionCosteMensualVencimientos(idUsuario, calendario));
+            usuario.setCosteMensual(actualizacionCosteMensualRupturas(idUsuario, calendario));
+        }
+        
+           
        
         }
     
     
     
     
-    }
+    
     
     //RUPTURA DEL MES
     

@@ -132,7 +132,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="cristaleria : ${cristalerias}" th:if="${!cristaleria.insumo}" >
+							<tr th:each="cristaleria : ${cristalerias}" th:if="${!cristaleria.insumo && cristaleria.activo}" >
                                                
 								<td >
 									<img th:src="${'/foto/cristaleriafoto/' + cristaleria.id}">
@@ -183,7 +183,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="ruptura: ${rupturas}" >
+							<tr th:each="ruptura: ${rupturas}" th:if="${!ruptura.insumo}">
                                                
 								<td >
 									<img th:src="${'/foto/cristaleriafoto/' + ruptura.tipoCristaleria.id}">

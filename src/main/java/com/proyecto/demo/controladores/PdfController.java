@@ -80,4 +80,19 @@ public class PdfController {
     
     }
     
+     @GetMapping("/vencimiento/{id}")
+    public void exportToPDFVencimientos(HttpServletResponse response,@PathVariable String id) throws IOException, ErrorServicio{
+        response.setContentType("application/pdf");
+        String headerKey="Content-Disposition";
+        String headerValue="attachment; filename=vencimientos.pdf";
+        response.setHeader(headerKey, headerValue);
+        
+        List<Ruptura> rupturas= rupturaServicio.listarTodasRupturas(id);
+         UserPDFExporter exporter = new UserPDFExporter(null, null, rupturas, null, null);
+          exporter.exportVencimientos(response);
+    
+    
+    
+    }
+   
 }

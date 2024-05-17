@@ -22,6 +22,7 @@ public class Cristaleria {
     private String id;
      private boolean insumo;
      private String tipo;
+     private boolean activo=true;
     @OneToOne
      private Barra barraPerteneciente;
     
@@ -47,6 +48,14 @@ public class Cristaleria {
 
     public String getId() {
         return id;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 
     public float getPrecioTotal() {

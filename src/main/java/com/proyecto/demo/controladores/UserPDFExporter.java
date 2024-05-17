@@ -190,6 +190,7 @@ public class UserPDFExporter {
            
            
         for (Ruptura r : rupturas) {
+            if(!r.isInsumo()){
            
             table.addCell(String.valueOf(r.getNumeroDeRuptura()));
             table.addCell(r.getTipoCristaleria().getTipo());
@@ -198,6 +199,24 @@ public class UserPDFExporter {
             table.addCell(String.valueOf(r.getCostoRuptura())+"$");
             table.addCell(r.getExplicacion());
             //table.addCell(String.valueOf(r.getDia()+"/"+r.getAnio()));
+        }
+        }
+    }
+         //llena los campos del pdf rupturas
+        private void writeTableDataVencimientos(PdfPTable table) throws BadElementException, IOException {
+           
+           
+        for (Ruptura r : rupturas) {
+            if(r.isInsumo()){
+           
+            table.addCell(String.valueOf(r.getNumeroDeRuptura()));
+            table.addCell(r.getTipoCristaleria().getTipo());
+           
+            table.addCell(r.getNombre());
+            table.addCell(String.valueOf(r.getCostoRuptura())+"$");
+            table.addCell(r.getExplicacion());
+            //table.addCell(String.valueOf(r.getDia()+"/"+r.getAnio()));
+        }
         }
     }
      //exporta el pdf cristalerias
@@ -250,6 +269,34 @@ public class UserPDFExporter {
          
         writeTableHeaderRuptura(table);
         writeTableDataRupturas(table);
+         
+        document.add(table);
+         
+        document.close();
+         
+    }
+      //exporta el pdf
+     public void exportVencimientos(HttpServletResponse response) throws DocumentException, IOException {
+        Document document = new Document(PageSize.A6.rotate());
+        PdfWriter.getInstance(document, response.getOutputStream());
+         
+        document.open();
+        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(18);
+        font.setColor(Color.BLUE);
+         
+        Paragraph p = new Paragraph("Lista de Vencimientos", font);
+        p.setAlignment(Paragraph.ALIGN_CENTER);
+         
+        document.add(p);
+         
+        PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100f);
+        table.setWidths(new float[] {1.5f, 3.5f, 3.0f, 3.0f, 1.5f});
+        table.setSpacingBefore(10);
+         
+        writeTableHeaderRuptura(table);
+        writeTableDataVencimientos(table);
          
         document.add(table);
          

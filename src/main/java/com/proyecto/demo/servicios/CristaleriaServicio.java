@@ -260,11 +260,16 @@ public class CristaleriaServicio {
         
     }
     
-   
+   @Transactional
      public void deshabilitar(String id) throws ErrorServicio{
-     
-          cristaleriaRepositorio.deleteById(id);
-     
+          
+         Cristaleria cristaleria= buscarPorId(id);
+         if(cristaleria.isActivo()){
+             cristaleria.setActivo(false);
+         }
+         else{
+             cristaleria.setActivo(true);
+         }
      }
      
      @Transactional

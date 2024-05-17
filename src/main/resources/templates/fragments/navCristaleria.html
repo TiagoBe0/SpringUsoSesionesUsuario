@@ -44,6 +44,18 @@
 					<span class="text" >Nuevo Proveedor</span>
 				</a>
                         </li>
+                         <li>
+                            <a th:href="@{/usuario/editar-pedido(id=__${session.usuariosession.id}__)}">
+				<i class='bx bx-cart' ></i>	
+                                <span class="text" >Nuevo Pedido</span>
+				</a>
+			</li>
+                         <li>
+                            <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
+				<i class='bx bx-log-in' ></i>	
+                                <span class="text" >Recepcion de Pedido</span>
+				</a>
+			</li>
                         <li>
                             <a th:href="@{/usuario/editar-cristal(id=__${session.usuariosession.id}__)}">
 					<i class='bx bx-image-add' ></i>

@@ -41,7 +41,7 @@ public class RupturaServicio {
         if (!idCristaleria.isEmpty()) {
 
             Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
-                 Usuario usuario = usuarioServicio.buscarPorId(id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
                  
            ruptura.setNombre(nombre);
            ruptura.setExplicacion(explicacion);
@@ -68,6 +68,8 @@ public class RupturaServicio {
           barraServicio.actualizarStockBarra(cristaleria.getBarraPerteneciente().getId(), cantidad);
            barraServicio.actualizarPrecioBarra(cristaleria.getBarraPerteneciente(), ruptura.getCostoRuptura());
         usuarioServicio.actualizarCapitalTotal(id);
+        //COSTE MENSUAL
+       
            //barraRepositorio.save(barraPerteneciente);
 
         }
@@ -103,28 +105,10 @@ public class RupturaServicio {
     }
    public List<Ruptura> listarTodasRupturas(String id) throws ErrorServicio{
    List<Ruptura> rupturas = usuarioServicio.buscarPorId(id).getTodasLasRupturas();
-       for (Ruptura ruptura : rupturas) {
-           if(ruptura.isInsumo()){
-           
-               rupturas.remove(ruptura);
-           }
-           
-           
-       }
+      
  return rupturas;
    }
-    public List<Ruptura> listarTodosInsumos(String id) throws ErrorServicio{
-   List<Ruptura> rupturas = usuarioServicio.buscarPorId(id).getTodasLasRupturas();
-       for (Ruptura ruptura : rupturas) {
-           if(!ruptura.isInsumo()){
-           
-               rupturas.remove(ruptura);
-           }
-           
-           
-       }
- return rupturas;
-   }
+    
  @Transactional
     public void borrarTodo(){
     
