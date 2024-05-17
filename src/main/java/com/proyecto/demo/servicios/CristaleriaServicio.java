@@ -85,11 +85,29 @@ public class CristaleriaServicio {
 
     }
     
-    public List<Cristaleria> listarPorIdUsuario(String mail){
+    public List<Cristaleria> listarCristaleriasPorIdUsuario(String idUsuario){
     
     
-    return cristaleriaRepositorio.buscarPorIdUsuario(mail);
+   return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+   
+    
     }
+     public List<Cristaleria> listarInsumosPorIdUsuario(String idUsuario){
+    
+    
+    return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+  
+       
+    
+    }
+    
+    
+    public List<Cristaleria> listarPorIdUsuario(String idUsuario){
+    
+    
+    return cristaleriaRepositorio.buscarPorIdUsuario(idUsuario);
+    }
+     
 
     @Transactional
     public void modificar(MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String idBarra,String id,String idCristal) throws ErrorServicio {

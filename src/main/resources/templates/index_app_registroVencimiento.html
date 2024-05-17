@@ -40,8 +40,8 @@
       </select>
   
   <label style="color: #660000">Barra Perteneciente</label>
-  <select  class="controls" style="color: #000" name="idBarra"> 
-      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}"> <</option>
+  <select  class="controls" style="color: #000" name="idBarra" > 
+      <option style="color: #660000" th:each="barra : ${barras}" th:value="${barra.id}" th:text="${barra.nombre}" th:if="${barra.insumo}"> </option>
   </select>     
   
                                                                                                       

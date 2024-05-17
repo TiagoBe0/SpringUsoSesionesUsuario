@@ -36,15 +36,30 @@ public class PdfController {
     private PedidoServicio pedidoServicio;
     
     @GetMapping("/cristalerias/{id}")
-    public void exportToPDF(HttpServletResponse response,@PathVariable String id) throws IOException{
+    public void exportToPDF(HttpServletResponse response,@PathVariable String id) throws IOException, ErrorServicio{
         response.setContentType("application/pdf");
         String headerKey="Content-Disposition";
         String headerValue="attachment; filename=cristalerias.pdf";
         response.setHeader(headerKey, headerValue);
         
-        List<Cristaleria> cristalerias= cristaleriaServicio.listarPorIdUsuario(id);
+        List<Cristaleria> cristalerias= cristaleriaServicio.listarCristaleriasPorIdUsuario(id);
          UserPDFExporter exporter = new UserPDFExporter(null, cristalerias, null, null, null);
           exporter.export(response);
+    
+    
+    
+    }
+    
+     @GetMapping("/insumo/{id}")
+    public void exportToPDFInsumos(HttpServletResponse response,@PathVariable String id) throws IOException, ErrorServicio{
+        response.setContentType("application/pdf");
+        String headerKey="Content-Disposition";
+        String headerValue="attachment; filename=insumos.pdf";
+        response.setHeader(headerKey, headerValue);
+        
+        List<Cristaleria> cristalerias= cristaleriaServicio.listarInsumosPorIdUsuario(id);
+         UserPDFExporter exporter = new UserPDFExporter(null, cristalerias, null, null, null);
+          exporter.exportInsumos(response);
     
     
     
@@ -64,4 +79,5 @@ public class PdfController {
     
     
     }
+    
 }

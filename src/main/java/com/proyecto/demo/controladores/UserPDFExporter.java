@@ -79,6 +79,33 @@ public class UserPDFExporter {
         cell.setPhrase(new Phrase("Barra", font));
         table.addCell(cell);       
     }
+     private void writeTableHeaderInsumos(PdfPTable table) {
+        PdfPCell cell = new PdfPCell();
+        cell.setBackgroundColor(Color.BLUE);
+        cell.setPadding(5);
+         
+        Font font = FontFactory.getFont(FontFactory.HELVETICA);
+        font.setColor(Color.WHITE);
+         
+        cell.setPhrase(new Phrase("Stock", font));
+        table.addCell(cell);
+         
+        cell.setPhrase(new Phrase("Tipo", font));
+        table.addCell(cell);
+        
+       
+         
+        cell.setPhrase(new Phrase("Foto", font));
+        table.addCell(cell);
+         
+        cell.setPhrase(new Phrase("Coste Unitario", font));
+        table.addCell(cell);
+        //cell.setPhrase(new Phrase("Descripcion", font));
+        //table.addCell(cell);
+         
+        cell.setPhrase(new Phrase("Barra", font));
+        table.addCell(cell);       
+    }
       private void writeTableHeaderRuptura(PdfPTable table) {
         PdfPCell cell = new PdfPCell();
         cell.setBackgroundColor(Color.BLUE);
@@ -116,10 +143,15 @@ public class UserPDFExporter {
             table.addCell(String.valueOf(user.getAlta()));
         }
     }
+    
+    
+    
+    
        private void writeTableDataCristalerias(PdfPTable table) throws BadElementException, IOException {
            
            
         for (Cristaleria c : cristalerias) {
+            if(!c.isInsumo()){
             Image imagen = new Jpeg(c.getFoto().getContenido(), 10.0f, 10.0f);
             table.addCell(String.valueOf(c.getEnStock()));
             table.addCell(c.getTipo());
@@ -130,6 +162,27 @@ public class UserPDFExporter {
             
             //table.addCell(c.getDescripcion());
             table.addCell(c.getBarraPertenecienteNombre());
+        }
+    }
+       }
+       
+       //escribe tabla de insumos
+         private void writeTableDataInsumos(PdfPTable table) throws BadElementException, IOException {
+           
+           
+        for (Cristaleria c : cristalerias) {
+            if(c.isInsumo()){
+            Image imagen = new Jpeg(c.getFoto().getContenido(), 10.0f, 10.0f);
+            table.addCell(String.valueOf(c.getEnStock()));
+            table.addCell(c.getTipo());
+           
+            table.addCell(imagen);
+             
+            table.addCell(String.valueOf(c.getPrecio())+"$");
+            
+            //table.addCell(c.getDescripcion());
+            table.addCell(c.getBarraPertenecienteNombre());
+        }
         }
     }
        //llena los campos del pdf rupturas
@@ -203,6 +256,33 @@ public class UserPDFExporter {
         document.close();
          
     }
-    
+    //export insumo
+      public void exportInsumos(HttpServletResponse response) throws DocumentException, IOException {
+        Document document = new Document(PageSize.A4.rotate());
+        PdfWriter.getInstance(document, response.getOutputStream());
+         
+        document.open();
+        Font font = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        font.setSize(18);
+        font.setColor(Color.BLUE);
+         
+        Paragraph p = new Paragraph("Lista de Cristalerias", font);
+        p.setAlignment(Paragraph.ALIGN_CENTER);
+         
+        document.add(p);
+         
+        PdfPTable table = new PdfPTable(5);
+        table.setWidthPercentage(100f);
+        table.setWidths(new float[] {1.5f, 3.5f, 3.0f, 3.0f, 1.5f});
+        table.setSpacingBefore(10);
+         
+        writeTableHeaderInsumos(table);
+        writeTableDataInsumos(table);
+         
+        document.add(table);
+         
+        document.close();
+         
+    }
 
 }
