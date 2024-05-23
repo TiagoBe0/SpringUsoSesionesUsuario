@@ -79,13 +79,24 @@ background: linear-gradient(90deg, rgba(217,168,2,0.9500175070028011) 0%, rgba(1
 				</li>
                                 <li  style="width: 300px;height: 100px;background: rgb(2,212,217);
 background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9,128,31,0.7231267507002801) 43%, rgba(11,162,94,0.7147233893557423) 100%);">
-					<i class='bx bxs-dollar-circle' ></i>
+                                    <i class='bx bxs-dollar-circle' >
+                                        
+                                    </i>
                                         <h4 >capital</h4>
                                        
 					<span class="text">
+                                            
 						<h3 th:text="${perfil.capitalTotalInsumos+'$'}"></h3>
                                                 
                                                 </span>
+                                        <a th:href="@{/usuario/historial-insumos(id=__${session.usuariosession.id}__)}">
+                                        <img   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAALdJREFUSEvNleEVgjAMhD820U1YxUnUSWQTRtFNxPgsr8UUSfrio3/L3eWuCekIPl0wP38VGIHe6WgATho2d/B0kieYmoYmYI0tFbY/gV+RpYrdDsIFtr6520G4gDWivKB5LtbatEVAxN7cEXNQvMnuBPLYanPQ5CBcQGvd5RxUHdyBA3AEHluHAMhxgpffvuCFp+iiC3A2EK99en1dCt/XRrt9lo5U4j0zuSbgJa3irMvFXEC4wASFzTIZSfWTbwAAAABJRU5ErkJggg=="/>
+                                        
+                                       </a>
+                                      
+                                              
+                            
+                                        
 				</li>
 			</ul>
 
@@ -120,9 +131,10 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="cristaleria : ${cristalerias}" th:if="${cristaleria.insumo}" >
+							<tr th:each="cristaleria : ${cristalerias}" th:if="${cristaleria.insumo && cristaleria.activo && cristaleria.enStock > 0}" >
                                                
 								<td >
+                                                                     <a th:href="@{/usuario/modificar-barra-panel/__${cristaleria.barraPerteneciente.id}__}" ><i class='bx bx-plus' style="width: 50px"></i></a>
 									<img th:src="${'/foto/cristaleriafoto/' + cristaleria.id}">
 									<p th:text="${cristaleria.tipo}"></p>
 								</td>

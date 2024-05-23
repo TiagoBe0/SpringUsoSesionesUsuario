@@ -187,8 +187,11 @@
 		
                  <div class="contenido-carddd" >
                  <form  style="align-items: lefth " action="/usuario/alterar-cristaleria"  method="POST" enctype="multipart/form-data">
+                      <p th:if="${exito!=null}" th:text="${exito}" style="color:green">Actualizado</p>
+       <p th:if="${error!=null}" th:text="${exito}" style="color:red">falta algun campo obligatorio</p>
                      <input style="color: #000" type="hidden" class="contenido-card input" name="idCristaleria" th:value="${cristaleria.id}"  >
-                     <input style="color: #000" type="hidden" class="contenido-card input"  name="id" th:value="${cristaleria.idUsuario}"  >
+                     <input style="color: #000" type="hidden" class="contenido-card input"  name="idBarra" th:value="${barra.id}"  >
+                          <input style="color: #000" type="hidden" class="contenido-card input" name="id" th:value="${cristaleria.idUsuario}"  >
                      <input style="color: #000" type="text" class="contenido-card input" name="tipo" th:value="${cristaleria.tipo}"  placeholder="modificar nombre">
                         <input  style="color: #000" type="text" class="contenido-card input" name="descripcion" th:value="${cristaleria.descripcion}"   placeholder="modificar descripcion" ><!-- comment -->
                             <input  style="color: #000" type="number" class="contenido-card input" name="enStock" th:value="${cristaleria.enStock}"  placeholder="modificar total unidades" ><!-- comment -->

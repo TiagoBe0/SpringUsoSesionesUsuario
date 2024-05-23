@@ -2,6 +2,7 @@
 
 package com.proyecto.demo.entidades;
 
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,6 +46,58 @@ public class Cristaleria {
     private Date alta;
     @Temporal(TemporalType.TIMESTAMP)
     private Date baja;
+    
+      private Calendar calendario;
+     private int anio;
+     private int mes;
+     private int dia;
+     private int hora;
+
+    public Calendar getCalendario() {
+        return calendario;
+    }
+
+    public void setCalendario(Calendar calendario) {
+        this.calendario = calendario;
+        setAnio(calendario.get(Calendar.YEAR));
+        setMes(calendario.get(Calendar.MONTH)+1);
+        setDia(calendario.get(Calendar.DATE));
+        setHora(calendario.get(Calendar.HOUR));
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
+    }
+
+    public int getHora() {
+        return hora;
+    }
+
+    public void setHora(int hora) {
+        this.hora = hora;
+    }
+     
+     
 
     public String getId() {
         return id;

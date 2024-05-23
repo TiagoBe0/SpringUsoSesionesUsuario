@@ -28,7 +28,10 @@
 			<section class="form-register">
   <h4 style="color: black">Añadir imagen al repositorio</h4>
   <form action="/usuario/actualizar-cristal"  method="POST" enctype="multipart/form-data">
-<div class="form-check">
+
+      <p th:if="${exito!=null}" th:text="${exito}" style="color:green">registro exitoso</p>
+       <p th:if="${error!=null}" th:text="${exito}" style="color:red">falta algun campo obligatorio</p>
+      <div class="form-check">
   <input class="form-check-input" type="radio" name="insumo" value="-1">
   <label style="color: #000" for="flexRadioDefault1">
     Cristal

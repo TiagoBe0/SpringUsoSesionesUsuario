@@ -27,7 +27,7 @@
 					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
 				</div>
 			</form>
-                        <input type="checkbox" id="switch-mode" value="check">
+                        <input  type="checkbox" id="switch-mode" value="check">
 			<label for="switch-mode" class="switch-mode"></label>
 			<a href="#" class="notification">
 				<i class='bx bxs-bell' ></i>
@@ -57,7 +57,7 @@
 				
 			</div>
                       <ul class="box-info">
-                            <li style="width: 220px;height: 75px">
+                            <li style="width: 220px;height: 75px;">
 					
                                         <h4  >Barras: </h4>
 					<span class="text">
@@ -132,7 +132,7 @@ background: linear-gradient(90deg, rgba(2,212,217,0.9500175070028011) 0%, rgba(9
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="cristaleria : ${cristalerias}" th:if="${!cristaleria.insumo && cristaleria.activo}" >
+                                                    <tr th:each="cristaleria : ${cristalerias}" th:if="${!cristaleria.insumo && cristaleria.activo && cristaleria.enStock > 0}" >
                                                
 								<td >
 									<img th:src="${'/foto/cristaleriafoto/' + cristaleria.id}">

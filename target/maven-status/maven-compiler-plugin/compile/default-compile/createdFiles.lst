@@ -14,6 +14,7 @@ com\proyecto\demo\servicios\RupturaServicio.class
 com\proyecto\demo\entidades\Cristal.class
 com\proyecto\demo\controladores\ProveedorController.class
 com\proyecto\demo\security\Security.class
+com\proyecto\demo\controladores\ExitoController.class
 com\proyecto\demo\controladores\ErroresController.class
 com\proyecto\demo\servicios\CristalServicio.class
 com\proyecto\demo\controladores\UserPDFExporter.class

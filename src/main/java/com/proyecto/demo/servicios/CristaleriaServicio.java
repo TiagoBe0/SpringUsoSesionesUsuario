@@ -14,7 +14,9 @@ import com.proyecto.demo.repositorios.CristalRepositorio;
 import com.proyecto.demo.repositorios.CristaleriaRepositorio;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
@@ -63,6 +65,8 @@ public class CristaleriaServicio {
         cristaleria.setPrecio(precio);
         cristaleria.setEnStock(enStock);
         cristaleria.setTipo(tipo);
+        Calendar calendario = new GregorianCalendar();
+        cristaleria.setCalendario(calendario);
         //Creamos una barra de pertenecencia y añadimos a lista de cristaleria comoa tributo
         Barra barra =barraServicio.buscarPorId(idBarra);
         Usuario usuario = usuarioServicio.buscarPorId(barra.getUsuario().getId());

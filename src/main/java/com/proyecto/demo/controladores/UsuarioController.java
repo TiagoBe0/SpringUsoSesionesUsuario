@@ -168,6 +168,7 @@ public class UsuarioController {
         }
         return "index_app_registroProveedor.html";
     }
+    
      //HTML CREAR CRISTAL
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/editar-cristal")
@@ -215,6 +216,30 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_registroCristaleria.html";
+    }
+        //ESTE ES PARA ENTRAR AL FORMULARIO DE CRISTALERIA 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/cristaleria-existente")
+    public String cargarCristaleriaExistente(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+            
+          
+              model.addAttribute("cristales",cristalServicio.listarTodas());
+            model.addAttribute("perfil", usuario);
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_registroCristaleriaExistente.html";
     }
      //ESTE ES PARA ENTRAR AL FORMULARIO DE ITEM 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -332,6 +357,38 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_dataInsumos.html";
+    }
+    
+     //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER INSUMOS base de datos
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/historial-insumos")
+    public String historialInsumobd(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_historialInsumos.html";
     }
     
      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER Cristaleria base de datos
@@ -483,7 +540,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
  //POST MODIFICAR ALTERAR CREAR CRISTALERIA
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @PostMapping("/alterar-cristaleria")
-    public String alterarCristaleria(ModelMap modelo, HttpSession session,   String idCristaleria,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id) throws ErrorServicio {
+    public String alterarCristaleria(ModelMap modelo, HttpSession session,   String idCristaleria,MultipartFile archivo, String tipo, String descripcion, float precio, int enStock,String id,String idBarra) throws ErrorServicio {
         
         //Aqui me comunico con modificar cristaleria
          cristaleriaServicio.alterar(archivo, tipo, descripcion, precio, enStock, idCristaleria, id);
@@ -501,11 +558,11 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-item-existente/"+idBarra;
         } catch (ErrorServicio ex) {
            
 
-            return "perfil.html";
+            return "redirect:/exito-registro-item-existente/"+idBarra;
         }
 
     }
@@ -535,7 +592,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return  "index_app_registroBarra.html";
+            return  "redirect:/exito-registro-barra/"+id;
         } catch (ErrorServicio ex) {
            
 
@@ -563,7 +620,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-proveedor/"+id;
         } catch (ErrorServicio ex) {
            
 
@@ -592,7 +649,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-pedido/"+id;
         } catch (ErrorServicio ex) {
            
 
@@ -672,19 +729,22 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
 
             Usuario login = (Usuario) session.getAttribute("usuariosession");
             if (login == null || !login.getId().equals(id)) {
-                return "redirect:/inicio";
+                return "redirect:/error-registro-cristaleria/"+id;
             }
 
             usuario = usuarioServicio.buscarPorId(id);
             //usuarioServicio.modificarBarra(id,nombre);
            
             session.setAttribute("usuariosession", usuario);
+            if(barraServicio.buscarPorId(idBarra).isInsumo()){
+                return "redirect:/exito-registro-item/"+id;
+            }else{
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-cristaleria/"+id;}
         } catch (ErrorServicio ex) {
            
 
-            return "perfil.html";
+            return "redirect:/error-registro-cristaleria/"+id;
         }
 
     }
@@ -715,7 +775,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
              modelo.addAttribute("cristales",cristalServicio.listarTodas());
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-cristal/"+id;
         } catch (ErrorServicio ex) {
            
 
@@ -751,12 +811,18 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         //METODO PARA MODIFICAR BARRA queda  guardado para despuesS GESTIR DE RYTYRAS
         @GetMapping("/ruptura/{id}")
 	public String crearRutura(ModelMap modelo, @PathVariable String id) throws ErrorServicio {
-		
+		  modelo.put("perfil",usuarioServicio.buscarPorId(id));
             modelo.put("cristaleria",cristaleriaServicio.buscarPorId(id));
            
             return "registroRuptura.html";
 	}
-
+      
+	public String exito(ModelMap modelo,  String id) throws ErrorServicio {
+		
+            modelo.put("cristaleria",cristaleriaServicio.buscarPorId(id));
+           
+            return "index_app_registroRuptura.html";
+	}
         
         //REGISTRAR RUPTURA -----------------------------------POST
  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
@@ -775,8 +841,9 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             usuario = usuarioServicio.buscarPorId(id);
             
             session.setAttribute("usuariosession", usuario);
+           
 
-            return "redirect:/inicio";
+            return "redirect:/exito-registro-ruptura/"+id;
         } catch (ErrorServicio ex) {
             
 
@@ -784,6 +851,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+    
     
     
   

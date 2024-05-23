@@ -28,7 +28,10 @@
 			<section class="form-register">
   <h4 style="color: black">Registro de Proveedor</h4>
   <form action="/usuario/actualizar-proveedor"  method="POST" enctype="multipart/form-data">
-  <input style="color: black" class="controls" type="text" name="nombre" id="nombre" placeholder="Ingrese un nombre">
+  
+      <p th:if="${exito!=null}" th:text="${exito}" style="color:green">registro de proveedor exitoso</p>
+       <p th:if="${error!=null}" th:text="${exito}" style="color:red">falta algun campo obligatorio</p>
+      <input style="color: black" class="controls" type="text" name="nombre" id="nombre" placeholder="Ingrese un nombre">
   <input style="color: black" class="controls" type="number" name="contacto" id="nombre" placeholder="contacto(542634542090)">
   <input style="color: black" class="controls" type="text" name="link" id="nombre" placeholder="(opcional)link de whatsapp">
   
