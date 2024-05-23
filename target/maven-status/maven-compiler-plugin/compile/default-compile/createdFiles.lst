@@ -8,6 +8,7 @@ com\proyecto\demo\servicios\FotoServicio.class
 com\proyecto\demo\controladores\CristaleriaController.class
 com\proyecto\demo\entidades\Usuario.class
 com\proyecto\demo\entidades\Ruptura.class
+com\proyecto\demo\repositorios\BalanceRepositorio.class
 com\proyecto\demo\repositorios\RupturaRepositorio.class
 com\proyecto\demo\servicios\CristaleriaServicio.class
 com\proyecto\demo\servicios\RupturaServicio.class
@@ -39,6 +40,7 @@ com\proyecto\demo\servicios\PedidoServicio.class
 com\proyecto\demo\controladores\FotoController.class
 com\proyecto\demo\repositorios\ProveedorRepositorio.class
 com\proyecto\demo\controladores\Controlador.class
+com\proyecto\demo\entidades\Balance.class
 com\proyecto\demo\servicios\ProveedorServicio.class
 com\proyecto\demo\ServletInitializer.class
 com\proyecto\demo\servicios\UsuarioServicio.class

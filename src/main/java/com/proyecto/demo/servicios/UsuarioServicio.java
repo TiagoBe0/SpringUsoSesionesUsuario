@@ -312,12 +312,25 @@ public class UsuarioServicio implements UserDetailsService {
         }
     
     
+    @Transactional
+    public void actualizarPerdidasTotales(String id) throws ErrorServicio{
+        
+        Usuario usuario = buscarPorId(id);
+        float suma=0.f;
+        for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
+            suma=suma+ruptura.getCostoRuptura();
+        }
+        usuario.setCosteMensual(suma);
+        
     
     
+        
+            
+            }
     
     
     //RUPTURA DEL MES
-    
+    @Transactional
     public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
          float costeMensualVencimiento=0.f;
@@ -327,7 +340,7 @@ public class UsuarioServicio implements UserDetailsService {
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
                 if(!ruptura.isInsumo()){
-                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                if(ruptura.getMes()==(calendario.get(Calendar.MONTH)+1)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
                     if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
@@ -342,7 +355,7 @@ public class UsuarioServicio implements UserDetailsService {
                 }else{
                 
                 
-                    if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                    if(ruptura.getMes()==calendario.get(Calendar.MONTH)+1){
                     
                     costeMensualVencimiento=costeMensualVencimiento+ruptura.getCostoRuptura();
                     if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
@@ -365,6 +378,8 @@ public class UsuarioServicio implements UserDetailsService {
     return costeMensual;
     
     }
+    
+    
     //VENCIMIENTOS
     
     public float actualizacionCosteMensualVencimientos(String idUsuario,Calendar calendario) throws ErrorServicio{

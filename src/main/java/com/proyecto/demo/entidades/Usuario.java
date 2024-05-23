@@ -39,7 +39,8 @@ public class Usuario {
   
     private int diasLimpiosInsumos;
     private int totalInsumos;
-     
+    @OneToMany
+     private List<Balance> balances;
     private float costeMensualInsumos;
     @ManyToOne
     private Zona zona;
@@ -176,6 +177,16 @@ public class Usuario {
     }
 
     public void setTodasLasRupturas(List<Ruptura> todasLasRupturas) {
+        float suma=0.f;
+        for (Ruptura r : todasLasRupturas)
+        {
+            if(!r.isInsumo()){
+                
+                    suma=suma+r.getCostoRuptura();
+            }
+            
+        }
+        setCosteMensual(suma);
         this.todasLasRupturas = todasLasRupturas;
     }
     

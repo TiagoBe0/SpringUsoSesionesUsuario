@@ -42,7 +42,7 @@ public class RupturaServicio {
 
             Cristaleria cristaleria = cristaleriaServicio.buscarPorId(idCristaleria);
             Usuario usuario = usuarioServicio.buscarPorId(id);
-                 
+          
            ruptura.setNombre(nombre);
            ruptura.setExplicacion(explicacion);
            
@@ -65,10 +65,12 @@ public class RupturaServicio {
            List<Ruptura> rupturas =usuario.getTodasLasRupturas();
            rupturas.add(ruptura);
            usuario.setTodasLasRupturas(rupturas);
+       
           barraServicio.actualizarStockBarra(cristaleria.getBarraPerteneciente().getId(), cantidad);
            barraServicio.actualizarPrecioBarra(cristaleria.getBarraPerteneciente(), ruptura.getCostoRuptura());
         usuarioServicio.actualizarCapitalTotal(id);
         //COSTE MENSUAL
+         
        
            //barraRepositorio.save(barraPerteneciente);
 
@@ -78,7 +80,7 @@ public class RupturaServicio {
     
     
     //RUPTURA DEL MES
-    
+    @Transactional
     public float actualizacionCosteMensualRupturas(String idUsuario,Calendar calendario) throws ErrorServicio{
         float costeMensual=0.f;
         Usuario usuario =usuarioServicio.buscarPorId(idUsuario);
@@ -86,7 +88,7 @@ public class RupturaServicio {
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
                 
-                if(ruptura.getCalendario().get(Calendar.MONTH)==calendario.get(Calendar.MONTH)){
+                if(ruptura.getCalendario().get(Calendar.MONTH)==(calendario.get(Calendar.MONTH)+1)){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
                 

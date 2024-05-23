@@ -359,7 +359,7 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         return "index_app_dataInsumos.html";
     }
     
-     //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER INSUMOS base de datos
+     //HISTORIAL DE INSUMOS
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/historial-insumos")
     public String historialInsumobd(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
@@ -389,6 +389,38 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
             model.addAttribute("error", e.getMessage());
         }
         return "index_app_historialInsumos.html";
+    }
+    
+      //HISTORIAL CRISTALERIA
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/historial-cristaleria")
+    public String historialCristaleria(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_historialCristaleria.html";
     }
     
      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER Cristaleria base de datos
