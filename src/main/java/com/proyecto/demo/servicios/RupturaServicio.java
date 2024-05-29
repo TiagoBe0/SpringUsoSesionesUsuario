@@ -45,13 +45,15 @@ public class RupturaServicio {
           
            ruptura.setNombre(nombre);
            ruptura.setExplicacion(explicacion);
+           ruptura.setIdUsuario(id);
+           ruptura.setUsuario(usuario);
            
            ruptura.setNumeroDeRuptura(cantidad);
            ruptura.setCostoRuptura(cristaleria.getPrecio()*cantidad);
            ruptura.setTipoCristaleria(cristaleria);
            ruptura.setCalendario(calendario);
            cristaleria.setEnStock(cristaleria.getEnStock()-cantidad);
-           cristaleria.setIdUsuario(usuario.getId());
+           
            if(cristaleria.isInsumo()){
                ruptura.setInsumo(true);
                
@@ -116,5 +118,20 @@ public class RupturaServicio {
     
     rupturaRepositorio.deleteAll();
     }
-       
+ 
+    
+    
+    public List<Ruptura> todasLasRupturas(String idUsuario){
+      List<Ruptura> rupturas=null;
+        for (Ruptura ruptura : rupturaRepositorio.findAll()) {
+            if(ruptura.getIdUsuario().equals(idUsuario)){
+            
+                rupturas.add(ruptura);
+            }
+            
+        }
+      
+    return rupturas;
+    }
+    
 }

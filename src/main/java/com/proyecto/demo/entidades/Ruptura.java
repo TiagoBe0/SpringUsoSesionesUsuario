@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +24,8 @@ public class Ruptura {
       private String idUsuario;
      private int numeroDeRuptura;
      private String explicacion;
+     @ManyToOne
+     private Usuario usuario;
     @Temporal(TemporalType.TIMESTAMP)
     private Date alta;
     @Temporal(TemporalType.TIMESTAMP)
@@ -56,6 +59,14 @@ public class Ruptura {
 
     public boolean isInsumo() {
         return insumo;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setInsumo(boolean insumo) {

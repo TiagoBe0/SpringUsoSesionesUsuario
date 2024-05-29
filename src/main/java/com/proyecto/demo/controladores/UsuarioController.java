@@ -3,6 +3,7 @@ package com.proyecto.demo.controladores;
 
 import com.proyecto.demo.entidades.Barra;
 import com.proyecto.demo.entidades.Cristaleria;
+import com.proyecto.demo.entidades.Ruptura;
 import com.proyecto.demo.entidades.Usuario;
 import com.proyecto.demo.entidades.Zona;
 import com.proyecto.demo.errores.ErrorServicio;
@@ -15,6 +16,7 @@ import com.proyecto.demo.servicios.ProveedorServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.io.IOException;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -289,7 +291,8 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
               model.addAttribute("proveedores", usuario.getProveedores());
             model.addAttribute("rupturas",usuario.getTodasLasRupturas());
              model.addAttribute("perfil", usuario);
-                
+                 model.addAttribute("costeMensual", usuarioServicio.costeMensualTotalPorMes(id));
+            
         } catch (ErrorServicio e) {
             model.addAttribute("error", e.getMessage());
         }
@@ -422,7 +425,71 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
         return "index_app_historialCristaleria.html";
     }
-    
+    //ACTRUALIZAR COSTE MENSUAL CRISTALERIA
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/historial-rupturas")
+    public String actualizarCosteMensualCristaleria(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+             model.addAttribute("costeMensual", usuarioServicio.costeMensualTotal(id));
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_historialRuptura.html";
+    }
+    //ACTRUALIZAR COSTE MENSUAL CRISTALERIA
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @GetMapping("/historial-vencimientos")
+    public String historialVencimientois(HttpSession session, @RequestParam String id, String nombre,ModelMap model) throws ErrorServicio {
+        //barraServicio.registrar(nombre, id);
+        
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        
+        model.put("barras", usuarioServicio.buscarPorId(id).getBarras());
+        List<Cristaleria> cristalerias=usuarioServicio.buscarPorId(id).getTodasLasCristalerias();
+         model.put("cristalerias",cristalerias );
+         
+         
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/inicio";
+        }
+
+        try {
+            //barraServicio.registrar(nombre, id);
+            Usuario usuario = usuarioServicio.buscarPorId(id);
+              usuarioServicio.actualizarCapitalTotal(id);
+             model.addAttribute("barras", usuarioServicio.todasLasBarras(id));
+              model.addAttribute("proveedores", usuario.getProveedores());
+            model.addAttribute("rupturas",usuario.getTodasLasRupturas());
+             model.addAttribute("perfil", usuario);
+             model.addAttribute("costeMensual", usuarioServicio.costeMensualTotalVencimientos(id));
+                
+        } catch (ErrorServicio e) {
+            model.addAttribute("error", e.getMessage());
+        }
+        return "index_app_historialVencimientos.html";
+    }
+   
      //ESTE ES PARA ENTRAR AL PANEL DE STOCK DE BARTENDER Cristaleria base de datos
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
     @GetMapping("/data-cristaleria")

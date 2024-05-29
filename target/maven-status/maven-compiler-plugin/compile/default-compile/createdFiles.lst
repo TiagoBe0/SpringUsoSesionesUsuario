@@ -1,5 +1,6 @@
 com\proyecto\demo\controladores\CristalController.class
 com\proyecto\demo\entidades\Zona.class
+com\proyecto\demo\servicios\BalanceServicio.class
 com\proyecto\demo\entidades\Cristaleria.class
 com\proyecto\demo\servicios\BarraServicio.class
 com\proyecto\demo\entidades\Foto.class

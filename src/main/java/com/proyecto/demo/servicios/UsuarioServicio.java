@@ -100,6 +100,8 @@ public class UsuarioServicio implements UserDetailsService {
 
         Foto foto = fotoServicio.guardar(archivo);
         usuario.setFoto(foto);
+         //modificarBarra(usuario.getId(), "Barra(cristaleria");
+         //modificarInsumo(usuario.getId(), "Barra(insumos)");
 
         usuarioRepositorio.save(usuario);
 
@@ -340,7 +342,7 @@ public class UsuarioServicio implements UserDetailsService {
         if(usuario!=null){
             for (Ruptura ruptura : usuario.getTodasLasRupturas()) {
                 if(!ruptura.isInsumo()){
-                if(ruptura.getMes()==(calendario.get(Calendar.MONTH)+1)){
+                if(true){
                     
                     costeMensual=costeMensual+ruptura.getCostoRuptura();
                     if(calendario.get(Calendar.DATE)-ruptura.getDia()<=diasLimpios){
@@ -379,7 +381,58 @@ public class UsuarioServicio implements UserDetailsService {
     
     }
     
-    
+    public float costeMensualTotal(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(!r.isInsumo()){
+               
+                   suma=suma+r.getCostoRuptura();
+               }
+           }
+       
+       }
+    return suma;
+    }
+    public float costeMensualTotalVencimientos(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(r.isInsumo()){
+               
+                   suma=suma+r.getCostoRuptura();
+               }
+           }
+       
+       }
+    return suma;
+    }
+    @Transactional
+    public float costeMensualTotalPorMes(String id) throws ErrorServicio{
+       Usuario usuario =buscarPorId(id);
+       Calendar calendario = new GregorianCalendar();
+        float suma=0.f;
+       if(usuario!=null){
+          
+           for (Ruptura r : usuario.getTodasLasRupturas()) {
+               if(!r.isInsumo()){
+               
+                   if((r.getMes()-1)==calendario.get(Calendar.MONTH)){
+                   
+                       suma+=r.getCostoRuptura();
+                   }
+               }
+               
+           }
+       usuario.setCosteMensual(suma);
+       }
+       
+    return suma;
+    }
     //VENCIMIENTOS
     
     public float actualizacionCosteMensualVencimientos(String idUsuario,Calendar calendario) throws ErrorServicio{
