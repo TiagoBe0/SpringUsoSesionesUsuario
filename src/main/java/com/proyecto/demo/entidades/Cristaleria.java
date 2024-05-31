@@ -26,8 +26,8 @@ public class Cristaleria {
      private boolean activo=true;
     @OneToOne
      private Barra barraPerteneciente;
-    
-         private String barraPertenecienteNombre;
+    private int totalEnPedido;
+    private String barraPertenecienteNombre;
     
     private String idUsuario;
     
@@ -63,6 +63,14 @@ public class Cristaleria {
         setMes(calendario.get(Calendar.MONTH)+1);
         setDia(calendario.get(Calendar.DATE));
         setHora(calendario.get(Calendar.HOUR));
+    }
+
+    public int getTotalEnPedido() {
+        return totalEnPedido;
+    }
+
+    public void setTotalEnPedido(int totalEnPedido) {
+        this.totalEnPedido = totalEnPedido;
     }
 
     public int getAnio() {

@@ -16,8 +16,12 @@ import com.proyecto.demo.servicios.ProveedorServicio;
 import com.proyecto.demo.servicios.RupturaServicio;
 import com.proyecto.demo.servicios.UsuarioServicio;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -730,25 +734,29 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         
      //POST ACTUALIZAR PROVEEDOR
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
-    @PostMapping("/actualizar-pedido")
-    public String actualizarPedido(ModelMap modelo, HttpSession session,   String id,  String nombre ,int contacto,String link ) throws ErrorServicio {
+    @PostMapping("/registro-pedido")
+    public String actualizarPedido(ModelMap modelo, HttpSession session,   List<String> id , List<Integer>   cantidad ,String idUsuario) throws ErrorServicio {
+              System.out.println("KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK");
        
+        
+
         //Aqui me comunico con MODIFICARBARRA
-         pedidoServicio.modificarPedido(id, nombre,contacto,link);
+        pedidoServicio.registrar(id,cantidad,idUsuario);
         Usuario usuario = null;
         try {
+            
 
             Usuario login = (Usuario) session.getAttribute("usuariosession");
-            if (login == null || !login.getId().equals(id)) {
+            if (login == null || !login.getId().equals(idUsuario)) {
                 return "redirect:/inicio";
             }
 
-            usuario = usuarioServicio.buscarPorId(id);
+            usuario = usuarioServicio.buscarPorId(idUsuario);
             //usuarioServicio.modificarBarra(id,nombre);
            
             session.setAttribute("usuariosession", usuario);
 
-            return "redirect:/exito-registro-pedido/"+id;
+            return "redirect:/exito-registro-pedido/"+idUsuario;
         } catch (ErrorServicio ex) {
            
 
@@ -756,6 +764,69 @@ System.out.println("NOMBRE E ID DE USUARIO BARRA _"+id+";"+nombre);
         }
 
     }
+    
+    @PostMapping("/registro-pedido-variable")
+    public String registerPedidoVariable(HttpServletRequest request) {
+        // Extract checkbox selections
+        System.out.println("    hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        List<Long> selectedCristalerias = new ArrayList<>();
+        List<String> stringInputs = new ArrayList<>();
+        
+        // Assuming cristalerias list has a known size, let's say 10 for example
+        int numberOfCristalerias = 10;
+
+        for (int i = 1; i <= numberOfCristalerias; i++) {
+            String checkboxParam = request.getParameter("id" + i);
+            if (checkboxParam != null) {
+                selectedCristalerias.add(Long.parseLong(checkboxParam));
+            }
+            String inputParam = request.getParameter("input" + i);
+            if (inputParam != null) {
+                stringInputs.add(inputParam);
+            }
+        }
+
+        // Process the selectedCristalerias and stringInputs
+        // For example, print them to console
+        System.out.println("Selected Cristalerias: " + selectedCristalerias);
+        System.out.println("String Inputs: " + stringInputs);
+
+        return "redirect:/some-success-page";
+    }
+  
+     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USUARIO')")
+    @PostMapping("/registro-pedido-chat")
+    public String handleSelectedCristalerias(@RequestParam("selectedIds[]") List<Integer> selectedIds) {
+         System.out.println("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG");
+        try {
+            // Procesar los IDs seleccionados
+            for (Integer id : selectedIds) {
+                // Lógica para registrar en la base de datos
+                System.out.println("Selected Cristaleria ID: " + id);
+            }
+            return "redirect:/success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+     @PostMapping("/registro-pedido-variabl")
+    public String handleSelectedCristaleriass(@RequestParam("selectedIds[]") List<String> selectedIds) {
+     try {
+         System.out.println("ppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+            // Procesar los IDs seleccionados
+            for (String id : selectedIds) {
+                System.out.println("ppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+                // Lógica para registrar en la base de datos usando el UUID
+                System.out.println("Selected Cristaleria ID: " + id);
+            }
+            return "redirect:/success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
+
       @GetMapping("/loginUsuarioModelo")
     public String login(@RequestParam(required = false) String error, @RequestParam(required = false) String logout, ModelMap model) {
         if (error != null) {

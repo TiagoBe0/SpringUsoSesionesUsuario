@@ -47,7 +47,8 @@ public class Usuario {
     
     @OneToMany
     private List<Barra> barras;
-    
+        @OneToMany
+    private List<Pedido> pedidos;
     @OneToMany
     private List<Proveedor> proveedores;
     
@@ -98,6 +99,22 @@ public class Usuario {
 
     public void setDiasLimpiosInsumos(int diasLimpiosInsumos) {
         this.diasLimpiosInsumos = diasLimpiosInsumos;
+    }
+
+    public List<Balance> getBalances() {
+        return balances;
+    }
+
+    public void setBalances(List<Balance> balances) {
+        this.balances = balances;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public float getCosteMensualInsumos() {
